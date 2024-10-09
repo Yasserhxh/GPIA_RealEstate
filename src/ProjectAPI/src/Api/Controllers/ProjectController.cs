@@ -4,6 +4,7 @@ using ProjectAPI.Api.Application.Projects.DeleteProject;
 using ProjectAPI.Api.Application.Projects.GetAllProjects;
 using ProjectAPI.Api.Application.Projects.GetProjectById;
 using ProjectAPI.Api.Application.Projects.UpdateProject;
+
 namespace ProjectAPI.Api.Controllers;
 
 /// <summary>

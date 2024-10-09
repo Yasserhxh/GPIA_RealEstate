@@ -1,6 +1,4 @@
-﻿using ProjectAPI.Api.Application.Common.Models;
-
-namespace ProjectAPI.Api.Application.Feedbacks.GetFeedbackById;
+﻿namespace ProjectAPI.Api.Application.Common.Models;
 
 /// <summary>
 /// Represents the feedback details response, including user and project information.

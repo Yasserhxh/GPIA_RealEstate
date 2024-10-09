@@ -15,6 +15,7 @@
 	</PropertyGroup>
 
 	<ItemGroup Label="Package References">
+		<PackageReference Include="Als.Foundation.Web" Version="8.0.5" />
 		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.8.1" />
 		<PackageReference Include="Mapster" Version="7.4.0" />
 		<PackageReference Include="Mapster.DependencyInjection" Version="1.0.1" />

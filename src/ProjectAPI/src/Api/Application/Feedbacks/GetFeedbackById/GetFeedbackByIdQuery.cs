@@ -1,4 +1,6 @@
-﻿namespace ProjectAPI.Api.Application.Feedbacks.GetFeedbackById;
+﻿using ProjectAPI.Api.Application.Common.Models;
+
+namespace ProjectAPI.Api.Application.Feedbacks.GetFeedbackById;
 
 /// <summary>
 /// Query for retrieving feedback details along with user and project info.
