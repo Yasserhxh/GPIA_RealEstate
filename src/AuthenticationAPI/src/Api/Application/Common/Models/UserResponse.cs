@@ -51,6 +51,11 @@ public record UserResponse
     public required string PhoneNumber { get; init; }
 
     /// <summary>
+    /// Gets or sets the user's Email.
+    /// </summary>
+    public required string Email { get; init; }
+
+    /// <summary>
     /// Gets or sets the user's assignment details.
     /// </summary>
     public UserAssignmentDto? UserAssignment { get; init; }

@@ -1,4 +1,5 @@
 ﻿using AuthenticationAPI.Domain.ApplicationUser.Entities;
+using AuthenticationAPI.Domain.Common.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Azure.Cosmos.Serialization.HybridRow;
 
@@ -10,14 +11,18 @@ namespace AuthenticationAPI.Api.Application.Users.Register;
 public class RegisterHandler : IRequestHandler<RegisterCommand, string>
 {
     private readonly UserManager<User> _userManager;
+    private readonly IEmailService _emailService;
 
     /// <summary>
     /// Constructor for RegisterHandler.
     /// </summary>
     /// <param name="userManager">The UserManager for managing user-related operations.</param>
-    public RegisterHandler(UserManager<User> userManager)
+    /// <param name="emailService">The email service for sending confirmation emails.</param>
+    public RegisterHandler(UserManager<User> userManager, IEmailService emailService)
     {
         _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
+        _emailService = emailService ?? throw new ArgumentNullException(nameof(emailService));
+
     }
 
     /// <summary>
@@ -42,6 +47,13 @@ public class RegisterHandler : IRequestHandler<RegisterCommand, string>
             {
                 await _userManager.AddToRoleAsync(user, role);
             }
+
+            /// TO SEE IF NEEDED 
+
+            // Generate email confirmation token
+            // var emailToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            // await _emailService.SendEmailAsync(user.Email, "Confirm your email", $"Please confirm your email by clicking on this link: http://localhost:32688/users/confirm-email?token={emailToken}&userId={user.Id}");
+            
             // Return success message
             return user.Id;
         }

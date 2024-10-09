@@ -28,13 +28,7 @@ namespace ProjectAPI.Api.Application.Projects.UpdateProject
         /// <returns>The response containing the updated project details.</returns>
         public async Task<ProjectResponse> Handle(UpdateProjectCommand request, CancellationToken cancellationToken)
         {
-            var project = await _repository.GetByIDAsync(request.Id);
-
-            if (project == null)
-            {
-                throw new NotFoundException($"Project with ID {request.Id} not found.");
-            }
-
+            var project = await _repository.GetByIDAsync(request.Id) ?? throw new NotFoundException($"Project with ID {request.Id} not found.");
             project.Name = request.Name;
             project.Location = request.Location;
             project.Type = request.Type.ToString();

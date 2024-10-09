@@ -1,5 +1,6 @@
 ﻿using AuthenticationAPI.Api.Application.Common.Models;
 using AuthenticationAPI.Api.Application.Roles.GetAllRoles;
+using AuthenticationAPI.Api.Application.Users.ConfirmEmail;
 using AuthenticationAPI.Api.Application.Users.DeleteUser;
 using AuthenticationAPI.Api.Application.Users.GetAllUsers;
 using AuthenticationAPI.Api.Application.Users.GetUsersByIds;
@@ -52,6 +53,24 @@ public class UserController : ControllerBase
     {
         var result = await _mediator.Send(command);
         return CreatedAtAction(nameof(Register), new { Id = result });
+    }
+
+    /// <summary>
+    /// Confirms a user's email.
+    /// </summary>
+    /// <param name="token">The command containing the confirmation token.</param>
+    /// <param name="userId">The command containing the user ID.</param>
+    /// <returns>A response indicating the result of the email confirmation.</returns>
+    [HttpPost("confirm-email")]
+    public async Task<IActionResult> ConfirmEmail([FromQuery] string token, [FromQuery] string userId)
+    {
+        var command = new ConfirmEmailCommand
+        {
+            Token = token,
+            UserId = userId
+        };
+        var result = await _mediator.Send(command);
+        return Ok(result);
     }
 
     /// <summary>

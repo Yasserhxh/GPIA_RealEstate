@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using ProjectAPI.Api.Application.Projects.CreateProject;
+using ProjectAPI.Api.Application.Projects.DeleteProject;
 using ProjectAPI.Api.Application.Projects.GetAllProjects;
 using ProjectAPI.Api.Application.Projects.GetProjectById;
 using ProjectAPI.Api.Application.Projects.UpdateProject;
-using System.Security.Claims;
-
 namespace ProjectAPI.Api.Controllers;
 
 /// <summary>
@@ -38,7 +37,6 @@ public class ProjectController : ControllerBase
     public async Task<IActionResult> CreateProject([FromBody] CreateProjectCommand command)
     {
 
-        // Check if the user is authorized as either an Agent or Admin
         var rolesClaim = User.FindFirst("Roles")?.Value;
         if (rolesClaim != null)
         {
@@ -53,10 +51,7 @@ public class ProjectController : ControllerBase
             return Forbid();
         }
 
-        // Handle the command using MediatR
         var projectId = await _mediator.Send(command);
-
-        // Create the response
         var response = new CreateProjectResponse
         {
             ProjectId = projectId,
@@ -120,5 +115,22 @@ public class ProjectController : ControllerBase
 
         var response = await _mediator.Send(command);
         return Ok(response);
+    }
+
+
+    /// <summary>
+    /// Deletes a project by its ID.
+    /// </summary>
+    /// <param name="id">The ID of the project to delete.</param>
+    /// <returns>A response indicating the result of the delete operation.</returns>
+    [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> DeleteProject(Guid id)
+    {
+        var command = new DeleteProjectCommand(id);
+        await _mediator.Send(command);
+        return NoContent();
     }
 }

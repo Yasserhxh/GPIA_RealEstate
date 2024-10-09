@@ -1,5 +1,6 @@
 ﻿using AuthenticationAPI.Domain.ApplicationUser.Entities;
 using AuthenticationAPI.Domain.ApplicationUser.Interfaces;
+using AuthenticationAPI.Domain.Common.Interfaces;
 using AuthenticationAPI.Infrastructure.Context;
 using AuthenticationAPI.Infrastructure.Providers;
 using AuthenticationAPI.Infrastructure.Settings;
@@ -128,6 +129,7 @@ public static class DependencyInjection
     {
         services
             .AddSingleton<ITokenProvider, TokenProvider>()
+            .AddSingleton<IEmailService, EmailService>()
             .AddSingleton<IOtpVerificationRepository, OtpVerificationRepository>();
 
         services.AddScoped<IUserRepository, UserRepository>();

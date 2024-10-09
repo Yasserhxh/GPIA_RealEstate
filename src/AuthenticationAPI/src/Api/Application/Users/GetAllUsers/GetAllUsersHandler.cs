@@ -59,6 +59,7 @@ public class GetAllUsersHandler : IRequestHandler<GetAllUsersQuery, PaginatedRes
                 LastName = u.LastName,
                 FirstNameAr = u.FirstNameAr,
                 LastNameAr = u.LastNameAr,
+                Email = u.Email,
                //AssignedBchId = u.AssignedBchId,
                 PhoneNumber = u.PhoneNumber!,
                 LockoutEnd = u.LockoutEnd

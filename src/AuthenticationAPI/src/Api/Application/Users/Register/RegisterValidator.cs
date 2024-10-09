@@ -35,13 +35,18 @@ public class RegisterValidator : AbstractValidator<RegisterCommand>
         RuleFor(command => command.PhoneNumber)
             .NotEmpty().WithMessage("Phone number is required.")
             .Matches("^(06|07)\\d{8}$").WithMessage("Invalid phone number format. It should start with 06 or 07 and contain 10 digits.");
+        
+        // Validation rules for Email
+        RuleFor(command => command.Email)
+            .NotEmpty().WithMessage("Email is required.")
+            .EmailAddress().WithMessage("Invalid email format.");
 
         // Validation rules for Role
         RuleFor(x => x.Roles)
             .Cascade(CascadeMode.Stop)
             .NotNull().WithMessage("Roles must not be null")
             .NotEmpty().WithMessage("At least one role is required")
-            .Must(roles => roles.TrueForAll(role => IsValidRole(role))).WithMessage("Invalid role. Must be 'AgentBch' or 'Observer' or 'Doctor' or 'Admin'");
+            .Must(roles => roles.TrueForAll(role => IsValidRole(role))).WithMessage("Invalid role. Must be 'AgentBch' or 'Observer' or 'Acheteur' or 'Admin'");
     }
 
     /// <summary>
@@ -51,6 +56,6 @@ public class RegisterValidator : AbstractValidator<RegisterCommand>
     /// <returns><c>true</c> if the role is valid; otherwise, <c>false</c>.</returns>
     private static bool IsValidRole(string role)
     {
-        return role == "AgentBch" || role == "Observer" || role == "Doctor" || role == "Admin" || role == "SecurityOfficer" || role == "AgentAuthority" || role == "Other";
+        return role == "AgentBch" || role == "Observer" || role == "Acheteur" || role == "Admin" || role == "SecurityOfficer" || role == "Agent" || role == "Other";
     }
 }

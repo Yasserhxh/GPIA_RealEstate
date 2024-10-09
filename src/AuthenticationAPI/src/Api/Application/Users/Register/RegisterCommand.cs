@@ -37,13 +37,17 @@ public record RegisterCommand : IRequest<string>
     /// <summary>
     /// Gets or initializes the assigned Bch ID for the registration.
     /// </summary>
-    public int? AssignedBchId { get; init; }
+    //public int? AssignedBchId { get; init; }
 
     /// <summary>
     /// Gets or initializes the phone number for the registration.
     /// </summary>
     public required string PhoneNumber { get; init; }
 
+    /// <summary>
+    /// Gets or initializes the Email for the registration.
+    /// </summary>
+    public required string Email { get; init; }
     /// <summary>
     /// Gets or initializes the role for the registration.
     /// </summary>
