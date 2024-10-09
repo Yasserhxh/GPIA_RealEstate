@@ -1,4 +1,4 @@
-# Alexsys professorassignmentapi
+# ProjectAPI
 
 [Quick description of the project]
 

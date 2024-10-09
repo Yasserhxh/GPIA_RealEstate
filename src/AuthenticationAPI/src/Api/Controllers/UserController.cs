@@ -14,7 +14,7 @@ using AuthenticationAPI.Api.Application.Users.UnlockUser;
 namespace AuthenticationAPI.Api.Controllers;
 
 
-[Route("users")]
+[Route("api/[controller]")]
 [ApiController]
 public class UserController : ControllerBase
 {

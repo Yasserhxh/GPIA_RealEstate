@@ -1,4 +1,4 @@
-# ProfessorAssignmentApi Change Log
+# ProjectAPI Change Log
 
 ## [Version]
 

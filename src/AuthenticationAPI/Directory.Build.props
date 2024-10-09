@@ -4,8 +4,8 @@
   <Import Project="build\GenerateInternalsVisibleTo.targets" />
 
   <PropertyGroup Label="Project">
-    <Product>Alexsys ProfessorAssignmentApi</Product>
-    <RootNamespace>Men.ProfessorAssignmentApi</RootNamespace>
+    <Product>ProjectAPI</Product>
+    <RootNamespace>ProjectAPI</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
