@@ -20,7 +20,7 @@
 
       }
     },
-    "Men.ProfessorAssignmentApi.Api": {
+    "AuthenticationAPI.Api": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "http://localhost:48988/health",
