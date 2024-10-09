@@ -1,0 +1,17 @@
+﻿using ProjectAPI.Api.Application.Common.Models;
+
+namespace ProjectAPI.Api.Application.Feedbacks.GetFeedbackById;
+
+/// <summary>
+/// Represents the feedback details response, including user and project information.
+/// </summary>
+public class FeedbackDetailsResponse
+{
+    public Guid FeedbackId { get; set; }
+    public UserDto User { get; set; }
+    public ProjectResponse? Project { get; set; }
+    public int Rating { get; set; }
+    public string Comments { get; set; }
+    public List<string> Attachments { get; set; }
+    public DateTime CreatedAt { get; set; }
+}

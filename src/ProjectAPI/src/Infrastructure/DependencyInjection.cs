@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ProjectAPI.Domain.FeedBacks.Interfaces;
 using ProjectAPI.Domain.Projects.Interfaces;
 using ProjectAPI.Infrastructure.Context;
 using ProjectAPI.Infrastructure.Repositories;
@@ -51,6 +52,8 @@ public static class DependencyInjection
     private static void ConfigureCustomServices(this IServiceCollection services)
     {
         services.AddScoped<IProjectRepository, ProjectRepository>();
+        services.AddScoped<IFeedbackRepository, IFeedbackRepository>();
+
     }
 
     #endregion

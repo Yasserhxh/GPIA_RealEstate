@@ -16,6 +16,7 @@ public class ApplicationDbContext :  DbContext
         base.OnModelCreating(builder);
 
         builder.ApplyConfiguration(new ProjectConfiguration());
+        builder.ApplyConfiguration(new FeedbackConfiguration());
     }
     /// <summary>
     /// Constructor for ApplicationDbContext.
