@@ -1,7 +1,9 @@
-﻿using ProjectAPI.Api.Application.Common.Exceptions;
+﻿using Microsoft.AspNetCore.Identity;
+using ProjectAPI.Api.Application.Common.Exceptions;
 using ProjectAPI.Api.Application.Common.Models;
 using ProjectAPI.Domain.FeedBacks.Entities;
 using ProjectAPI.Domain.FeedBacks.Interfaces;
+using ProjectAPI.Domain.Users.Entities;
 using System.Linq.Expressions;
 
 namespace ProjectAPI.Api.Application.Feedbacks.GetFeedbackById;
@@ -12,7 +14,6 @@ namespace ProjectAPI.Api.Application.Feedbacks.GetFeedbackById;
 public class GetFeedbackByIdHandler : IRequestHandler<GetFeedbackByIdQuery, FeedbackDetailsResponse>
 {
     private readonly IFeedbackRepository _feedbackRepository;
-
     public GetFeedbackByIdHandler(IFeedbackRepository feedbackRepository)
     {
         _feedbackRepository = feedbackRepository;
@@ -36,8 +37,8 @@ public class GetFeedbackByIdHandler : IRequestHandler<GetFeedbackByIdQuery, Feed
             User = new UserDto
             {
                 Id = feedback.User.Id,
-                UserName = feedback.User.UserName,
-                Email = feedback.User.Email
+                UserName = feedback.User.UserName!,
+                Email = feedback.User.Email!
             },
             Project = feedback.FeedBack_Project != null ? new ProjectResponse
             {

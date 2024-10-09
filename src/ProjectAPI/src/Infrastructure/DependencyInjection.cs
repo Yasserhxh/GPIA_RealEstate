@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using ProjectAPI.Domain.FeedBacks.Interfaces;
 using ProjectAPI.Domain.Projects.Interfaces;
+using ProjectAPI.Domain.Users.Entities;
 using ProjectAPI.Infrastructure.Context;
-using ProjectAPI.Infrastructure.Repositories;
 using ProjectAPI.Infrastructure.Settings;
 
 namespace ProjectAPI.Infrastructure;
@@ -25,6 +26,9 @@ public static class DependencyInjection
         // Register DbContexts
         services.ConfigureDbContexts(configuration);
 
+        // Add identity to get user informations
+        services.ConfigureIdentity();
+
         // Register custom services
         services.ConfigureCustomServices();
         return services;
@@ -43,7 +47,12 @@ public static class DependencyInjection
             .AddSingleton(jwtSettings)
             .AddSingleton(otpSettings);
     }
-
+    private static void ConfigureIdentity(this IServiceCollection services)
+    {
+        services.AddIdentity<User, IdentityRole>()
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
+    }
     private static void ConfigureDbContexts(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<ApplicationDbContext>(options =>
@@ -52,8 +61,7 @@ public static class DependencyInjection
     private static void ConfigureCustomServices(this IServiceCollection services)
     {
         services.AddScoped<IProjectRepository, ProjectRepository>();
-        services.AddScoped<IFeedbackRepository, IFeedbackRepository>();
-
+        services.AddScoped<IFeedbackRepository, FeedbackRepository>();
     }
 
     #endregion

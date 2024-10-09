@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.Azure.Cosmos;
 using ProjectAPI.Api.Application.Common.Exceptions;
 using ProjectAPI.Domain.FeedBacks.Entities;
 using ProjectAPI.Domain.FeedBacks.Interfaces;
 using ProjectAPI.Domain.Projects.Entities;
 using ProjectAPI.Domain.Projects.Interfaces;
+using ProjectAPI.Domain.Users.Entities;
 
 namespace ProjectAPI.Api.Application.Feedbacks.SubmitFeedback;
 
@@ -26,31 +26,38 @@ public class SubmitFeedbackHandler : IRequestHandler<SubmitFeedbackCommand, stri
 
     public async Task<string> Handle(SubmitFeedbackCommand request, CancellationToken cancellationToken)
     {
-        var user = await _userManager.FindByIdAsync(request.UserId) ?? throw new NotFoundException("User not found.");
-        Project project = null;
-        if (request.ProjectId.HasValue)
+        try
         {
-            project = await _projectRepository.GetByIDAsync(request.ProjectId.Value);
-            if (project == null)
+            var user = await _userManager.FindByIdAsync(request.UserId) ?? throw new NotFoundException("User not found.");
+            Project project = null;
+            if (request.ProjectId.HasValue)
             {
-                throw new NotFoundException("Project not found.");
+                project = await _projectRepository.GetByIDAsync(request.ProjectId.Value);
+                if (project == null)
+                {
+                    throw new NotFoundException("Project not found.");
+                }
             }
+
+            var feedback = new Feedback
+            {
+                Id = Guid.NewGuid(),
+                UserId = request.UserId,
+                ProjectId = request.ProjectId,
+                Rating = request.Rating,
+                Comments = request.Comments,
+                Attachments = request.Attachements,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            await _feedbackRepository.InsertAsync(feedback);
+            await _feedbackRepository.SaveAsync();
+
+            return "Feedback submitted successfully.";
+        }catch(Exception ex)
+        {
+            return ex.ToString();
         }
 
-        var feedback = new Feedback
-        {
-            Id = Guid.NewGuid(),
-            UserId = request.UserId,
-            ProjectId = request.ProjectId,
-            Rating = request.Rating,
-            Comments = request.Comments,
-            Attachments = request.Attachements,
-            CreatedAt = DateTime.UtcNow
-        };
-
-        await _feedbackRepository.InsertAsync(feedback);
-        await _feedbackRepository.SaveAsync();
-
-        return "Feedback submitted successfully.";
     }
 }

@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ProjectAPI.Domain.Projects.Entities;
+using ProjectAPI.Domain.Users.Entities;
 using ProjectAPI.Infrastructure.Configurations;
 
 namespace ProjectAPI.Infrastructure.Context;
@@ -7,7 +9,7 @@ namespace ProjectAPI.Infrastructure.Context;
 /// <summary>
 /// Represents the application database context, extending IdentityDbContext for Project management.
 /// </summary>
-public class ApplicationDbContext :  DbContext
+public class ApplicationDbContext : IdentityDbContext<User>
 {
     public DbSet<Project> Projects { get; set; }
 

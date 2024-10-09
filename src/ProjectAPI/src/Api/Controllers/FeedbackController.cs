@@ -23,7 +23,7 @@ public class FeedbackController : ControllerBase
     /// <param name="command">The feedback command containing user ID, project ID, rating, and comments.</param>
     /// <returns>A response indicating the result of the feedback submission.</returns>
     [HttpPost("submit-feedback")]
-    [Authorize(Roles = "Acheteur")]
+    //[Authorize(Roles = "Acheteur")]
     public async Task<IActionResult> SubmitFeedback([FromBody] SubmitFeedbackCommand command)
     {
         var result = await _mediator.Send(command);

@@ -1,10 +1,12 @@
-﻿namespace ProjectAPI.Domain.Users.Entities;
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace ProjectAPI.Domain.Users.Entities;
 /// <summary>
 /// Represents a user in the system.
 /// </summary>
-public class User
+public class User : IdentityUser
 {
-    public string Id { get; set; }
-    public string UserName { get; set; }
-    public string Email { get; set; }
+    // Add your custom properties here
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
 }
