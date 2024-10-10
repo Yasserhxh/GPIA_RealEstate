@@ -2,13 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using ProjectAPI.Domain.FeedBacks.Entities;
 
-
 namespace ProjectAPI.Infrastructure.Configurations;
+
 /// <summary>
 /// Configuration for the Feedback entity.
 /// </summary>
 public class FeedbackConfiguration : IEntityTypeConfiguration<Feedback>
 {
+    /// <summary>
+    /// Configures the properties and relationships of the Feedback entity.
+    /// </summary>
+    /// <param name="builder">The entity type builder for Feedback.</param>
     public void Configure(EntityTypeBuilder<Feedback> builder)
     {
         builder.ToTable("Feedbacks");

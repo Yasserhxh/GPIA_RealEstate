@@ -33,6 +33,9 @@
 		<!-- dotnet aspnet-codegenerator - Code Generation tool for ASP.NET Core used for generating controllers and views. -->
 		<DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Application\Users\AssignProjectsToAgents\" />
+	</ItemGroup>
 
 	<PropertyGroup>
 		<SharedRuleSetPath>\\CLO-NAS\cds-informatique\00_Partage_Sécurisé\dotnet\sonar\sonar-platinium-1.0.ruleset</SharedRuleSetPath>

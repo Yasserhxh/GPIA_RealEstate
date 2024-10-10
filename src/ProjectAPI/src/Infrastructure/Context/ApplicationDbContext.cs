@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using ProjectAPI.Domain.Appointments.Entities;
 using ProjectAPI.Domain.Projects.Entities;
 using ProjectAPI.Domain.Users.Entities;
 using ProjectAPI.Infrastructure.Configurations;
@@ -12,13 +13,21 @@ namespace ProjectAPI.Infrastructure.Context;
 public class ApplicationDbContext : IdentityDbContext<User>
 {
     public DbSet<Project> Projects { get; set; }
+    public DbSet<ProjectAssignment> Assignments { get; set; }
+    public DbSet<Agent> Agents { get; set; }
+    public DbSet<Appointment> Appointments { get; set; }
+
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
 
         builder.ApplyConfiguration(new ProjectConfiguration());
-        builder.ApplyConfiguration(new FeedbackConfiguration());
+        builder.ApplyConfiguration(new FeedbackConfiguration()); 
+        builder.ApplyConfiguration(new AgentConfiguration());
+        builder.ApplyConfiguration(new AppointmentConfiguration());
+        builder.ApplyConfiguration(new AssignmentConfiguration());
+
     }
     /// <summary>
     /// Constructor for ApplicationDbContext.

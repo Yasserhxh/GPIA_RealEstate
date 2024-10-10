@@ -37,6 +37,16 @@ namespace ProjectAPI.Infrastructure.Configurations
             builder.Property(ast => ast.Type)
                 .HasMaxLength(50)
                 .IsRequired();
+
+            // Configures the relationship between Project and Assignments.
+            builder.HasMany(p => p.Assignments)
+                .WithOne(a => a.Project)
+                .HasForeignKey(a => a.ProjectId);
+
+            // Configures the relationship between Project and Appointments.
+            builder.HasMany(p => p.Appointments)
+                .WithOne(a => a.Project)
+                .HasForeignKey(a => a.ProjectId);
         }
     }
 }

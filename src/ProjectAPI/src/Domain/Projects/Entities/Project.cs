@@ -1,4 +1,7 @@
-﻿namespace ProjectAPI.Domain.Projects.Entities
+﻿using ProjectAPI.Domain.Appointments.Entities;
+using ProjectAPI.Domain.Users.Entities;
+
+namespace ProjectAPI.Domain.Projects.Entities
 {
     /// <summary>
     /// Represents a real estate project.
@@ -59,5 +62,15 @@
         /// Gets or sets the status of the project (e.g., ComingSoon, Available).
         /// </summary>
         public string Status { get; set; }
+
+        /// <summary>
+        /// Gets or sets the collection of assignments associated with the project.
+        /// </summary>
+        public ICollection<ProjectAssignment> Assignments { get; set; }
+
+        /// <summary>
+        /// Gets or sets the collection of appointments associated with the project.
+        /// </summary>
+        public ICollection<Appointment> Appointments { get; set; }
     }
 }

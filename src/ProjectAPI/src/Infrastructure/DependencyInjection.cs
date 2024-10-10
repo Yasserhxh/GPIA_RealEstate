@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using ProjectAPI.Domain.Appointments.Interfaces;
 using ProjectAPI.Domain.FeedBacks.Interfaces;
 using ProjectAPI.Domain.Projects.Interfaces;
 using ProjectAPI.Domain.Users.Entities;
+using ProjectAPI.Domain.Users.Interfaces;
 using ProjectAPI.Infrastructure.Context;
 using ProjectAPI.Infrastructure.Settings;
 
@@ -62,6 +64,9 @@ public static class DependencyInjection
     {
         services.AddScoped<IProjectRepository, ProjectRepository>();
         services.AddScoped<IFeedbackRepository, FeedbackRepository>();
+        services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+        services.AddScoped<IAgentRepository, AgentRepository>();
+
     }
 
     #endregion
