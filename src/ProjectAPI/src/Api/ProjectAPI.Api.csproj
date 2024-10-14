@@ -20,6 +20,14 @@
 		<PackageReference Include="Mapster" Version="7.4.0" />
 		<PackageReference Include="Mapster.DependencyInjection" Version="1.0.1" />
 		<PackageReference Include="MediatR" Version="12.2.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.8">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
 	</ItemGroup>
 
@@ -33,6 +41,11 @@
 	<ItemGroup Label="Tools">
 		<!-- dotnet aspnet-codegenerator - Code Generation tool for ASP.NET Core used for generating controllers and views. -->
 		<DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Application\Appointments\GetAppointmentById\" />
+	  <Folder Include="Application\Appointments\CreateAppointmentReview\" />
+	  <Folder Include="Application\Appointments\UpdateAppointmentStatus\" />
 	</ItemGroup>
 
 	<PropertyGroup>

@@ -44,6 +44,8 @@ public class AppointmentConfiguration : IEntityTypeConfiguration<Appointment>
         // Configures the relationship between Appointment and Agent.
         builder.HasOne(ap => ap.Agent)
             .WithMany(a => a.Appointments)
-            .HasForeignKey(ap => ap.AgentId);
+            .HasForeignKey(ap => ap.AgentId)       
+            .IsRequired(true)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

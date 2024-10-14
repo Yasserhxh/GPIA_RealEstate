@@ -24,7 +24,6 @@ public class ApplicationDbContext : IdentityDbContext<User>
 
         builder.ApplyConfiguration(new ProjectConfiguration());
         builder.ApplyConfiguration(new FeedbackConfiguration()); 
-        builder.ApplyConfiguration(new AgentConfiguration());
         builder.ApplyConfiguration(new AppointmentConfiguration());
         builder.ApplyConfiguration(new AssignmentConfiguration());
 

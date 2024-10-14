@@ -48,12 +48,13 @@ public class CreateAppointmentHandler : IRequestHandler<CreateAppointmentCommand
         {
             Id = Guid.NewGuid(),
             ProjectId = request.ProjectId,
-            AgentId = request.AgentId.Value,
+            AgentId = request.AgentId.Value.ToString(),
             AppointmentDate = request.AppointmentDate,
             UserId = request.UserId,
             Name = request.Name,
             Email = request.Email,
-            PhoneNumber = request.PhoneNumber
+            PhoneNumber = request.PhoneNumber,
+            LastName = request.LastName
         };
 
         await _appointmentRepository.InsertAsync(appointment);

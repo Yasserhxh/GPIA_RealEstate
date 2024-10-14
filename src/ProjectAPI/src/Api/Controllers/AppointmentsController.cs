@@ -5,6 +5,7 @@ namespace ProjectAPI.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize(AuthenticationSchemes = "Bearer")]
 public class AppointmentsController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -20,6 +21,7 @@ public class AppointmentsController : ControllerBase
     /// <param name="command">The appointment creation command.</param>
     /// <returns>A response containing the appointment ID and a success message.</returns>
     [HttpPost]
+    [AllowAnonymous]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CreateAppointment([FromBody] CreateAppointmentCommand command)

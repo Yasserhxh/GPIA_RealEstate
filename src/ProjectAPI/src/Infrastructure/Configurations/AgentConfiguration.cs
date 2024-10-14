@@ -15,7 +15,7 @@ public class AgentConfiguration : IEntityTypeConfiguration<Agent>
     /// <param name="builder">The builder to be used to configure the entity.</param>
     public void Configure(EntityTypeBuilder<Agent> builder)
     {
-        builder.ToTable("Agents");
+        /*builder.ToTable("Agents");
 
         // Defines the primary key for Agent.
         builder.HasKey(a => a.Id);
@@ -36,6 +36,6 @@ public class AgentConfiguration : IEntityTypeConfiguration<Agent>
         // Configures the relationship between Agent and Appointments.
         builder.HasMany(a => a.Appointments)
             .WithOne(ap => ap.Agent)
-            .HasForeignKey(ap => ap.AgentId);
+            .HasForeignKey(ap => ap.AgentId);*/
     }
 }

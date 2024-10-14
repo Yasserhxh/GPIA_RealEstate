@@ -21,7 +21,7 @@ public class Appointment
     /// <summary>
     /// Gets or sets the unique identifier of the agent managing the appointment.
     /// </summary>
-    public Guid AgentId { get; set; }
+    public string AgentId { get; set; }
 
     /// <summary>
     /// Gets or sets the date and time of the appointment.

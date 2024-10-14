@@ -20,7 +20,7 @@ public class ProjectAssignment
     /// <summary>
     /// Gets or sets the unique identifier of the agent assigned to the project.
     /// </summary>
-    public Guid AgentId { get; set; }
+    public string AgentId { get; set; }
 
     /// <summary>
     /// Gets or sets the date and time when the assignment was created.
