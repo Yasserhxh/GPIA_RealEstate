@@ -28,35 +28,14 @@ public class User : IdentityUser<string>
     public string LastNameAr { get; set; } = default!;
 
     /// <summary>
-    /// Gets or sets the ID of the assigned BCH.
+    /// Gets or sets the description about the agent.
     /// </summary>
-    //public short? AssignedBchId { get; set; }
+    public string? About { get; set; }
 
     /// <summary>
-    /// Gets or sets the ID of the assigned authority station.
+    /// Gets or sets the rating of the agent. Defaults to 0.
     /// </summary>
-    //public short? AssignedAuthorityStationId { get; set; }
-
-    /// <summary>
-    /// Gets or sets the assigned authority station.
-    /// </summary>
-    //public AuthorityStation? AssignedAuthorityStation { get; set; }
-
-    /// <summary>
-    /// Gets or sets the ID of the assigned security station.
-    /// </summary>
-    //public short? AssignedSecurityStationId { get; set; }
-
-    /// <summary>
-    /// Gets or sets the assigned security station.
-    /// </summary>
-    //public SecurityStation? AssignedSecurityStation { get; set; }
-
-    /// <summary>
-    /// Gets or sets the assigned BCH.
-    /// </summary>
-    //public Bch? AssignedBch { get; set; }
-
+    public double Rating { get; set; } = 0;
     /// <summary>
     /// Gets or sets the collection of user roles.
     /// </summary>

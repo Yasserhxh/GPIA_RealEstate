@@ -1,7 +1,6 @@
 ﻿using AuthenticationAPI.Domain.ApplicationUser.Entities;
 using AuthenticationAPI.Domain.Common.Interfaces;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Azure.Cosmos.Serialization.HybridRow;
 
 namespace AuthenticationAPI.Api.Application.Users.Register;
 
@@ -22,7 +21,6 @@ public class RegisterHandler : IRequestHandler<RegisterCommand, string>
     {
         _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
         _emailService = emailService ?? throw new ArgumentNullException(nameof(emailService));
-
     }
 
     /// <summary>
@@ -48,7 +46,7 @@ public class RegisterHandler : IRequestHandler<RegisterCommand, string>
                 await _userManager.AddToRoleAsync(user, role);
             }
 
-            /// TO SEE IF NEEDED 
+            // TO SEE IF NEEDED 
 
             // Generate email confirmation token
             // var emailToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);

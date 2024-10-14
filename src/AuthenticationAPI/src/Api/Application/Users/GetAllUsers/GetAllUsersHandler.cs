@@ -29,21 +29,11 @@ public class GetAllUsersHandler : IRequestHandler<GetAllUsersQuery, PaginatedRes
     {
         IQueryable<User> query = _context.Users;
 
-
-        if (request.RoleId != null)
-        {
-            query = query.Where(u => u.UserRoles.Any(r => r.Role.Id == request.RoleId));
-        }
-
-        /*if (request.AssignedBchId != null)
-        {
-            query = query.Where(u => u.AssignedBchId == request.AssignedBchId);
-        }*/
-        if (request.UserName != null)
-        {
-            query = query.Where(u => u.UserName == request.UserName);
-        }
-
+        query = query.Where(u =>
+            (request.RoleId == null || u.UserRoles.Any(r => r.Role.Id == request.RoleId)) &&
+            (request.UserName == null || u.UserName == request.UserName) &&
+            (request.Rating == null || u.Rating >= request.Rating)
+        );
 
         int totalItems = await query.CountAsync(cancellationToken);
 
@@ -60,7 +50,8 @@ public class GetAllUsersHandler : IRequestHandler<GetAllUsersQuery, PaginatedRes
                 FirstNameAr = u.FirstNameAr,
                 LastNameAr = u.LastNameAr,
                 Email = u.Email,
-               //AssignedBchId = u.AssignedBchId,
+                Rating = u.Rating,
+                About = u.About,
                 PhoneNumber = u.PhoneNumber!,
                 LockoutEnd = u.LockoutEnd
             },

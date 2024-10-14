@@ -36,16 +36,6 @@ public record UserResponse
     public string LastNameAr { get; init; } = default!;
 
     /// <summary>
-    /// Gets or sets the ID of the assigned BCH (Business Center Hub).
-    /// </summary>
-    public int? AssignedBchId { get; init; }
-
-    /// <summary>
-    /// Gets or sets the list of BCH IDs the user is responsible for.
-    /// </summary>
-    public IEnumerable<int> ResponsibleBchIds { get; init; } = [];
-
-    /// <summary>
     /// Gets or sets the user's phone number.
     /// </summary>
     public required string PhoneNumber { get; init; }
@@ -56,9 +46,14 @@ public record UserResponse
     public required string Email { get; init; }
 
     /// <summary>
-    /// Gets or sets the user's assignment details.
+    /// Gets or sets the description about the agent.
     /// </summary>
-    public UserAssignmentDto? UserAssignment { get; init; }
+    public string? About { get; set; }
+
+    /// <summary>
+    /// Gets or sets the rating of the agent. Defaults to 0.
+    /// </summary>
+    public double Rating { get; set; } = 0;
 
     ///<summary>
     ///Gets or sets the date and time when the user's lockout period ends, if any.

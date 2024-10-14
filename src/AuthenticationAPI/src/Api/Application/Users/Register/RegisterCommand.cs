@@ -48,8 +48,20 @@ public record RegisterCommand : IRequest<string>
     /// Gets or initializes the Email for the registration.
     /// </summary>
     public required string Email { get; init; }
+
+    /// <summary>
+    /// Gets or sets the description about the agent.
+    /// </summary>
+    public string? About { get; set; }
+
+    /// <summary>
+    /// Gets or sets the rating of the agent. Defaults to 0.
+    /// </summary>
+    public double Rating { get; set; } = 0;
+
     /// <summary>
     /// Gets or initializes the role for the registration.
     /// </summary>
     public List<string> Roles { get; init; } = default!;
+
 }
