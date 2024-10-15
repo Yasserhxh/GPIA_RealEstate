@@ -44,8 +44,10 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Application\Appointments\GetAppointmentById\" />
-	  <Folder Include="Application\Appointments\CreateAppointmentReview\" />
-	  <Folder Include="Application\Appointments\UpdateAppointmentStatus\" />
+	  <Folder Include="Application\Appointments\Reviews\CreateAppointmentReview\" />
+	  <Folder Include="Application\Appointments\Reviews\GetReviewById\" />
+	  <Folder Include="Application\Appointments\Reviews\GetReviewsByUserId\" />
+	  <Folder Include="Application\Appointments\Reviews\GetReviewByAppointmentId\" />
 	</ItemGroup>
 
 	<PropertyGroup>

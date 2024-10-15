@@ -16,6 +16,7 @@ public class ApplicationDbContext : IdentityDbContext<User>
     public DbSet<ProjectAssignment> Assignments { get; set; }
     public DbSet<Agent> Agents { get; set; }
     public DbSet<Appointment> Appointments { get; set; }
+    public DbSet<AppointmentReview> AppointmentReviews { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -25,6 +26,7 @@ public class ApplicationDbContext : IdentityDbContext<User>
         builder.ApplyConfiguration(new ProjectConfiguration());
         builder.ApplyConfiguration(new FeedbackConfiguration()); 
         builder.ApplyConfiguration(new AppointmentConfiguration());
+        builder.ApplyConfiguration(new AppointmentReviewConfiguration());
         builder.ApplyConfiguration(new AssignmentConfiguration());
 
     }
