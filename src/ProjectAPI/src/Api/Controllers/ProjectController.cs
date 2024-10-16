@@ -4,6 +4,8 @@ using ProjectAPI.Api.Application.Projects.DeleteProject;
 using ProjectAPI.Api.Application.Projects.GetAllProjects;
 using ProjectAPI.Api.Application.Projects.GetProjectById;
 using ProjectAPI.Api.Application.Projects.UpdateProject;
+using ProjectAPI.Api.Application.Units.CreateProjectUnit;
+using ProjectAPI.Api.Extensions;
 
 namespace ProjectAPI.Api.Controllers;
 
@@ -12,6 +14,7 @@ namespace ProjectAPI.Api.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/[controller]")]
+[Authorize(AuthenticationSchemes = "Bearer")]
 public class ProjectController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -34,7 +37,7 @@ public class ProjectController : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [Authorize(Roles = "Agent, Admin")]
+    [CustomAuthorize("Agent, Admin")]
     public async Task<IActionResult> CreateProject([FromBody] CreateProjectCommand command)
     {
 
@@ -106,7 +109,7 @@ public class ProjectController : ControllerBase
     [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [Authorize(Roles = "Admin, Agent")]
+    [CustomAuthorize("Admin, Agent")]
     public async Task<IActionResult> UpdateProject(Guid id, [FromBody] UpdateProjectCommand command)
     {
         if (id != command.Id)
@@ -127,11 +130,28 @@ public class ProjectController : ControllerBase
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [Authorize(Roles = "Admin")]
+    [CustomAuthorize("Admin")]
     public async Task<IActionResult> DeleteProject(Guid id)
     {
         var command = new DeleteProjectCommand(id);
         await _mediator.Send(command);
         return NoContent();
+    }
+
+    /// <summary>
+    /// Adds a list of units to a project.
+    /// </summary>
+    /// <param name="projectId">The ID of the project to which units will be added.</param>
+    /// <param name="command">The command containing the list of units to be added.</param>
+    /// <returns>A response indicating the result of the add operation.</returns>
+    [HttpPost("{projectId}/units")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [CustomAuthorize("Agent")]
+    public async Task<IActionResult> AddUnitsToProject(Guid projectId, [FromBody] CreateProjectUnitCommand command)
+    {
+        command.ProjectId = projectId;
+        var response = await _mediator.Send(command);
+        return Ok(response);
     }
 }

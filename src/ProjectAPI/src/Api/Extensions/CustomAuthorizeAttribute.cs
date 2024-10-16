@@ -12,6 +12,7 @@ public class CustomAuthorizeAttribute : Attribute, IAuthorizationFilter
 
     public void OnAuthorization(AuthorizationFilterContext context)
     {
+        var r = _allowedRoles.FirstOrDefault();
         var rolesClaim = context.HttpContext.User.FindFirst("Roles")?.Value;
 
         if (rolesClaim == null)

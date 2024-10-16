@@ -13,6 +13,7 @@ namespace ProjectAPI.Infrastructure.Context;
 public class ApplicationDbContext : IdentityDbContext<User>
 {
     public DbSet<Project> Projects { get; set; }
+    public DbSet<Unit> Units { get; set; }
     public DbSet<ProjectAssignment> Assignments { get; set; }
     public DbSet<Agent> Agents { get; set; }
     public DbSet<Appointment> Appointments { get; set; }
@@ -24,6 +25,7 @@ public class ApplicationDbContext : IdentityDbContext<User>
         base.OnModelCreating(builder);
 
         builder.ApplyConfiguration(new ProjectConfiguration());
+        builder.ApplyConfiguration(new UnitConfiguration());
         builder.ApplyConfiguration(new FeedbackConfiguration()); 
         builder.ApplyConfiguration(new AppointmentConfiguration());
         builder.ApplyConfiguration(new AppointmentReviewConfiguration());

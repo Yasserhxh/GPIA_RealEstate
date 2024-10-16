@@ -72,5 +72,8 @@ namespace ProjectAPI.Domain.Projects.Entities
         /// Gets or sets the collection of appointments associated with the project.
         /// </summary>
         public ICollection<Appointment> Appointments { get; set; }
+
+        // New attribute to hold a collection of units in the project
+        public ICollection<Unit> Units { get; set; } = new List<Unit>();
     }
 }

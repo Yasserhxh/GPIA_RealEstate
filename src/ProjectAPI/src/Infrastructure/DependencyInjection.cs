@@ -63,6 +63,7 @@ public static class DependencyInjection
     private static void ConfigureCustomServices(this IServiceCollection services)
     {
         services.AddScoped<IProjectRepository, ProjectRepository>();
+        services.AddScoped<IUnitRepository, UnitRepository>();
         services.AddScoped<IFeedbackRepository, FeedbackRepository>();
         services.AddScoped<IAppointmentRepository, AppointmentRepository>();
         services.AddScoped<IAgentRepository, AgentRepository>();
