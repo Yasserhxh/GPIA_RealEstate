@@ -54,4 +54,19 @@ public class CreateProjectCommand : IRequest<Guid>
     /// Gets or sets the status of the project (e.g., ComingSoon, Available).
     /// </summary>
     public string Status { get; set; }
+
+    /// <summary>
+    /// Gets or sets the number of units in the project.
+    /// </summary>
+    public int NumberOfUnits { get; set; }
+
+    /// <summary>
+    /// Gets or sets the minimum sellable surface area range of the project.
+    /// </summary>
+    public int MinSellableSurfaceRange { get; set; }
+
+    /// <summary>
+    /// Gets or sets the maximum sellable surface area range of the project.
+    /// </summary>
+    public int MaxSellableSurfaceRange { get; set; }
 }

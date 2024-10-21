@@ -73,7 +73,24 @@ namespace ProjectAPI.Domain.Projects.Entities
         /// </summary>
         public ICollection<Appointment> Appointments { get; set; }
 
-        // New attribute to hold a collection of units in the project
+        /// <summary>
+        /// Gets or sets the collection of units in the project.
+        /// </summary>
         public ICollection<Unit> Units { get; set; } = new List<Unit>();
+
+        /// <summary>
+        /// Gets or sets the number of units available in the project.
+        /// </summary>
+        public int NumberOfUnits { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Min sellable surface area range of the project.
+        /// </summary>
+        public int MinSellableSurfaceRange { get; set; }
+        /// <summary>
+        /// Gets or sets the Max sellable surface area range of the project.
+        /// </summary>
+        public int MaxSellableSurfaceRange { get; set; }
+
     }
 }

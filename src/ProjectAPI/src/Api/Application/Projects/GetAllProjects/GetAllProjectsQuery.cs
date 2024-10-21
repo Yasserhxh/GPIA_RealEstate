@@ -21,6 +21,7 @@ namespace ProjectAPI.Api.Application.Projects.GetAllProjects
         /// The type of the project to filter by.
         /// </summary>
         public string? Type { get; set; }
+
         /// <summary>
         /// The minimum price of the project to filter by.
         /// </summary>
@@ -30,6 +31,16 @@ namespace ProjectAPI.Api.Application.Projects.GetAllProjects
         /// The maximum price of the project to filter by.
         /// </summary>
         public decimal? MaxPrice { get; set; }
+
+        /// <summary>
+        /// The minimum sellable surface area to filter by.
+        /// </summary>
+        public int? MinSellableSurfaceRange { get; set; }
+
+        /// <summary>
+        /// The maximum sellable surface area to filter by.
+        /// </summary>
+        public int? MaxSellableSurfaceRange { get; set; }
 
         /// <summary>
         /// The current page number.

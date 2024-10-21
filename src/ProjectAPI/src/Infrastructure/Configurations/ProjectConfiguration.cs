@@ -18,35 +18,74 @@ namespace ProjectAPI.Infrastructure.Configurations
             builder.ToTable("Projects");
 
             // Defines the primary key for Project.
-            builder.HasKey(ast => ast.Id);
+            builder.HasKey(p => p.Id);
 
             // Configures the Name property to be required.
-            builder.Property(ast => ast.Name)
+            builder.Property(p => p.Name)
                 .IsRequired()
                 .HasMaxLength(150);
 
             // Configures the Location property to be required.
-            builder.Property(ast => ast.Location)
-                .IsRequired();
-
-            // Configures the Images property to be required.
-            builder.Property(ast => ast.Images)
+            builder.Property(p => p.Location)
                 .IsRequired();
 
             // Configures the Type property to be required.
-            builder.Property(ast => ast.Type)
-                .HasMaxLength(50)
+            builder.Property(p => p.Type)
+                .IsRequired()
+                .HasConversion<string>()
+                .HasMaxLength(50);
+
+            // Configures the MinPrice property to be required.
+            builder.Property(p => p.MinPrice)
                 .IsRequired();
 
-            // Configures the relationship between Project and Assignments.
+            // Configures the MaxPrice property to be required.
+            builder.Property(p => p.MaxPrice)
+                .IsRequired();
+
+            // Configures the Status property to be required.
+            builder.Property(p => p.Status)
+                .IsRequired()
+                .HasConversion<string>();
+
+            // Configures the Images property to be required.
+            builder.Property(p => p.Images)
+                .IsRequired();
+
+            // Configures the Description property.
+            builder.Property(p => p.Description)
+                .HasMaxLength(1000);
+
+            // Configures the Latitude property to be required.
+            builder.Property(p => p.Latitude)
+                .IsRequired();
+
+            // Configures the Longitude property to be required.
+            builder.Property(p => p.Longitude)
+                .IsRequired();
+
+            // Configures the MinSellableSurfaceRange property to be required.
+            builder.Property(p => p.MinSellableSurfaceRange)
+                .IsRequired();
+
+            // Configures the MaxSellableSurfaceRange property to be required.
+            builder.Property(p => p.MaxSellableSurfaceRange)
+                .IsRequired();
+
+            // Configures the relationships between Project and Assignments.
             builder.HasMany(p => p.Assignments)
                 .WithOne(a => a.Project)
                 .HasForeignKey(a => a.ProjectId);
 
-            // Configures the relationship between Project and Appointments.
+            // Configures the relationships between Project and Appointments.
             builder.HasMany(p => p.Appointments)
                 .WithOne(a => a.Project)
                 .HasForeignKey(a => a.ProjectId);
+
+            // Configures the relationships between Project and Units.
+            builder.HasMany(p => p.Units)
+                .WithOne(u => u.Project)
+                .HasForeignKey(u => u.ProjectId);
         }
     }
 }

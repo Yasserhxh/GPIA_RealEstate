@@ -38,6 +38,16 @@ namespace ProjectAPI.Api.Application.Projects.UpdateProject
         public decimal MaxPrice { get; set; }
 
         /// <summary>
+        /// Gets or sets the minimum sellable surface area range of the project.
+        /// </summary>
+        public int MinSellableSurfaceRange { get; set; }
+
+        /// <summary>
+        /// Gets or sets the maximum sellable surface area range of the project.
+        /// </summary>
+        public int MaxSellableSurfaceRange { get; set; }
+
+        /// <summary>
         /// Gets or sets the status of the project.
         /// </summary>
         public ProjectStatus Status { get; set; }
@@ -62,5 +72,4 @@ namespace ProjectAPI.Api.Application.Projects.UpdateProject
         /// </summary>
         public double Longitude { get; set; }
     }
-
 }

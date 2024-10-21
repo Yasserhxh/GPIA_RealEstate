@@ -32,9 +32,12 @@ public class GetAllProjectsHandler : IRequestHandler<GetAllProjectsQuery, Pagina
                  (string.IsNullOrEmpty(request.Location) || p.Location.Contains(request.Location)) &&
                  (request.MinPrice == null || p.MinPrice >= request.MinPrice) &&
                  (request.MaxPrice == null || p.MaxPrice <= request.MaxPrice) &&
-                 (request.Type == null || p.Type == request.Type.ToString()),
+                 (request.Type == null || p.Type == request.Type.ToString()) &&
+                 (request.MinSellableSurfaceRange == null || p.MinSellableSurfaceRange >= request.MinSellableSurfaceRange) &&
+                 (request.MaxSellableSurfaceRange == null || p.MaxSellableSurfaceRange <= request.MaxSellableSurfaceRange),
             null
         );
+
 
         var totalItems = projects.Count();
         var paginatedData = projects
@@ -52,7 +55,8 @@ public class GetAllProjectsHandler : IRequestHandler<GetAllProjectsQuery, Pagina
                 Images = p.Images,
                 Description = p.Description,
                 Latitude = p.Latitude,
-                Longitude = p.Longitude
+                Longitude = p.Longitude,
+                NumberOfUnits = p.NumberOfUnits
             });
 
         return new PaginatedResponse<ProjectResponse>(paginatedData, request.PageNumber, request.PageSize, totalItems);

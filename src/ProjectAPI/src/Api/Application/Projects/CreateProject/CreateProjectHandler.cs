@@ -39,7 +39,10 @@ namespace ProjectAPI.Api.Application.Projects.CreateProject
                 Description = request.Description,
                 Longitude = request.Longitude,
                 Latitude = request.Latitude,
-                Status = "ComingSoon"
+                Status = "ComingSoon",
+                NumberOfUnits = request.NumberOfUnits,
+                MinSellableSurfaceRange = request.MinSellableSurfaceRange,
+                MaxSellableSurfaceRange = request.MaxSellableSurfaceRange
             };
 
             await _repository.InsertAsync(project);

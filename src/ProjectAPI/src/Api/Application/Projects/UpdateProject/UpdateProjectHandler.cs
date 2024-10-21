@@ -39,6 +39,8 @@ namespace ProjectAPI.Api.Application.Projects.UpdateProject
             project.Description = request.Description;
             project.Latitude = request.Latitude;
             project.Longitude = request.Longitude;
+            project.MaxSellableSurfaceRange = request.MaxSellableSurfaceRange;
+            project.MinSellableSurfaceRange = request.MinSellableSurfaceRange;
 
             _repository.Update(project);
             await _repository.SaveAsync();

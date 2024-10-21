@@ -43,6 +43,17 @@
             // Validation rule for Longitude
             RuleFor(project => project.Longitude)
                 .NotEmpty().WithMessage("Longitude is required.");
+
+            // Validation rule for NumberOfUnits
+            RuleFor(project => project.NumberOfUnits)
+                .GreaterThanOrEqualTo(0).WithMessage("Number of units must be greater than or equal to 0.");
+
+            // Validation rules for Min and Max Sellable Surface Range
+            RuleFor(project => project.MinSellableSurfaceRange)
+                .GreaterThan(0).WithMessage("Minimum sellable surface range must be greater than 0.");
+
+            RuleFor(project => project.MaxSellableSurfaceRange)
+                .GreaterThan(project => project.MinSellableSurfaceRange).WithMessage("Maximum sellable surface range must be greater than minimum sellable surface range.");
         }
     }
 }
