@@ -4,6 +4,7 @@ using ProjectAPI.Domain.Appointments.Entities;
 using ProjectAPI.Domain.Projects.Entities;
 using ProjectAPI.Domain.Users.Entities;
 using ProjectAPI.Infrastructure.Configurations;
+using RealEstate.Infrastructure.Configurations;
 
 namespace ProjectAPI.Infrastructure.Context;
 
@@ -29,8 +30,9 @@ public class ApplicationDbContext : IdentityDbContext<User>
         builder.ApplyConfiguration(new FeedbackConfiguration()); 
         builder.ApplyConfiguration(new AppointmentConfiguration());
         builder.ApplyConfiguration(new AppointmentReviewConfiguration());
-        builder.ApplyConfiguration(new AssignmentConfiguration());
-
+        builder.ApplyConfiguration(new IncidentConfiguration());
+        builder.ApplyConfiguration(new NotaryAppointmentConfiguration());
+        builder.ApplyConfiguration(new PropertyDeliveryConfiguration());
     }
     /// <summary>
     /// Constructor for ApplicationDbContext.

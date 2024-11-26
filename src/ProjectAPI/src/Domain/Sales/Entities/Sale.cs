@@ -11,4 +11,6 @@ public class Sale
     public decimal TotalPrice { get; set; }
     public bool IsUnderConstruction { get; set; } // To indicate if the unit is still under construction
     public ICollection<PaymentTracking> Payments { get; set; } = new List<PaymentTracking>();
+    public ICollection<PropertyDelivery> PropertyDeliveries { get; set; } = new List<PropertyDelivery>();
+
 }

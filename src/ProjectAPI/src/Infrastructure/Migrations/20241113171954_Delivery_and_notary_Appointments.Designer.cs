@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectAPI.Infrastructure.Context;
 
@@ -11,9 +12,11 @@ using ProjectAPI.Infrastructure.Context;
 namespace ProjectAPI.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241113171954_Delivery_and_notary_Appointments")]
+    partial class Delivery_and_notary_Appointments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -264,32 +267,6 @@ namespace ProjectAPI.Infrastructure.Migrations
                     b.ToTable("AppointmentReviews", (string)null);
                 });
 
-            modelBuilder.Entity("ProjectAPI.Domain.Appointments.Entities.NotaryAppointment", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("AppointmentDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("SaleId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("NotaryAppointments", (string)null);
-                });
-
             modelBuilder.Entity("ProjectAPI.Domain.FeedBacks.Entities.Feedback", b =>
                 {
                     b.Property<Guid>("Id")
@@ -325,37 +302,6 @@ namespace ProjectAPI.Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Feedbacks", (string)null);
-                });
-
-            modelBuilder.Entity("ProjectAPI.Domain.FeedBacks.Entities.Incident", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<DateTime>("ReportedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<Guid>("UnitId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Incidents", (string)null);
                 });
 
             modelBuilder.Entity("ProjectAPI.Domain.Projects.Entities.Project", b =>
@@ -442,7 +388,7 @@ namespace ProjectAPI.Infrastructure.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Assignments");
+                    b.ToTable("Assignments", (string)null);
                 });
 
             modelBuilder.Entity("ProjectAPI.Domain.Projects.Entities.Unit", b =>
@@ -546,16 +492,14 @@ namespace ProjectAPI.Infrastructure.Migrations
 
                     b.Property<string>("Report")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("SaleId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("UnitId")
                         .HasColumnType("uniqueidentifier");
@@ -566,7 +510,7 @@ namespace ProjectAPI.Infrastructure.Migrations
 
                     b.HasIndex("UnitId");
 
-                    b.ToTable("PropertyDeliveries", (string)null);
+                    b.ToTable("PropertyDelivery");
                 });
 
             modelBuilder.Entity("ProjectAPI.Domain.Sales.Entities.Sale", b =>

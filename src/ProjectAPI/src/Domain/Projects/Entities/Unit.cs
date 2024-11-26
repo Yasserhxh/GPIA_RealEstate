@@ -1,4 +1,6 @@
-﻿namespace ProjectAPI.Domain.Projects.Entities;
+﻿using ProjectAPI.Domain.Sales.Entities;
+
+namespace ProjectAPI.Domain.Projects.Entities;
 
 /// <summary>
 /// Represents a specific unit within a project.
@@ -79,4 +81,6 @@ public class Unit
     /// Navigation property to the related project.
     /// </summary>
     public Project Project { get; set; }
+    public ICollection<PropertyDelivery> PropertyDeliveries { get; set; } = new List<PropertyDelivery>();
+
 }
