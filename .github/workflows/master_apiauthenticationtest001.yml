@@ -24,7 +24,10 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.x'
-
+          
+      - name: Restore dependencies
+        run: dotnet restore ./src/AuthenticationAPI/AuthenticationAPI.sln --configfile ./nuget.config
+        
       - name: Build with dotnet
         run: dotnet build ./src/AuthenticationAPI/AuthenticationAPI.sln --configuration Release
 
