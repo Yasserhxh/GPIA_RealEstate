@@ -3,7 +3,7 @@
 [Quick description of the project]
 
 ## How to build
-
+Run dotnet buid ./AhtenticationAPI.sln
 ## How to test
 
 ## Release notes
