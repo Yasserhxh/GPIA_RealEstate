@@ -37,8 +37,16 @@ public class UserController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Login([FromBody] LoginCommand command)
     {
-        var result = await _mediator.Send(command);
-        return Ok(result);
+        try
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }catch(Exception ex)
+        {
+            Console.WriteLine(ex.StackTrace);
+            return BadRequest(ex.Message);
+        }
+
     }
 
     /// <summary>
