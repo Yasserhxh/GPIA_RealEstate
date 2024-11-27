@@ -37,7 +37,10 @@ jobs:
       # Build the solution
       - name: Build with dotnet
         run: dotnet build ./src/AuthenticationAPI/AuthenticationAPI.sln --configuration Release
-
+        
+      - name: dotnet publish
+        run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
+        
       # Upload the artifact for deployment
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
