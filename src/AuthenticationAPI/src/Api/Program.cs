@@ -23,7 +23,12 @@ builder.Services
 builder.Services
     // Registers the Swagger generator, defining one Swagger document.
     .AddEndpointsApiExplorer()
-    .AddSwaggerGen()
+    .AddSwaggerGen(c =>
+    {
+        var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+        var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+        c.IncludeXmlComments(xmlPath);
+    })
     // Registers services to compress outputs.
     .AddResponseCompression()
     // Registers sensitive encryption services (e.g. to encrypt cookies).
