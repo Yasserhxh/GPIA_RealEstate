@@ -27,7 +27,7 @@ jobs:
           dotnet-version: '8.x'
 
       # Add NuGet-NetCore-Ekram source with credentials
-      - name: Set up NuGet Feed for NuGet-NetCore-Ekram
+      - name: Set up NuGet Feed for NuGet-NetCore
         run: dotnet nuget add source "${{ secrets.NUGET_NETCORE_URL }}" -n "NuGet-NetCore-Ekram" -u "${{ secrets.NUGET_NETCORE_USERNAME }}" -p "${{ secrets.NUGET_NETCORE_PASSWORD }}" --store-password-in-clear-text
 
       # Restore dependencies
