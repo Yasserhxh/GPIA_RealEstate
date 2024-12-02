@@ -70,4 +70,4 @@ jobs:
           app-name: 'apitestproejct001'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_93ACD9B785F94556BCE654074D622911 }}
+          publish-profile: ${{ secrets.AZURE_NET_PUBLISH_PROFILE }}
