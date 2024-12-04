@@ -18,7 +18,7 @@ namespace ProjectAPI.Api.Application.Projects.GetAllProjects
         public string? Location { get; set; }
 
         /// <summary>
-        /// The type of the project to filter by.
+        /// The type of the project to filter by (e.g., residential, commercial).
         /// </summary>
         public string? Type { get; set; }
 
