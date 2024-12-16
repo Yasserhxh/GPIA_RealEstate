@@ -48,7 +48,7 @@ public class GetAllProjectsHandler : IRequestHandler<GetAllProjectsQuery, Pagina
                 Id = p.Id,
                 Name = p.Name,
                 Location = p.Location,
-                Type = Enum.Parse<PropertyType>(p.Type),
+                Type = p.Type,
                 MinPrice = p.MinPrice,
                 MaxPrice = p.MaxPrice,
                 Status = Enum.Parse<ProjectStatus>(p.Status),
@@ -56,7 +56,9 @@ public class GetAllProjectsHandler : IRequestHandler<GetAllProjectsQuery, Pagina
                 Description = p.Description,
                 Latitude = p.Latitude,
                 Longitude = p.Longitude,
-                NumberOfUnits = p.NumberOfUnits
+                NumberOfUnits = p.NumberOfUnits,
+                MaxSellableSurfaceRange = p.MaxSellableSurfaceRange,
+                MinSellableSurfaceRange = p.MinSellableSurfaceRange
             });
 
         return new PaginatedResponse<ProjectResponse>(paginatedData, request.PageNumber, request.PageSize, totalItems);

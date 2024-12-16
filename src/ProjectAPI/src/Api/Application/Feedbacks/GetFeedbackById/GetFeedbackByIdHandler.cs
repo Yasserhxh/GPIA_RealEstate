@@ -45,7 +45,7 @@ public class GetFeedbackByIdHandler : IRequestHandler<GetFeedbackByIdQuery, Feed
                 Id = feedback.FeedBack_Project.Id,
                 Name = feedback.FeedBack_Project.Name,
                 Location = feedback.FeedBack_Project.Location,
-                Type = Enum.Parse<PropertyType>(feedback.FeedBack_Project.Type ?? string.Empty),
+                Type =feedback.FeedBack_Project.Type ?? string.Empty,
                 MinPrice = feedback.FeedBack_Project.MinPrice,
                 MaxPrice = feedback.FeedBack_Project.MaxPrice
             } : null,

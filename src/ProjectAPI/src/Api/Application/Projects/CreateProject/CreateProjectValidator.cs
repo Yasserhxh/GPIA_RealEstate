@@ -16,8 +16,8 @@
                 .MaximumLength(150).WithMessage("Project name must not exceed 150 characters.");
 
             // Validation rule for Location
-            RuleFor(project => project.Location)
-                .NotEmpty().WithMessage("Project location is required.");
+            /*RuleFor(project => project.Location)
+                .NotEmpty().WithMessage("Project location is required.");*/
 
             // Validation rule for Type
             RuleFor(project => project.Type)
@@ -25,7 +25,7 @@
                 .MaximumLength(50).WithMessage("Project type must not exceed 50 characters.");
 
             // Validation rule for MinPrice
-            RuleFor(project => project.MinPrice)
+            /*RuleFor(project => project.MinPrice)
                 .GreaterThanOrEqualTo(0).WithMessage("Minimum price must be greater than or equal to 0.");
 
             // Validation rule for MaxPrice
@@ -42,7 +42,7 @@
 
             // Validation rule for Longitude
             RuleFor(project => project.Longitude)
-                .NotEmpty().WithMessage("Longitude is required.");
+                .NotEmpty().WithMessage("Longitude is required.");*/
 
             // Validation rule for NumberOfUnits
             RuleFor(project => project.NumberOfUnits)

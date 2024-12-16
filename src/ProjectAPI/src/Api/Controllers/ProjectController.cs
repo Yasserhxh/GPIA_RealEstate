@@ -37,7 +37,7 @@ public class ProjectController : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [CustomAuthorize("Agent, Admin")]
+    //[CustomAuthorize("Agent")]
     public async Task<IActionResult> CreateProject([FromBody] CreateProjectCommand command)
     {
 

@@ -3,7 +3,7 @@
     /// <summary>
     /// Enumeration for the type of property.
     /// </summary>
-    public enum PropertyType { Villa, Apartment, Commercial }
+   // public enum PropertyType { Villa, Apartment, Commercial }
 
     /// <summary>
     /// Enumeration for the status of a project.
@@ -33,7 +33,7 @@
         /// <summary>
         /// Gets or sets the type of property (e.g., Villa, Apartment, Commercial).
         /// </summary>
-        public PropertyType Type { get; set; }
+        public string Type { get; set; }
 
         /// <summary>
         /// Gets or sets the minimum price for properties in the project.

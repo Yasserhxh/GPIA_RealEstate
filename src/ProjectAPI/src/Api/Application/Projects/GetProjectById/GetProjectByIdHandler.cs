@@ -40,7 +40,7 @@ public class GetProjectByIdHandler : IRequestHandler<GetProjectByIdQuery, Projec
             Id = project.Id,
             Name = project.Name,
             Location = project.Location,
-            Type = Enum.Parse<PropertyType>(project.Type),
+            Type = project.Type,
             MinPrice = project.MinPrice,
             MaxPrice = project.MaxPrice,
             Status = Enum.Parse<ProjectStatus>(project.Status),

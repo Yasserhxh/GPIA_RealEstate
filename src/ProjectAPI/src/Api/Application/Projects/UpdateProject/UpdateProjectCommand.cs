@@ -25,7 +25,7 @@ namespace ProjectAPI.Api.Application.Projects.UpdateProject
         /// <summary>
         /// Gets or sets the type of the property.
         /// </summary>
-        public PropertyType Type { get; set; }
+        public string Type { get; set; }
 
         /// <summary>
         /// Gets or sets the minimum price of the project.
