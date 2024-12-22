@@ -25,17 +25,17 @@ public class Unit
     /// <summary>
     /// Gets or sets the number of bedrooms in the unit.
     /// </summary>
-    public int NumberOfBedrooms { get; set; }
+    public int? NumberOfBedrooms { get; set; }
 
     /// <summary>
     /// Gets or sets the number of bathrooms in the unit.
     /// </summary>
-    public int NumberOfBathrooms { get; set; }
+    public int? NumberOfBathrooms { get; set; }
 
     /// <summary>
     /// Gets or sets the surface area of the apartment.
     /// </summary>
-    public double ApartmentSurface { get; set; } // e.g., "72m2"
+    public double? ApartmentSurface { get; set; } // e.g., "72m2"
 
     /// <summary>
     /// Gets or sets the balcony surface area.
@@ -65,12 +65,32 @@ public class Unit
     /// <summary>
     /// Gets or sets the total surface area of the unit (including balconies, terraces, etc.).
     /// </summary>
-    public double TotalSurface { get; set; }
+    public double? TotalSurface { get; set; }
 
     /// <summary>
-    /// Gets or sets the price of the unit.
+    /// Gets or sets the saleable value of the unit using the first formula (50% balcony, 50% terrace, 30% garden).
     /// </summary>
-    public decimal? Price { get; set; } // e.g., "1,431,250 MAD"
+    public double? SaleableValue { get; set; }
+
+    /// <summary>
+    /// Gets or sets the saleable value of the unit using the second formula (100% balcony, 50% terrace, 30% garden).
+    /// </summary>
+    public double? SaleableValue1 { get; set; }
+
+    /// <summary>
+    /// Gets or sets the price calculated using SaleableValue.
+    /// </summary>
+    public decimal? PriceSaleableValue { get; set; }
+
+    /// <summary>
+    /// Gets or sets the price calculated using SaleableValue1.
+    /// </summary>
+    public decimal? PriceSaleableValue1 { get; set; }
+
+    /// <summary>
+    /// Gets or sets the price as of the latest date (e.g., 06/11).
+    /// </summary>
+    public decimal? LatestPrice { get; set; }
 
     /// <summary>
     /// Gets or sets the identifier of the related project.
@@ -81,6 +101,9 @@ public class Unit
     /// Navigation property to the related project.
     /// </summary>
     public Project Project { get; set; }
-    public ICollection<PropertyDelivery> PropertyDeliveries { get; set; } = new List<PropertyDelivery>();
 
+    /// <summary>
+    /// Navigation property for related property deliveries.
+    /// </summary>
+    public ICollection<PropertyDelivery> PropertyDeliveries { get; set; } = new List<PropertyDelivery>();
 }

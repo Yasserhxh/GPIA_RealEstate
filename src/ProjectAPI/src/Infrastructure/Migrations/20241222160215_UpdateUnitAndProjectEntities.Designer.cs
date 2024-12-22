@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectAPI.Infrastructure.Context;
 
@@ -11,9 +12,11 @@ using ProjectAPI.Infrastructure.Context;
 namespace ProjectAPI.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241222160215_UpdateUnitAndProjectEntities")]
+    partial class UpdateUnitAndProjectEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -165,9 +168,6 @@ namespace ProjectAPI.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("AgentId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("AppointmentDate")
                         .HasColumnType("datetime2");
 
@@ -204,8 +204,6 @@ namespace ProjectAPI.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AgentId");
-
-                    b.HasIndex("AgentId1");
 
                     b.HasIndex("ProjectId");
 
@@ -369,7 +367,10 @@ namespace ProjectAPI.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AgentId")
+                    b.Property<Guid>("AgentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AgentId1")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
@@ -437,7 +438,7 @@ namespace ProjectAPI.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AgentId");
+                    b.HasIndex("AgentId1");
 
                     b.ToTable("Projects", (string)null);
                 });
@@ -638,9 +639,8 @@ namespace ProjectAPI.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AgentId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("AgentId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("AgentId1")
                         .HasColumnType("nvarchar(450)");
@@ -662,11 +662,9 @@ namespace ProjectAPI.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AgentId");
-
                     b.HasIndex("AgentId1");
 
-                    b.ToTable("PerformanceIndicators", (string)null);
+                    b.ToTable("PerformanceIndicator");
                 });
 
             modelBuilder.Entity("ProjectAPI.Domain.Users.Entities.User", b =>
@@ -819,14 +817,10 @@ namespace ProjectAPI.Infrastructure.Migrations
             modelBuilder.Entity("ProjectAPI.Domain.Appointments.Entities.Appointment", b =>
                 {
                     b.HasOne("ProjectAPI.Domain.Users.Entities.Agent", "Agent")
-                        .WithMany()
+                        .WithMany("Appointments")
                         .HasForeignKey("AgentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("ProjectAPI.Domain.Users.Entities.Agent", null)
-                        .WithMany("Appointments")
-                        .HasForeignKey("AgentId1");
 
                     b.HasOne("ProjectAPI.Domain.Projects.Entities.Project", "Project")
                         .WithMany("Appointments")
@@ -870,11 +864,6 @@ namespace ProjectAPI.Infrastructure.Migrations
             modelBuilder.Entity("ProjectAPI.Domain.Projects.Entities.Project", b =>
                 {
                     b.HasOne("ProjectAPI.Domain.Users.Entities.Agent", "Agent")
-                        .WithMany()
-                        .HasForeignKey("AgentId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("ProjectAPI.Domain.Users.Entities.Agent", null)
                         .WithMany("Projects")
                         .HasForeignKey("AgentId1");
 
@@ -942,12 +931,6 @@ namespace ProjectAPI.Infrastructure.Migrations
             modelBuilder.Entity("ProjectAPI.Domain.Users.Entities.PerformanceIndicator", b =>
                 {
                     b.HasOne("ProjectAPI.Domain.Users.Entities.Agent", "Agent")
-                        .WithMany()
-                        .HasForeignKey("AgentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ProjectAPI.Domain.Users.Entities.Agent", null)
                         .WithMany("PerformanceIndicators")
                         .HasForeignKey("AgentId1");
 

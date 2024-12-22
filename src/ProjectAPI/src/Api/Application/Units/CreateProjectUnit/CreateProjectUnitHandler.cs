@@ -53,8 +53,7 @@ namespace ProjectAPI.Api.Application.Units.CreateProjectUnit
                 GardenSurface = request.GardenSurface,
                 View = request.View,
                 Orientation = request.Orientation,
-                TotalSurface = request.TotalSurface,
-                Price = request.Price
+                TotalSurface = request.TotalSurface
             };
 
             // Insert the unit

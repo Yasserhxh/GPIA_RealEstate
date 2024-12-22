@@ -3,42 +3,49 @@ using ProjectAPI.Domain.FeedBacks.Entities;
 using ProjectAPI.Domain.FeedBacks.Interfaces;
 using System.Linq.Expressions;
 
-namespace ProjectAPI.Api.Application.Feedbacks.GetFeedBackByUserId;
+namespace ProjectAPI.Api.Application.Feedbacks.GetFeedback;
 
 /// <summary>
-/// Handler for retrieving feedback by User ID.
+/// Handler for processing feedback retrieval queries.
 /// </summary>
-public class GetFeedbackByUserIdHandler : IRequestHandler<GetFeedbackByUserIdQuery, PaginatedResponse<FeedbackDetailsResponse>>
+public class GetFeedbackHandler : IRequestHandler<GetFeedbackQuery, PaginatedResponse<FeedbackDetailsResponse>>
 {
     private readonly IFeedbackRepository _feedbackRepository;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="GetFeedbackByUserIdHandler"/> class.
+    /// Initializes a new instance of the <see cref="GetFeedbackHandler"/> class.
     /// </summary>
-    /// <param name="feedbackRepository">The feedback repository used to retrieve feedback information.</param>
-    public GetFeedbackByUserIdHandler(IFeedbackRepository feedbackRepository)
+    /// <param name="feedbackRepository">The repository used to retrieve feedback data.</param>
+    public GetFeedbackHandler(IFeedbackRepository feedbackRepository)
     {
         _feedbackRepository = feedbackRepository;
     }
 
     /// <summary>
-    /// Handles the request to retrieve feedback for a specific user by User ID.
+    /// Handles the request to retrieve feedback based on the provided query filters.
     /// </summary>
-    /// <param name="request">The request containing the User ID, page number, and page size.</param>
-    /// <param name="cancellationToken">A token that can be used to cancel the operation.</param>
-    /// <returns>A <see cref="PaginatedResponse{T}"/> containing a list of feedback details for the specified user.</returns>
-    public async Task<PaginatedResponse<FeedbackDetailsResponse>> Handle(GetFeedbackByUserIdQuery request, CancellationToken cancellationToken)
+    /// <param name="request">The query containing filters for user ID, project ID, and agent ID.</param>
+    /// <param name="cancellationToken">A cancellation token for the asynchronous operation.</param>
+    /// <returns>A paginated response containing the feedback details that match the filters.</returns>
+    public async Task<PaginatedResponse<FeedbackDetailsResponse>> Handle(GetFeedbackQuery request, CancellationToken cancellationToken)
     {
-        // Define related entities to include in the feedback query
+        // Define the relationships to include in the query
         var includes = new Expression<Func<Feedback, object>>[]
         {
             f => f.User,
             f => f.FeedBack_Project
         };
 
-        // Retrieve feedback by user ID
-        var feedback = (await _feedbackRepository.Find(f => f.UserId == request.UserId.ToString(), includes)).ToList();
+        // Build a dynamic predicate based on the query filters
+        Expression<Func<Feedback, bool>> predicate = f =>
+            (string.IsNullOrEmpty(request.UserId) || f.UserId == request.UserId) &&
+            (!request.ProjectId.HasValue || f.ProjectId == request.ProjectId) &&
+            (!request.AgentId.HasValue || f.FeedBack_Project.Assignments.Any(a => a.AgentId == request.AgentId.ToString()));
 
+        // Retrieve feedback that matches the filters
+        var feedback = (await _feedbackRepository.Find(predicate, includes)).ToList();
+
+        // Paginate and map feedback to the response model
         var totalItems = feedback.Count;
         var paginatedData = feedback
             .Skip((request.PageNumber - 1) * request.PageSize)
@@ -67,7 +74,6 @@ public class GetFeedbackByUserIdHandler : IRequestHandler<GetFeedbackByUserIdQue
                 CreatedAt = p.CreatedAt
             });
 
-        // Return paginated feedback response
         return new PaginatedResponse<FeedbackDetailsResponse>(paginatedData, request.PageNumber, request.PageSize, totalItems);
     }
 }

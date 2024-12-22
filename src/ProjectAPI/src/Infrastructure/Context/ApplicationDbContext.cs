@@ -5,6 +5,7 @@ using ProjectAPI.Domain.Projects.Entities;
 using ProjectAPI.Domain.Users.Entities;
 using ProjectAPI.Infrastructure.Configurations;
 using RealEstate.Infrastructure.Configurations;
+using System.Reflection.Emit;
 
 namespace ProjectAPI.Infrastructure.Context;
 
@@ -26,6 +27,8 @@ public class ApplicationDbContext : IdentityDbContext<User>
         base.OnModelCreating(builder);
 
         builder.ApplyConfiguration(new ProjectConfiguration());
+        builder.ApplyConfiguration(new AppointmentConfiguration());
+        builder.ApplyConfiguration(new PerformanceIndicatorConfiguration());
         builder.ApplyConfiguration(new UnitConfiguration());
         builder.ApplyConfiguration(new FeedbackConfiguration()); 
         builder.ApplyConfiguration(new AppointmentConfiguration());

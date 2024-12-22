@@ -25,32 +25,42 @@ namespace ProjectAPI.Infrastructure.Configurations
                 .IsRequired()
                 .HasMaxLength(150);
 
-            // Configures the Location property to be required.
+            // Configures the Location property to be optional.
             builder.Property(p => p.Location)
-                .IsRequired();
+                .HasMaxLength(250);
 
-            // Configures the Type property to be required.
+            // Configures the Type property to be optional.
             builder.Property(p => p.Type)
-                .IsRequired()
-                .HasConversion<string>()
                 .HasMaxLength(50);
+
+            // Configures the ResidencyType property.
+            builder.Property(p => p.ResidencyType)
+                .HasMaxLength(100);
 
             // Configures the MinPrice property to be required.
             builder.Property(p => p.MinPrice)
-                .IsRequired();
+                   .HasColumnType("decimal(18,2)")
+                   .IsRequired();
+
 
             // Configures the MaxPrice property to be required.
+
             builder.Property(p => p.MaxPrice)
+                .HasColumnType("decimal(18,2)")
                 .IsRequired();
+
 
             // Configures the Status property to be required.
             builder.Property(p => p.Status)
                 .IsRequired()
-                .HasConversion<string>();
+                .HasMaxLength(50);
 
-            // Configures the Images property to be required.
-            builder.Property(p => p.Images)
-                .IsRequired();
+            // Configures the Images property to be optional.
+            builder.Property(p => p.Images);
+
+            // Configures the Module3DLink property.
+            builder.Property(p => p.Module3DLink)
+                .HasMaxLength(250);
 
             // Configures the Description property.
             builder.Property(p => p.Description)
@@ -64,28 +74,55 @@ namespace ProjectAPI.Infrastructure.Configurations
             builder.Property(p => p.Longitude)
                 .IsRequired();
 
-            // Configures the MinSellableSurfaceRange property to be required.
+            // Configures the NumberOfUnits property.
+            builder.Property(p => p.NumberOfUnits)
+                .IsRequired();
+
+            // Configures the NumberOfSoldUnites property.
+            builder.Property(p => p.NumberOfSoldUnites)
+                .IsRequired();
+
+            // Configures the NumberOfAvailableUnites property.
+            builder.Property(p => p.NumberOfAvailableUnites)
+                .IsRequired();
+
+            // Configures the SellsPercentage property.
+            builder.Property(p => p.SellsPercentage)
+                .IsRequired();
+
+            // Configures the MinSellableSurfaceRange property.
             builder.Property(p => p.MinSellableSurfaceRange)
                 .IsRequired();
 
-            // Configures the MaxSellableSurfaceRange property to be required.
+            // Configures the MaxSellableSurfaceRange property.
             builder.Property(p => p.MaxSellableSurfaceRange)
                 .IsRequired();
 
             // Configures the relationships between Project and Assignments.
             builder.HasMany(p => p.Assignments)
                 .WithOne(a => a.Project)
-                .HasForeignKey(a => a.ProjectId);
+                .HasForeignKey(a => a.ProjectId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             // Configures the relationships between Project and Appointments.
             builder.HasMany(p => p.Appointments)
                 .WithOne(a => a.Project)
-                .HasForeignKey(a => a.ProjectId);
+                .HasForeignKey(a => a.ProjectId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             // Configures the relationships between Project and Units.
             builder.HasMany(p => p.Units)
                 .WithOne(u => u.Project)
-                .HasForeignKey(u => u.ProjectId);
+                .HasForeignKey(u => u.ProjectId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne(p => p.Agent)
+                .WithMany() // No navigation property on AspNetUsers for Projects
+                .HasForeignKey(p => p.AgentId)
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
         }
     }
 }

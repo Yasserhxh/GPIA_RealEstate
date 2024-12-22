@@ -5,6 +5,8 @@ using ProjectAPI.Api.Application.Projects.GetAllProjects;
 using ProjectAPI.Api.Application.Projects.GetProjectById;
 using ProjectAPI.Api.Application.Projects.UpdateProject;
 using ProjectAPI.Api.Application.Units.CreateProjectUnit;
+using ProjectAPI.Api.Application.Units.GetAllUnits;
+using ProjectAPI.Api.Application.Units.GetUnitsByProjectId;
 using ProjectAPI.Api.Extensions;
 
 namespace ProjectAPI.Api.Controllers;
@@ -152,6 +154,30 @@ public class ProjectController : ControllerBase
     {
         command.ProjectId = projectId;
         var response = await _mediator.Send(command);
+        return Ok(response);
+    }
+
+    /// <summary>
+    /// Gets units by project ID with pagination.
+    /// </summary>
+    /// <param name="query">Query parameters including project ID, page number, and page size.</param>
+    /// <returns>A paginated list of units associated with the specified project.</returns>
+    [HttpGet("by-project")]
+    public async Task<IActionResult> GetUnitsByProjectId([FromQuery] GetUnitsByProjectIdQuery query)
+    {
+        var response = await _mediator.Send(query);
+        return Ok(response);
+    }
+
+    /// <summary>
+    /// Gets all units with optional filters.
+    /// </summary>
+    /// <param name="queryParams">Query parameters to filter units.</param>
+    /// <returns>A filtered and paginated list of units.</returns>
+    [HttpGet("all")]
+    public async Task<IActionResult> GetAllUnits([FromQuery] GetAllUnitsQuery queryParams)
+    {
+        var response = await _mediator.Send(queryParams);
         return Ok(response);
     }
 }

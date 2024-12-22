@@ -42,10 +42,10 @@ public class AppointmentConfiguration : IEntityTypeConfiguration<Appointment>
             .HasForeignKey(ap => ap.ProjectId);
 
         // Configures the relationship between Appointment and Agent.
-        builder.HasOne(ap => ap.Agent)
-            .WithMany(a => a.Appointments)
-            .HasForeignKey(ap => ap.AgentId)       
-            .IsRequired(true)
+        builder.HasOne(a => a.Agent)
+            .WithMany() // No navigation property on AspNetUsers for Appointments
+            .HasForeignKey(a => a.AgentId)
             .OnDelete(DeleteBehavior.Cascade);
+
     }
 }

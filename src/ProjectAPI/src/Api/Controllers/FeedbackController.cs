@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using ProjectAPI.Api.Application.Feedbacks.GetFeedback;
 using ProjectAPI.Api.Application.Feedbacks.GetFeedbackById;
-using ProjectAPI.Api.Application.Feedbacks.GetFeedbackByProjectId;
-using ProjectAPI.Api.Application.Feedbacks.GetFeedBackByUserId;
 using ProjectAPI.Api.Application.Feedbacks.SubmitFeedback;
 using ProjectAPI.Api.Extensions;
 using System.Security.Claims;
@@ -63,32 +62,35 @@ public class FeedbackController : ControllerBase
         var feedback = await _mediator.Send(query);
         return Ok(feedback);
     }
-
     /// <summary>
-    /// Gets feedback by the project ID.
+    /// Gets feedback based on optional filters: UserId, ProjectId, or AgentId.
     /// </summary>
-    /// <param name="projectId">The ID of the project for which feedback is to be retrieved.</param>
-    /// <returns>A response containing a list of feedbacks for the given project.</returns>
-    [HttpGet("by-project/{projectId}")]
+    /// <param name="userId">The ID of the user for which feedback is to be retrieved (optional).</param>
+    /// <param name="projectId">The ID of the project for which feedback is to be retrieved (optional).</param>
+    /// <param name="agentId">The ID of the agent for which feedback is to be retrieved (optional).</param>
+    /// <param name="pageNumber">The current page number for pagination (default is 1).</param>
+    /// <param name="pageSize">The number of items per page for pagination (default is 10).</param>
+    /// <returns>A response containing a paginated list of feedback matching the filters.</returns>
+    [HttpGet("feedbacks")]
     [Authorize(Roles = "Acheteur,Admin,Agent")]
-    public async Task<IActionResult> GetFeedbackByProjectId(Guid projectId)
+    public async Task<IActionResult> GetFeedbacks(
+        [FromQuery] string? userId,
+        [FromQuery] Guid? projectId,
+        [FromQuery] Guid? agentId,
+        [FromQuery] int pageNumber = 1,
+        [FromQuery] int pageSize = 10)
     {
-        var query = new GetFeedbackByProjectIdQuery { ProjectId = projectId };
+        var query = new GetFeedbackQuery
+        {
+            UserId = userId,
+            ProjectId = projectId,
+            AgentId = agentId,
+            PageNumber = pageNumber,
+            PageSize = pageSize
+        };
+
         var feedbackList = await _mediator.Send(query);
         return Ok(feedbackList);
     }
 
-    /// <summary>
-    /// Gets feedback by the user ID.
-    /// </summary>
-    /// <param name="userId">The ID of the user for which feedback is to be retrieved.</param>
-    /// <returns>A response containing a list of feedbacks submitted by the given user.</returns>
-    [HttpGet("by-user/{userId}")]
-    [Authorize(Roles = "Acheteur,Admin,Agent")]
-    public async Task<IActionResult> GetFeedbackByUserId(string userId)
-    {
-        var query = new GetFeedbackByUserIdQuery { UserId = Guid.Parse(userId) };
-        var feedbackList = await _mediator.Send(query);
-        return Ok(feedbackList);
-    }
 }

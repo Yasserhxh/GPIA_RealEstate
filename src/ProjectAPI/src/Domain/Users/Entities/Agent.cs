@@ -27,4 +27,8 @@ public class Agent : User
     /// Gets or sets the collection of appointments associated with the agent.
     /// </summary>
     public ICollection<Appointment> Appointments { get; set; }
+    public ICollection<PerformanceIndicator> PerformanceIndicators { get; set; }
+    public ICollection<Project> Projects { get; set; }
+
+
 }

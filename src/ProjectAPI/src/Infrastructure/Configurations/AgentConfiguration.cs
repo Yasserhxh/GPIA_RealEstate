@@ -4,38 +4,26 @@ using ProjectAPI.Domain.Users.Entities;
 
 namespace ProjectAPI.Infrastructure.Configurations;
 
-/// <summary>
-/// Configuration class for the <see cref="Agent"/> entity.
-/// </summary>
 public class AgentConfiguration : IEntityTypeConfiguration<Agent>
 {
-    /// <summary>
-    /// Configures the properties and relationships of the <see cref="Agent"/> entity.
-    /// </summary>
-    /// <param name="builder">The builder to be used to configure the entity.</param>
     public void Configure(EntityTypeBuilder<Agent> builder)
     {
-        /*builder.ToTable("Agents");
-
-        // Defines the primary key for Agent.
+      /*  builder.ToTable("Agents");
         builder.HasKey(a => a.Id);
 
-        // Configures the About property with a maximum length of 500 characters.
-        builder.Property(a => a.About)
-            .HasMaxLength(500);
+        builder.Property(a => a.About).HasMaxLength(500);
+        builder.Property(a => a.Rating).HasDefaultValue(0);
 
-        // Configures the Rating property with a default value of 0.
-        builder.Property(a => a.Rating)
-            .HasDefaultValue(0);
+        builder.HasMany(a => a.Projects)
+            .WithOne(p => p.Agent)
+            .HasForeignKey(p => p.AgentId);
 
-        // Configures the relationship between Agent and Assignments.
-        builder.HasMany(a => a.Assignments)
-            .WithOne(a => a.Agent)
-            .HasForeignKey(a => a.AgentId);
-
-        // Configures the relationship between Agent and Appointments.
         builder.HasMany(a => a.Appointments)
             .WithOne(ap => ap.Agent)
-            .HasForeignKey(ap => ap.AgentId);*/
+            .HasForeignKey(ap => ap.AgentId);
+
+        builder.HasMany(a => a.PerformanceIndicators)
+            .WithOne(pi => pi.Agent)
+            .HasForeignKey(pi => pi.AgentId);*/
     }
 }
