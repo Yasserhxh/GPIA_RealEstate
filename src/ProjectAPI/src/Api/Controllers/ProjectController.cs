@@ -14,7 +14,7 @@ namespace ProjectAPI.Api.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/[controller]")]
-[Authorize(AuthenticationSchemes = "Bearer")]
+//[Authorize(AuthenticationSchemes = "Bearer")]
 public class ProjectController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -41,7 +41,7 @@ public class ProjectController : ControllerBase
     public async Task<IActionResult> CreateProject([FromBody] CreateProjectCommand command)
     {
 
-        var rolesClaim = User.FindFirst("Roles")?.Value;
+        /*var rolesClaim = User.FindFirst("Roles")?.Value;
         if (rolesClaim != null)
         {
             var roles = rolesClaim.Split(',').Select(r => r.Trim());
@@ -53,7 +53,7 @@ public class ProjectController : ControllerBase
         else
         {
             return Forbid();
-        }
+        }*/
 
         var projectId = await _mediator.Send(command);
         var response = new CreateProjectResponse
@@ -109,7 +109,7 @@ public class ProjectController : ControllerBase
     [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [CustomAuthorize("Admin, Agent")]
+    //[CustomAuthorize("Admin, Agent")]
     public async Task<IActionResult> UpdateProject(Guid id, [FromBody] UpdateProjectCommand command)
     {
         if (id != command.Id)
@@ -130,7 +130,7 @@ public class ProjectController : ControllerBase
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [CustomAuthorize("Admin")]
+    //[CustomAuthorize("Admin")]
     public async Task<IActionResult> DeleteProject(Guid id)
     {
         var command = new DeleteProjectCommand(id);
@@ -147,7 +147,7 @@ public class ProjectController : ControllerBase
     [HttpPost("{projectId}/units")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [CustomAuthorize("Agent")]
+    //[CustomAuthorize("Agent")]
     public async Task<IActionResult> AddUnitsToProject(Guid projectId, [FromBody] CreateProjectUnitCommand command)
     {
         command.ProjectId = projectId;
