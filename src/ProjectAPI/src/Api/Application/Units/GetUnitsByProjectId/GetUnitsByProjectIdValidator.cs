@@ -7,7 +7,7 @@ public class GetUnitsByProjectIdValidator : AbstractValidator<GetUnitsByProjectI
 {
     public GetUnitsByProjectIdValidator()
     {
-        RuleFor(q => q.ProjectId)
+        RuleFor(q => q.ImmeubleId)
             .NotEmpty().WithMessage("Project ID is required.");
 
         RuleFor(q => q.PageNumber)

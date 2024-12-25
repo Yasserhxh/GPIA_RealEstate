@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ProjectAPI.Domain.Appointments.Entities;
+using ProjectAPI.Domain.Immeubles.Entities;
 using ProjectAPI.Domain.Projects.Entities;
 using ProjectAPI.Domain.Users.Entities;
 using ProjectAPI.Infrastructure.Configurations;
-using RealEstate.Infrastructure.Configurations;
-using System.Reflection.Emit;
 
 namespace ProjectAPI.Infrastructure.Context;
 
@@ -14,9 +13,10 @@ namespace ProjectAPI.Infrastructure.Context;
 /// </summary>
 public class ApplicationDbContext : IdentityDbContext<User>
 {
+    public DbSet<Immeuble> Immeubles { get; set; }
     public DbSet<Project> Projects { get; set; }
     public DbSet<Unit> Units { get; set; }
-    public DbSet<ProjectAssignment> Assignments { get; set; }
+    public DbSet<ImmeubleAssignment> Assignments { get; set; }
     public DbSet<Agent> Agents { get; set; }
     public DbSet<Appointment> Appointments { get; set; }
     public DbSet<AppointmentReview> AppointmentReviews { get; set; }
@@ -25,8 +25,9 @@ public class ApplicationDbContext : IdentityDbContext<User>
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-
+        
         builder.ApplyConfiguration(new ProjectConfiguration());
+        builder.ApplyConfiguration(new ImmeubleConfiguration());
         builder.ApplyConfiguration(new AppointmentConfiguration());
         builder.ApplyConfiguration(new PerformanceIndicatorConfiguration());
         builder.ApplyConfiguration(new UnitConfiguration());
@@ -36,6 +37,7 @@ public class ApplicationDbContext : IdentityDbContext<User>
         builder.ApplyConfiguration(new IncidentConfiguration());
         builder.ApplyConfiguration(new NotaryAppointmentConfiguration());
         builder.ApplyConfiguration(new PropertyDeliveryConfiguration());
+        builder.ApplyConfiguration(new AssignmentConfiguration());
     }
     /// <summary>
     /// Constructor for ApplicationDbContext.

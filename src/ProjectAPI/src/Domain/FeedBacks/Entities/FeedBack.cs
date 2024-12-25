@@ -1,4 +1,4 @@
-﻿using ProjectAPI.Domain.Projects.Entities;
+﻿using ProjectAPI.Domain.Immeubles.Entities;
 using ProjectAPI.Domain.Users.Entities;
 
 namespace ProjectAPI.Domain.FeedBacks.Entities;
@@ -52,5 +52,5 @@ public class Feedback
     /// <summary>
     /// Gets or sets the navigation property to the project associated with the feedback.
     /// </summary>
-    public Project FeedBack_Project { get; set; }
+    public Immeuble FeedBack_Project { get; set; }
 }

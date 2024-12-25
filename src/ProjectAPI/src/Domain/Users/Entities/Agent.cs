@@ -1,5 +1,5 @@
-﻿using ProjectAPI.Domain.Projects.Entities;
-using ProjectAPI.Domain.Appointments.Entities;
+﻿using ProjectAPI.Domain.Appointments.Entities;
+using ProjectAPI.Domain.Immeubles.Entities;
 
 namespace ProjectAPI.Domain.Users.Entities;
 
@@ -21,14 +21,12 @@ public class Agent : User
     /// <summary>
     /// Gets or sets the collection of project assignments associated with the agent.
     /// </summary>
-    public ICollection<ProjectAssignment> Assignments { get; set; }
 
     /// <summary>
     /// Gets or sets the collection of appointments associated with the agent.
     /// </summary>
     public ICollection<Appointment> Appointments { get; set; }
     public ICollection<PerformanceIndicator> PerformanceIndicators { get; set; }
-    public ICollection<Project> Projects { get; set; }
 
 
 }

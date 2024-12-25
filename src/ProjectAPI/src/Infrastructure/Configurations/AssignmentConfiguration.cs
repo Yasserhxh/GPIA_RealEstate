@@ -1,19 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using ProjectAPI.Domain.Projects.Entities;
+using ProjectAPI.Domain.Immeubles.Entities;
 
 namespace ProjectAPI.Infrastructure.Configurations;
 
 /// <summary>
-/// Configuration class for the <see cref="ProjectAssignment"/> entity.
+/// Configuration class for the <see cref="ImmeubleAssignment"/> entity.
 /// </summary>
-public class AssignmentConfiguration : IEntityTypeConfiguration<ProjectAssignment>
+public class AssignmentConfiguration : IEntityTypeConfiguration<ImmeubleAssignment>
 {
     /// <summary>
-    /// Configures the properties and relationships of the <see cref="ProjectAssignment"/> entity.
+    /// Configures the properties and relationships of the <see cref="ImmeubleAssignment"/> entity.
     /// </summary>
     /// <param name="builder">The builder to be used to configure the entity.</param>
-    public void Configure(EntityTypeBuilder<ProjectAssignment> builder)
+    public void Configure(EntityTypeBuilder<ImmeubleAssignment> builder)
     {
         builder.ToTable("Assignments");
 
@@ -29,13 +29,13 @@ public class AssignmentConfiguration : IEntityTypeConfiguration<ProjectAssignmen
             .IsRequired();
 
         // Configures the relationship between ProjectAssignment and Project.
-        builder.HasOne(a => a.Project)
+        builder.HasOne(a => a.Immeuble)
             .WithMany(p => p.Assignments)
             .HasForeignKey(a => a.ProjectId);
 
         // Configures the relationship between ProjectAssignment and Agent.
         builder.HasOne(a => a.Agent)
-            .WithMany(ag => ag.Assignments)
+            .WithMany()
             .HasForeignKey(a => a.AgentId);
     }
 }

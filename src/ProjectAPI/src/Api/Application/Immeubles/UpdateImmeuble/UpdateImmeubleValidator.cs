@@ -1,14 +1,14 @@
-﻿namespace ProjectAPI.Api.Application.Projects.UpdateProject
+﻿namespace ProjectAPI.Api.Application.Immeubles.UpdateImmeuble
 {
     /// <summary>
-    /// Validator for the <see cref="UpdateProjectCommand"/> class.
+    /// Validator for the <see cref="UpdateImmeubleCommand"/> class.
     /// </summary>
-    public class UpdateProjectValidator : AbstractValidator<UpdateProjectCommand>
+    public class UpdateImmeubleValidator : AbstractValidator<UpdateImmeubleCommand>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateProjectValidator"/> class.
+        /// Initializes a new instance of the <see cref="UpdateImmeubleValidator"/> class.
         /// </summary>
-        public UpdateProjectValidator()
+        public UpdateImmeubleValidator()
         {
             RuleFor(command => command.Name)
                 .NotEmpty().WithMessage("Project name is required.")

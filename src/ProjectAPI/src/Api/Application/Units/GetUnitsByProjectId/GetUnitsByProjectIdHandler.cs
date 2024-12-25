@@ -1,5 +1,5 @@
 ﻿using ProjectAPI.Api.Application.Common.Models;
-using ProjectAPI.Domain.Projects.Interfaces;
+using ProjectAPI.Domain.Immeubles.Interfaces;
 
 namespace ProjectAPI.Api.Application.Units.GetUnitsByProjectId;
 
@@ -28,7 +28,7 @@ public class GetUnitsByProjectIdHandler : IRequestHandler<GetUnitsByProjectIdQue
     public async Task<PaginatedResponse<UnitResponse>> Handle(GetUnitsByProjectIdQuery request, CancellationToken cancellationToken)
     {
         // Retrieve filtered units based on the project ID
-        var units = (await _unitRepository.Find(u => u.ProjectId == request.ProjectId))
+        var units = (await _unitRepository.Find(u => u.ProjectId == request.ImmeubleId))
                     .Skip((request.PageNumber - 1) * request.PageSize)
                     .Take(request.PageSize)
                     .Select(u => new UnitResponse

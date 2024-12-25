@@ -1,7 +1,7 @@
 ﻿using Als.Foundation.Data.Abstractions.EntityFramework;
-using ProjectAPI.Domain.Projects.Entities;
+using ProjectAPI.Domain.Immeubles.Entities;
 
-namespace ProjectAPI.Domain.Projects.Interfaces;
+namespace ProjectAPI.Domain.Immeubles.Interfaces;
 /// <summary>
 /// Repository interface for managing <see cref="Unit"/> entities.
 /// </summary>

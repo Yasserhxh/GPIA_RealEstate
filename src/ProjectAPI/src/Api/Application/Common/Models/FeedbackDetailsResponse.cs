@@ -7,7 +7,7 @@ public class FeedbackDetailsResponse
 {
     public Guid FeedbackId { get; set; }
     public UserDto User { get; set; }
-    public ProjectResponse? Project { get; set; }
+    public ImmeubleResponse? Project { get; set; }
     public int Rating { get; set; }
     public string Comments { get; set; }
     public List<string> Attachments { get; set; }

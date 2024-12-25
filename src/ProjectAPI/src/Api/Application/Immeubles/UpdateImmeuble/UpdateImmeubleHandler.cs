@@ -1,21 +1,21 @@
 ﻿using ProjectAPI.Api.Application.Common.Exceptions;
 using ProjectAPI.Api.Application.Common.Models;
-using ProjectAPI.Domain.Projects.Interfaces;
+using ProjectAPI.Domain.Immeubles.Interfaces;
 
-namespace ProjectAPI.Api.Application.Projects.UpdateProject
+namespace ProjectAPI.Api.Application.Immeubles.UpdateImmeuble
 {
     /// <summary>
-    /// Handler for the <see cref="UpdateProjectCommand"/>.
+    /// Handler for the <see cref="UpdateImmeubleCommand"/>.
     /// </summary>
-    public class UpdateProjectHandler : IRequestHandler<UpdateProjectCommand, ProjectResponse>
+    public class UpdateImmeubleHandler : IRequestHandler<UpdateImmeubleCommand, ImmeubleResponse>
     {
-        private readonly IProjectRepository _repository;
+        private readonly IImmeubleRepository _repository;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateProjectHandler"/> class.
+        /// Initializes a new instance of the <see cref="UpdateImmeubleHandler"/> class.
         /// </summary>
         /// <param name="repository">The project repository.</param>
-        public UpdateProjectHandler(IProjectRepository repository)
+        public UpdateImmeubleHandler(IImmeubleRepository repository)
         {
             _repository = repository;
         }
@@ -26,7 +26,7 @@ namespace ProjectAPI.Api.Application.Projects.UpdateProject
         /// <param name="request">The request containing project update details.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The response containing the updated project details.</returns>
-        public async Task<ProjectResponse> Handle(UpdateProjectCommand request, CancellationToken cancellationToken)
+        public async Task<ImmeubleResponse> Handle(UpdateImmeubleCommand request, CancellationToken cancellationToken)
         {
             var project = await _repository.GetByIDAsync(request.Id) ?? throw new NotFoundException($"Project with ID {request.Id} not found.");
             project.Name = request.Name;
@@ -45,7 +45,7 @@ namespace ProjectAPI.Api.Application.Projects.UpdateProject
             _repository.Update(project);
             await _repository.SaveAsync();
 
-            return new ProjectResponse
+            return new ImmeubleResponse
             {
                 Id = project.Id,
                 Name = project.Name,
@@ -57,7 +57,7 @@ namespace ProjectAPI.Api.Application.Projects.UpdateProject
                 Images = project.Images,
                 Description = project.Description,
                 Latitude = project.Latitude,
-                Longitude =project.Longitude
+                Longitude = project.Longitude
             };
         }
     }

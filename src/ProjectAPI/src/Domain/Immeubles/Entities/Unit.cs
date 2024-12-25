@@ -1,6 +1,6 @@
 ﻿using ProjectAPI.Domain.Sales.Entities;
 
-namespace ProjectAPI.Domain.Projects.Entities;
+namespace ProjectAPI.Domain.Immeubles.Entities;
 
 /// <summary>
 /// Represents a specific unit within a project.
@@ -100,7 +100,7 @@ public class Unit
     /// <summary>
     /// Navigation property to the related project.
     /// </summary>
-    public Project Project { get; set; }
+    public Immeuble Immeuble { get; set; }
 
     /// <summary>
     /// Navigation property for related property deliveries.

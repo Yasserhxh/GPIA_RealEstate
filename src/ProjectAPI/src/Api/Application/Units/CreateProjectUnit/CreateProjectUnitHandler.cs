@@ -1,5 +1,5 @@
 ﻿using ProjectAPI.Api.Application.Common.Exceptions;
-using ProjectAPI.Domain.Projects.Interfaces;
+using ProjectAPI.Domain.Immeubles.Interfaces;
 
 namespace ProjectAPI.Api.Application.Units.CreateProjectUnit
 {
@@ -9,14 +9,14 @@ namespace ProjectAPI.Api.Application.Units.CreateProjectUnit
     public class CreateProjectUnitHandler : IRequestHandler<CreateProjectUnitCommand, CreateProjectUnitResponse>
     {
         private readonly IUnitRepository _unitRepository;
-        private readonly IProjectRepository _projectRepository;
+        private readonly IImmeubleRepository _projectRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateProjectUnitHandler"/> class.
         /// </summary>
         /// <param name="unitRepository">The repository to access unit data.</param>
         /// <param name="projectRepository">The repository to access project data.</param>
-        public CreateProjectUnitHandler(IUnitRepository unitRepository, IProjectRepository projectRepository)
+        public CreateProjectUnitHandler(IUnitRepository unitRepository, IImmeubleRepository projectRepository)
         {
             _unitRepository = unitRepository;
             _projectRepository = projectRepository;
@@ -39,7 +39,7 @@ namespace ProjectAPI.Api.Application.Units.CreateProjectUnit
             }
 
             // Create a new unit
-            var unit = new Domain.Projects.Entities.Unit
+            var unit = new Domain.Immeubles.Entities.Unit
             {
                 Id = Guid.NewGuid(),
                 ProjectId = request.ProjectId,

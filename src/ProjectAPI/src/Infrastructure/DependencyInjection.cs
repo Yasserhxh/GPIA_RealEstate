@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ProjectAPI.Domain.Appointments.Interfaces;
 using ProjectAPI.Domain.FeedBacks.Interfaces;
+using ProjectAPI.Domain.Immeubles.Interfaces;
 using ProjectAPI.Domain.Projects.Interfaces;
 using ProjectAPI.Domain.Users.Entities;
 using ProjectAPI.Domain.Users.Interfaces;
@@ -62,6 +63,7 @@ public static class DependencyInjection
     }
     private static void ConfigureCustomServices(this IServiceCollection services)
     {
+        services.AddScoped<IImmeubleRepository, ImmeubleRepository>();
         services.AddScoped<IProjectRepository, ProjectRepository>();
         services.AddScoped<IUnitRepository, UnitRepository>();
         services.AddScoped<IFeedbackRepository, FeedbackRepository>();

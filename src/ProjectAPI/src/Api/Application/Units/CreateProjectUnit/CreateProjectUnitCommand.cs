@@ -1,12 +1,12 @@
 ﻿namespace ProjectAPI.Api.Application.Units.CreateProjectUnit;
 
 /// <summary>
-/// Command to create a new project unit.
+/// Command to create a new immeuble unit.
 /// </summary>
 public class CreateProjectUnitCommand : IRequest<CreateProjectUnitResponse>
 {
     /// <summary>
-    /// Gets or sets the project ID to which the unit belongs.
+    /// Gets or sets the immeuble ID to which the unit belongs.
     /// </summary>
     public Guid ProjectId { get; set; }
 

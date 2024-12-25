@@ -2,8 +2,8 @@
 using ProjectAPI.Api.Application.Common.Exceptions;
 using ProjectAPI.Domain.FeedBacks.Entities;
 using ProjectAPI.Domain.FeedBacks.Interfaces;
-using ProjectAPI.Domain.Projects.Entities;
-using ProjectAPI.Domain.Projects.Interfaces;
+using ProjectAPI.Domain.Immeubles.Entities;
+using ProjectAPI.Domain.Immeubles.Interfaces;
 using ProjectAPI.Domain.Users.Entities;
 
 namespace ProjectAPI.Api.Application.Feedbacks.SubmitFeedback;
@@ -14,10 +14,10 @@ namespace ProjectAPI.Api.Application.Feedbacks.SubmitFeedback;
 public class SubmitFeedbackHandler : IRequestHandler<SubmitFeedbackCommand, string>
 {
     private readonly IFeedbackRepository _feedbackRepository;
-    private readonly IProjectRepository _projectRepository;
+    private readonly IImmeubleRepository _projectRepository;
     private readonly UserManager<User> _userManager;
 
-    public SubmitFeedbackHandler(IFeedbackRepository feedbackRepository, IProjectRepository projectRepository, UserManager<User> userManager)
+    public SubmitFeedbackHandler(IFeedbackRepository feedbackRepository, IImmeubleRepository projectRepository, UserManager<User> userManager)
     {
         _feedbackRepository = feedbackRepository;
         _projectRepository = projectRepository;
@@ -29,7 +29,7 @@ public class SubmitFeedbackHandler : IRequestHandler<SubmitFeedbackCommand, stri
         try
         {
             var user = await _userManager.FindByIdAsync(request.UserId) ?? throw new NotFoundException("User not found.");
-            Project project = null;
+            Immeuble project = null;
             if (request.ProjectId.HasValue)
             {
                 project = await _projectRepository.GetByIDAsync(request.ProjectId.Value);

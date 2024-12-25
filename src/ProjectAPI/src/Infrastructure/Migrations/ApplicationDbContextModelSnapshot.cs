@@ -165,9 +165,6 @@ namespace ProjectAPI.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("AgentId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("AppointmentDate")
                         .HasColumnType("datetime2");
 
@@ -204,8 +201,6 @@ namespace ProjectAPI.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AgentId");
-
-                    b.HasIndex("AgentId1");
 
                     b.HasIndex("ProjectId");
 
@@ -363,7 +358,7 @@ namespace ProjectAPI.Infrastructure.Migrations
                     b.ToTable("Incidents", (string)null);
                 });
 
-            modelBuilder.Entity("ProjectAPI.Domain.Projects.Entities.Project", b =>
+            modelBuilder.Entity("ProjectAPI.Domain.Immeubles.Entities.Immeuble", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -419,6 +414,9 @@ namespace ProjectAPI.Infrastructure.Migrations
                     b.Property<int>("NumberOfUnits")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("ResidencyType")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
@@ -439,10 +437,12 @@ namespace ProjectAPI.Infrastructure.Migrations
 
                     b.HasIndex("AgentId");
 
-                    b.ToTable("Projects", (string)null);
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("Immeubles", (string)null);
                 });
 
-            modelBuilder.Entity("ProjectAPI.Domain.Projects.Entities.ProjectAssignment", b =>
+            modelBuilder.Entity("ProjectAPI.Domain.Immeubles.Entities.ImmeubleAssignment", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -467,10 +467,10 @@ namespace ProjectAPI.Infrastructure.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Assignments");
+                    b.ToTable("Assignments", (string)null);
                 });
 
-            modelBuilder.Entity("ProjectAPI.Domain.Projects.Entities.Unit", b =>
+            modelBuilder.Entity("ProjectAPI.Domain.Immeubles.Entities.Unit", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -540,6 +540,36 @@ namespace ProjectAPI.Infrastructure.Migrations
                     b.HasIndex("ProjectId");
 
                     b.ToTable("Units", (string)null);
+                });
+
+            modelBuilder.Entity("ProjectAPI.Domain.Projects.Entities.Project", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("Images")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Projects", (string)null);
                 });
 
             modelBuilder.Entity("ProjectAPI.Domain.Sales.Entities.PaymentTracking", b =>
@@ -819,16 +849,12 @@ namespace ProjectAPI.Infrastructure.Migrations
             modelBuilder.Entity("ProjectAPI.Domain.Appointments.Entities.Appointment", b =>
                 {
                     b.HasOne("ProjectAPI.Domain.Users.Entities.Agent", "Agent")
-                        .WithMany()
+                        .WithMany("Appointments")
                         .HasForeignKey("AgentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ProjectAPI.Domain.Users.Entities.Agent", null)
-                        .WithMany("Appointments")
-                        .HasForeignKey("AgentId1");
-
-                    b.HasOne("ProjectAPI.Domain.Projects.Entities.Project", "Project")
+                    b.HasOne("ProjectAPI.Domain.Immeubles.Entities.Immeuble", "Immeuble")
                         .WithMany("Appointments")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -836,7 +862,7 @@ namespace ProjectAPI.Infrastructure.Migrations
 
                     b.Navigation("Agent");
 
-                    b.Navigation("Project");
+                    b.Navigation("Immeuble");
                 });
 
             modelBuilder.Entity("ProjectAPI.Domain.Appointments.Entities.AppointmentReview", b =>
@@ -852,7 +878,7 @@ namespace ProjectAPI.Infrastructure.Migrations
 
             modelBuilder.Entity("ProjectAPI.Domain.FeedBacks.Entities.Feedback", b =>
                 {
-                    b.HasOne("ProjectAPI.Domain.Projects.Entities.Project", "FeedBack_Project")
+                    b.HasOne("ProjectAPI.Domain.Immeubles.Entities.Immeuble", "FeedBack_Project")
                         .WithMany()
                         .HasForeignKey("ProjectId");
 
@@ -867,30 +893,15 @@ namespace ProjectAPI.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ProjectAPI.Domain.Projects.Entities.Project", b =>
+            modelBuilder.Entity("ProjectAPI.Domain.Immeubles.Entities.Immeuble", b =>
                 {
                     b.HasOne("ProjectAPI.Domain.Users.Entities.Agent", "Agent")
                         .WithMany()
                         .HasForeignKey("AgentId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("ProjectAPI.Domain.Users.Entities.Agent", null)
-                        .WithMany("Projects")
-                        .HasForeignKey("AgentId1");
-
-                    b.Navigation("Agent");
-                });
-
-            modelBuilder.Entity("ProjectAPI.Domain.Projects.Entities.ProjectAssignment", b =>
-                {
-                    b.HasOne("ProjectAPI.Domain.Users.Entities.Agent", "Agent")
-                        .WithMany("Assignments")
-                        .HasForeignKey("AgentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("ProjectAPI.Domain.Projects.Entities.Project", "Project")
-                        .WithMany("Assignments")
+                        .WithMany("Immeubles")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -900,15 +911,34 @@ namespace ProjectAPI.Infrastructure.Migrations
                     b.Navigation("Project");
                 });
 
-            modelBuilder.Entity("ProjectAPI.Domain.Projects.Entities.Unit", b =>
+            modelBuilder.Entity("ProjectAPI.Domain.Immeubles.Entities.ImmeubleAssignment", b =>
                 {
-                    b.HasOne("ProjectAPI.Domain.Projects.Entities.Project", "Project")
+                    b.HasOne("ProjectAPI.Domain.Users.Entities.Agent", "Agent")
+                        .WithMany()
+                        .HasForeignKey("AgentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProjectAPI.Domain.Immeubles.Entities.Immeuble", "Immeuble")
+                        .WithMany("Assignments")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Agent");
+
+                    b.Navigation("Immeuble");
+                });
+
+            modelBuilder.Entity("ProjectAPI.Domain.Immeubles.Entities.Unit", b =>
+                {
+                    b.HasOne("ProjectAPI.Domain.Immeubles.Entities.Immeuble", "Immeuble")
                         .WithMany("Units")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Project");
+                    b.Navigation("Immeuble");
                 });
 
             modelBuilder.Entity("ProjectAPI.Domain.Sales.Entities.PaymentTracking", b =>
@@ -928,7 +958,7 @@ namespace ProjectAPI.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ProjectAPI.Domain.Projects.Entities.Unit", "Unit")
+                    b.HasOne("ProjectAPI.Domain.Immeubles.Entities.Unit", "Unit")
                         .WithMany("PropertyDeliveries")
                         .HasForeignKey("UnitId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -959,7 +989,7 @@ namespace ProjectAPI.Infrastructure.Migrations
                     b.Navigation("Reviews");
                 });
 
-            modelBuilder.Entity("ProjectAPI.Domain.Projects.Entities.Project", b =>
+            modelBuilder.Entity("ProjectAPI.Domain.Immeubles.Entities.Immeuble", b =>
                 {
                     b.Navigation("Appointments");
 
@@ -968,9 +998,14 @@ namespace ProjectAPI.Infrastructure.Migrations
                     b.Navigation("Units");
                 });
 
-            modelBuilder.Entity("ProjectAPI.Domain.Projects.Entities.Unit", b =>
+            modelBuilder.Entity("ProjectAPI.Domain.Immeubles.Entities.Unit", b =>
                 {
                     b.Navigation("PropertyDeliveries");
+                });
+
+            modelBuilder.Entity("ProjectAPI.Domain.Projects.Entities.Project", b =>
+                {
+                    b.Navigation("Immeubles");
                 });
 
             modelBuilder.Entity("ProjectAPI.Domain.Sales.Entities.Sale", b =>
@@ -984,11 +1019,7 @@ namespace ProjectAPI.Infrastructure.Migrations
                 {
                     b.Navigation("Appointments");
 
-                    b.Navigation("Assignments");
-
                     b.Navigation("PerformanceIndicators");
-
-                    b.Navigation("Projects");
                 });
 #pragma warning restore 612, 618
         }

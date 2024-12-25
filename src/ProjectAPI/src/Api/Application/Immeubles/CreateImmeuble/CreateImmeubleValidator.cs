@@ -1,14 +1,14 @@
-﻿namespace ProjectAPI.Api.Application.Projects.CreateProject
+﻿namespace ProjectAPI.Api.Application.Immeubles.CreateImmeuble
 {
     /// <summary>
-    /// Validator for the <see cref="CreateProjectCommand"/> class.
+    /// Validator for the <see cref="CreateImmeubleCommand"/> class.
     /// </summary>
-    public class CreateProjectValidator : AbstractValidator<CreateProjectCommand>
+    public class CreateImmeubleValidator : AbstractValidator<CreateImmeubleCommand>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CreateProjectValidator"/> class.
+        /// Initializes a new instance of the <see cref="CreateImmeubleValidator"/> class.
         /// </summary>
-        public CreateProjectValidator()
+        public CreateImmeubleValidator()
         {
             // Validation rule for Name
             RuleFor(project => project.Name)
@@ -38,11 +38,10 @@
 
             // Validation rule for Latitude
             RuleFor(project => project.Latitude)
-                .NotEmpty().WithMessage("Latitude is required.");
+                .NotEmpty().WithMessage("Latitude is required.");*/
 
-            // Validation rule for Longitude
-            RuleFor(project => project.Longitude)
-                .NotEmpty().WithMessage("Longitude is required.");*/
+            RuleFor(project => project.ProjectId)
+                .NotEmpty().WithMessage("Project Id must not be empty.");
 
             // Validation rule for NumberOfUnits
             RuleFor(project => project.NumberOfUnits)

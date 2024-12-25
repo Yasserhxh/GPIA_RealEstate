@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using ProjectAPI.Domain.Projects.Entities;
+using ProjectAPI.Domain.Immeubles.Entities;
 
 namespace ProjectAPI.Infrastructure.Configurations
 {
@@ -73,7 +73,7 @@ namespace ProjectAPI.Infrastructure.Configurations
             builder.Property(unit => unit.LatestPrice);
 
             // Configures the relationship between Unit and Project.
-            builder.HasOne(unit => unit.Project)
+            builder.HasOne(unit => unit.Immeuble)
                 .WithMany(project => project.Units)
                 .HasForeignKey(unit => unit.ProjectId)
                 .OnDelete(DeleteBehavior.Cascade);

@@ -1,5 +1,4 @@
-﻿using ProjectAPI.Domain.Projects.Entities;
-
+﻿using ProjectAPI.Domain.Immeubles.Entities;
 
 namespace ProjectAPI.Domain.Sales.Entities;
 

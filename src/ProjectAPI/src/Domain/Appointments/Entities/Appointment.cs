@@ -1,4 +1,4 @@
-﻿using ProjectAPI.Domain.Projects.Entities;
+﻿using ProjectAPI.Domain.Immeubles.Entities;
 using ProjectAPI.Domain.Users.Entities;
 
 namespace ProjectAPI.Domain.Appointments.Entities;
@@ -63,7 +63,7 @@ public class Appointment
     /// <summary>
     /// Gets or sets the project associated with the appointment.
     /// </summary>
-    public Project Project { get; set; }
+    public Immeuble Immeuble { get; set; }
 
     /// <summary>
     /// Gets or sets the agent associated with the appointment.

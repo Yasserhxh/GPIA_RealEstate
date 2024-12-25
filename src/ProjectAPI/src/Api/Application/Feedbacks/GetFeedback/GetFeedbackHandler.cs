@@ -59,7 +59,7 @@ public class GetFeedbackHandler : IRequestHandler<GetFeedbackQuery, PaginatedRes
                     UserName = p.User.UserName!,
                     Email = p.User.Email!
                 },
-                Project = p.FeedBack_Project != null ? new ProjectResponse
+                Project = p.FeedBack_Project != null ? new ImmeubleResponse
                 {
                     Id = p.FeedBack_Project.Id,
                     Name = p.FeedBack_Project.Name,

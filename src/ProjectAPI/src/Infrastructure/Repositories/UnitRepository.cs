@@ -1,6 +1,6 @@
 ﻿using Als.Foundation.Data.EntityFramework;
-using ProjectAPI.Domain.Projects.Entities;
-using ProjectAPI.Domain.Projects.Interfaces;
+using ProjectAPI.Domain.Immeubles.Entities;
+using ProjectAPI.Domain.Immeubles.Interfaces;
 using ProjectAPI.Infrastructure.Context;
 
 namespace ProjectAPI.Infrastructure.Repositories;

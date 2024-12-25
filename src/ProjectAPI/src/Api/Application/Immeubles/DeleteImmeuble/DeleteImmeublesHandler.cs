@@ -1,20 +1,20 @@
 ﻿using ProjectAPI.Api.Application.Common.Exceptions;
-using ProjectAPI.Domain.Projects.Interfaces;
+using ProjectAPI.Domain.Immeubles.Interfaces;
 
-namespace ProjectAPI.Api.Application.Projects.DeleteProject;
+namespace ProjectAPI.Api.Application.Immeubles.DeleteImmeuble;
 
 /// <summary>
-/// Handler for the <see cref="DeleteProjectCommand"/>.
+/// Handler for the <see cref="DeleteImmeublesCommand"/>.
 /// </summary>
-public class DeleteProjectHandler : IRequestHandler<DeleteProjectCommand, Unit>
+public class DeleteImmeublesHandler : IRequestHandler<DeleteImmeublesCommand, Unit>
 {
-    private readonly IProjectRepository _repository;
+    private readonly IImmeubleRepository _repository;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="DeleteProjectHandler"/> class.
+    /// Initializes a new instance of the <see cref="DeleteImmeublesHandler"/> class.
     /// </summary>
     /// <param name="repository">The project repository.</param>
-    public DeleteProjectHandler(IProjectRepository repository)
+    public DeleteImmeublesHandler(IImmeubleRepository repository)
     {
         _repository = repository;
     }
@@ -25,7 +25,7 @@ public class DeleteProjectHandler : IRequestHandler<DeleteProjectCommand, Unit>
     /// <param name="request">The request containing the project ID to delete.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>A unit result indicating the completion of the request.</returns>
-    public async Task<Unit> Handle(DeleteProjectCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(DeleteImmeublesCommand request, CancellationToken cancellationToken)
     {
         var project = await _repository.GetByIDAsync(request.Id) ?? throw new NotFoundException($"Project with ID {request.Id} not found.");
         await _repository.DeleteAsync(project);

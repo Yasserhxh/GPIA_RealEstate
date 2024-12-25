@@ -1,11 +1,11 @@
 ﻿using ProjectAPI.Domain.Users.Entities;
 
-namespace ProjectAPI.Domain.Projects.Entities;
+namespace ProjectAPI.Domain.Immeubles.Entities;
 
 /// <summary>
 /// Represents an assignment of an agent to a project, including assignment details such as project, agent, and assignment status.
 /// </summary>
-public class ProjectAssignment
+public class ImmeubleAssignment
 {
     /// <summary>
     /// Gets or sets the unique identifier for the project assignment.
@@ -35,7 +35,7 @@ public class ProjectAssignment
     /// <summary>
     /// Gets or sets the project associated with the assignment.
     /// </summary>
-    public Project Project { get; set; }
+    public Immeuble Immeuble { get; set; }
 
     /// <summary>
     /// Gets or sets the agent assigned to the project.

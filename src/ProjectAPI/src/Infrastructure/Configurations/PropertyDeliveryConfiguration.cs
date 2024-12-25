@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ProjectAPI.Domain.Sales.Entities;
-namespace RealEstate.Infrastructure.Configurations
+namespace ProjectAPI.Infrastructure.Configurations
 {
     /// <summary>
     /// Configuration class for the <see cref="PropertyDelivery"/> entity.
@@ -46,9 +46,9 @@ namespace RealEstate.Infrastructure.Configurations
                 .WithMany(s => s.PropertyDeliveries)
                 .HasForeignKey(pd => pd.SaleId);
 
-           builder.HasOne(pd => pd.Unit)
-                .WithMany(u => u.PropertyDeliveries)
-                .HasForeignKey(pd => pd.UnitId);
+            builder.HasOne(pd => pd.Unit)
+                 .WithMany(u => u.PropertyDeliveries)
+                 .HasForeignKey(pd => pd.UnitId);
         }
     }
 }

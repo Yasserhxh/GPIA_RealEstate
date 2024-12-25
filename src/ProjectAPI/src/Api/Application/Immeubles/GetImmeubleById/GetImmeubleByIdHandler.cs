@@ -1,21 +1,21 @@
 ﻿using ProjectAPI.Api.Application.Common.Exceptions;
 using ProjectAPI.Api.Application.Common.Models;
-using ProjectAPI.Domain.Projects.Interfaces;
+using ProjectAPI.Domain.Immeubles.Interfaces;
 
-namespace ProjectAPI.Api.Application.Projects.GetProjectById;
+namespace ProjectAPI.Api.Application.Immeubles.GetImmeubleById;
 
 /// <summary>
-/// Handler for the <see cref="GetProjectByIdQuery"/>.
+/// Handler for the <see cref="GetImmeubleByIdQuery"/>.
 /// </summary>
-public class GetProjectByIdHandler : IRequestHandler<GetProjectByIdQuery, ProjectResponse>
+public class GetImmeubleByIdHandler : IRequestHandler<GetImmeubleByIdQuery, ImmeubleResponse>
 {
-    private readonly IProjectRepository _repository;
+    private readonly IImmeubleRepository _repository;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="GetProjectByIdHandler"/> class.
+    /// Initializes a new instance of the <see cref="GetImmeubleByIdHandler"/> class.
     /// </summary>
     /// <param name="repository">The project repository.</param>
-    public GetProjectByIdHandler(IProjectRepository repository)
+    public GetImmeubleByIdHandler(IImmeubleRepository repository)
     {
         _repository = repository;
     }
@@ -26,7 +26,7 @@ public class GetProjectByIdHandler : IRequestHandler<GetProjectByIdQuery, Projec
     /// <param name="request">The request containing the project ID.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The response containing the project details.</returns>
-    public async Task<ProjectResponse> Handle(GetProjectByIdQuery request, CancellationToken cancellationToken)
+    public async Task<ImmeubleResponse> Handle(GetImmeubleByIdQuery request, CancellationToken cancellationToken)
     {
         var project = await _repository.GetByIDAsync(request.Id);
 
@@ -35,7 +35,7 @@ public class GetProjectByIdHandler : IRequestHandler<GetProjectByIdQuery, Projec
             throw new NotFoundException($"Project with ID {request.Id} not found.");
         }
 
-        return new ProjectResponse
+        return new ImmeubleResponse
         {
             Id = project.Id,
             Name = project.Name,

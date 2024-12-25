@@ -1,7 +1,7 @@
 ﻿using ProjectAPI.Api.Application.Common.Models;
-using ProjectAPI.Domain.Projects.Interfaces;
+using ProjectAPI.Domain.Immeubles.Interfaces;
 using System.Linq.Expressions;
-using Unit = ProjectAPI.Domain.Projects.Entities.Unit;
+using Unit = ProjectAPI.Domain.Immeubles.Entities.Unit;
 
 namespace ProjectAPI.Api.Application.Units.GetAllUnits;
 

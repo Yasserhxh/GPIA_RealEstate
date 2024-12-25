@@ -1,4 +1,4 @@
-﻿namespace ProjectAPI.Domain.Reservation.Entities;
+﻿namespace ProjectAPI.Domain.Reservations.Entities;
 
 /// <summary>
 /// Represents a reservation made by a user before purchasing a property.

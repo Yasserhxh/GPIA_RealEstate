@@ -3,7 +3,6 @@ using ProjectAPI.Domain.Appointments.Interfaces;
 using ProjectAPI.Api.Application.Common.Exceptions;
 using Microsoft.AspNetCore.Identity;
 using ProjectAPI.Domain.Users.Entities;
-using ProjectAPI.Api.Application.Common.Models;
 
 namespace ProjectAPI.Api.Application.Appointments.CreateAppointment;
 

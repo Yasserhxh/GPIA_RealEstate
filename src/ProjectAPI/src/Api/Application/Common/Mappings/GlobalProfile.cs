@@ -1,5 +1,5 @@
 ﻿using ProjectAPI.Api.Application.Common.Models;
-using ProjectAPI.Domain.Projects.Entities;
+using ProjectAPI.Domain.Immeubles.Entities;
 namespace ProjectAPI.Api.Application.Common.Mappings
 {
     /// <summary>
@@ -17,7 +17,7 @@ namespace ProjectAPI.Api.Application.Common.Mappings
             //.Map(dest => dest.UserAssignment, src => src.GetUserAssignmentEntity());
 
             // Mapping configuration for Project to ProjectResponse
-            config.NewConfig<Project, ProjectResponse>();
+            config.NewConfig<Immeuble, ImmeubleResponse>();
         }
     }
 }

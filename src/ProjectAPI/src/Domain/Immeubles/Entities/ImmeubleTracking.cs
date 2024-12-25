@@ -1,8 +1,8 @@
-﻿namespace ProjectAPI.Domain.Projects.Entities;
+﻿namespace ProjectAPI.Domain.Immeubles.Entities;
 /// <summary>
 /// Represents the tracking of the project, especially for projects under construction.
 /// </summary>
-public class ProjectTracking
+public class ImmeubleTracking
 {
     public Guid Id { get; set; }
     public Guid ProjectId { get; set; }
