@@ -1,14 +1,12 @@
-﻿using ProjectAPI.Domain.Sales.Entities;
-
-namespace ProjectAPI.Domain.Immeubles.Entities;
+﻿namespace ProjectAPI.Api.Application.Units.UpdateUnit;
 
 /// <summary>
-/// Represents a specific unit within a project.
+/// Command to update a unit.
 /// </summary>
-public class Unit
+public class UpdateUnitCommand : IRequest<UpdateUnitResponse>
 {
     /// <summary>
-    /// Gets or sets the unique identifier for the unit.
+    /// Gets or sets the unique identifier of the unit to be updated.
     /// </summary>
     public Guid Id { get; set; }
 
@@ -78,37 +76,22 @@ public class Unit
     public double? SaleableValue1 { get; set; }
 
     /// <summary>
-    /// Gets or sets the price calculated using SaleableValue.
+    /// Gets or sets the price calculated using the first saleable value formula.
     /// </summary>
     public decimal? PriceSaleableValue { get; set; }
 
     /// <summary>
-    /// Gets or sets the price calculated using SaleableValue1.
+    /// Gets or sets the price calculated using the second saleable value formula.
     /// </summary>
     public decimal? PriceSaleableValue1 { get; set; }
 
     /// <summary>
-    /// Gets or sets the price as of the latest date.
+    /// Gets or sets the latest price of the unit.
     /// </summary>
     public decimal? LatestPrice { get; set; }
 
     /// <summary>
-    /// Gets or sets the identifier of the related project.
+    /// Gets or sets the status of the unit (e.g., "Available", "Sold").
     /// </summary>
-    public Guid ProjectId { get; set; }
-
-    /// <summary>
-    /// Navigation property to the related project.
-    /// </summary>
-    public Immeuble Immeuble { get; set; }
-
-    /// <summary>
-    /// Navigation property for related property deliveries.
-    /// </summary>
-    public ICollection<PropertyDelivery> PropertyDeliveries { get; set; } = new List<PropertyDelivery>();
-
-    /// <summary>
-    /// Gets or sets the status of the unit.
-    /// </summary>
-    public string Status { get; set; } // e.g., "Available", "Sold"
+    public string Status { get; set; }
 }

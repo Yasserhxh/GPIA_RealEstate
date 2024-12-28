@@ -51,7 +51,7 @@ namespace ProjectAPI.Api.Application.Common.Models
         /// <summary>
         /// Gets or sets the current status of the project.
         /// </summary>
-        public ProjectStatus Status { get; set; }
+        public ProjectStatus? Status { get; set; }
 
         /// <summary>
         /// Gets or sets the image URLs for the project, represented as JSON.

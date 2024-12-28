@@ -6,6 +6,7 @@ using ProjectAPI.Api.Application.Immeubles.UpdateImmeuble;
 using ProjectAPI.Api.Application.Units.CreateProjectUnit;
 using ProjectAPI.Api.Application.Units.GetAllUnits;
 using ProjectAPI.Api.Application.Units.GetUnitsByProjectId;
+using ProjectAPI.Api.Application.Units.UpdateUnit;
 
 namespace ProjectAPI.Api.Controllers;
 
@@ -179,4 +180,18 @@ public class ImmeubleController : ControllerBase
         var response = await _mediator.Send(queryParams);
         return Ok(response);
     }
+    [HttpPut("update/{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> UpdateUnit(Guid id, [FromBody] UpdateUnitCommand command)
+    {
+        if (id != command.Id)
+        {
+            return BadRequest("Unit ID mismatch.");
+        }
+
+        var response = await _mediator.Send(command);
+        return response.IsSuccess ? Ok(response.Message) : BadRequest(response.Message);
+    }
+
 }

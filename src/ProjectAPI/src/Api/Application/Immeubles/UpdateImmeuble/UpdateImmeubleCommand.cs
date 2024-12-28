@@ -50,7 +50,7 @@ namespace ProjectAPI.Api.Application.Immeubles.UpdateImmeuble
         /// <summary>
         /// Gets or sets the status of the immeuble.
         /// </summary>
-        public ProjectStatus Status { get; set; }
+        public ProjectStatus? Status { get; set; }
 
         /// <summary>
         /// Gets or sets the images of the immeuble.
