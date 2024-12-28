@@ -14,7 +14,7 @@ public class GetAllProjectsQuery : IRequest<PaginatedResponse<ProjectResponse>>
     /// The location of the project to filter by.
     /// </summary>
     public string? Location { get; set; }
-
+    public string? UserId { get; set; }
 
     /// <summary>
     /// The adress to filter by.

@@ -68,7 +68,7 @@ namespace ProjectAPI.Api.Application.Immeubles.UpdateImmeuble
                 MinPrice = immeuble.MinPrice,
                 MaxPrice = immeuble.MaxPrice,
                 Status = Enum.Parse<ProjectStatus>(immeuble.Status),
-                Images = immeuble.Images,
+                Images = [.. immeuble.Images.Split(',')],
                 Description = immeuble.Description,
                 Latitude = immeuble.Latitude,
                 Longitude = immeuble.Longitude

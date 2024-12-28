@@ -54,7 +54,7 @@ public class GetAllImmeublesHandler : IRequestHandler<GetAllImmeublesQuery, Pagi
                 MinPrice = p.MinPrice,
                 MaxPrice = p.MaxPrice,
                 Status = Enum.Parse<ProjectStatus>(p.Status),
-                Images = p.Images,
+                Images = [.. p.Images.Split(',')],
                 Description = p.Description,
                 Latitude = p.Latitude,
                 Longitude = p.Longitude,

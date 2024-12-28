@@ -56,7 +56,7 @@ namespace ProjectAPI.Api.Application.Common.Models
         /// <summary>
         /// Gets or sets the image URLs for the project, represented as JSON.
         /// </summary>
-        public string Images { get; set; } // JSON for image URLs
+        public List<string> Images { get; set; } = new List<string>();
 
         /// <summary>
         /// Gets or sets the description of the project.

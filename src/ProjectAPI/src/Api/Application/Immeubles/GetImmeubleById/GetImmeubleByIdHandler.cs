@@ -44,7 +44,7 @@ public class GetImmeubleByIdHandler : IRequestHandler<GetImmeubleByIdQuery, Imme
             MinPrice = project.MinPrice,
             MaxPrice = project.MaxPrice,
             Status = Enum.Parse<ProjectStatus>(project.Status),
-            Images = project.Images,
+            Images = [.. project.Images.Split(',')],
             Description = project.Description,
             Latitude = project.Latitude,
             Longitude = project.Longitude
