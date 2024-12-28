@@ -5,6 +5,7 @@ using ProjectAPI.Domain.Immeubles.Entities;
 using ProjectAPI.Domain.Projects.Entities;
 using ProjectAPI.Domain.Users.Entities;
 using ProjectAPI.Infrastructure.Configurations;
+using System.Reflection.Emit;
 
 namespace ProjectAPI.Infrastructure.Context;
 
@@ -20,12 +21,15 @@ public class ApplicationDbContext : IdentityDbContext<User>
     public DbSet<Agent> Agents { get; set; }
     public DbSet<Appointment> Appointments { get; set; }
     public DbSet<AppointmentReview> AppointmentReviews { get; set; }
-
+    public DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        
+        builder.Entity<User>(b =>
+        {
+            b.ToTable("AspNetUsers");
+        });
         builder.ApplyConfiguration(new ProjectConfiguration());
         builder.ApplyConfiguration(new ImmeubleConfiguration());
         builder.ApplyConfiguration(new AppointmentConfiguration());
@@ -38,6 +42,7 @@ public class ApplicationDbContext : IdentityDbContext<User>
         builder.ApplyConfiguration(new NotaryAppointmentConfiguration());
         builder.ApplyConfiguration(new PropertyDeliveryConfiguration());
         builder.ApplyConfiguration(new AssignmentConfiguration());
+        builder.ApplyConfiguration(new LikedProjectsConfiguration());
     }
     /// <summary>
     /// Constructor for ApplicationDbContext.

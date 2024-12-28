@@ -29,13 +29,14 @@ public class GetAllImmeublesHandler : IRequestHandler<GetAllImmeublesQuery, Pagi
     {
         var projects = await _repository.Find(
             p => (string.IsNullOrEmpty(request.Name) || p.Name.Contains(request.Name)) &&
-                 (string.IsNullOrEmpty(request.Location) || p.Location.Contains(request.Location)) &&
+                 (string.IsNullOrEmpty(request.Location) || p.Location!.Contains(request.Location)) &&
+                 (!request.ProjectId.HasValue || p.ProjectId == request.ProjectId) &&
                  (request.MinPrice == null || p.MinPrice >= request.MinPrice) &&
                  (request.MaxPrice == null || p.MaxPrice <= request.MaxPrice) &&
                  (request.Type == null || p.Type == request.Type.ToString()) &&
                  (request.MinSellableSurfaceRange == null || p.MinSellableSurfaceRange >= request.MinSellableSurfaceRange) &&
                  (request.MaxSellableSurfaceRange == null || p.MaxSellableSurfaceRange <= request.MaxSellableSurfaceRange),
-            null
+            null!
         );
 
 

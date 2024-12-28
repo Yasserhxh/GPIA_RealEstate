@@ -17,6 +17,8 @@ namespace ProjectAPI.Api.Application.Immeubles.GetAllImmeubles
         /// </summary>
         public string? Location { get; set; }
 
+        public Guid? ProjectId { get; set; }
+
         /// <summary>
         /// The type of the immeuble to filter by (e.g., residential, commercial).
         /// </summary>

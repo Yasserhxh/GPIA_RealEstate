@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectAPI.Infrastructure.Context;
 
@@ -11,9 +12,11 @@ using ProjectAPI.Infrastructure.Context;
 namespace ProjectAPI.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241228154223_FixedLikedProjectsConfigForUsers")]
+    partial class FixedLikedProjectsConfigForUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -560,13 +563,11 @@ namespace ProjectAPI.Infrastructure.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProjectId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("LikedProjects", (string)null);
                 });
@@ -978,15 +979,7 @@ namespace ProjectAPI.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ProjectAPI.Domain.Users.Entities.User", "User")
-                        .WithMany("LikedProjects")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Project");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ProjectAPI.Domain.Sales.Entities.PaymentTracking", b =>
@@ -1061,11 +1054,6 @@ namespace ProjectAPI.Infrastructure.Migrations
                     b.Navigation("Payments");
 
                     b.Navigation("PropertyDeliveries");
-                });
-
-            modelBuilder.Entity("ProjectAPI.Domain.Users.Entities.User", b =>
-                {
-                    b.Navigation("LikedProjects");
                 });
 
             modelBuilder.Entity("ProjectAPI.Domain.Users.Entities.Agent", b =>

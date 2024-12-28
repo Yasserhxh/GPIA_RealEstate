@@ -73,6 +73,7 @@ public static class DependencyInjection
         services.AddScoped<IAppointmentRepository, AppointmentRepository>();
         services.AddScoped<IAgentRepository, AgentRepository>();
         services.AddSingleton<IEmailService, EmailService>();
+        services.AddScoped<ILikedProjectRepository, LikedProjectRepository>();
 
 
         services.AddScoped<IBlobStorageService, BlobStorageService>(); // Register BlobStorageService as Scoped

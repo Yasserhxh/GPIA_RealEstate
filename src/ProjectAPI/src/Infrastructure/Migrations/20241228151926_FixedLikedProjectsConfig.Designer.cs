@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectAPI.Infrastructure.Context;
 
@@ -11,9 +12,11 @@ using ProjectAPI.Infrastructure.Context;
 namespace ProjectAPI.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241228151926_FixedLikedProjectsConfig")]
+    partial class FixedLikedProjectsConfig
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -979,7 +982,7 @@ namespace ProjectAPI.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("ProjectAPI.Domain.Users.Entities.User", "User")
-                        .WithMany("LikedProjects")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1061,11 +1064,6 @@ namespace ProjectAPI.Infrastructure.Migrations
                     b.Navigation("Payments");
 
                     b.Navigation("PropertyDeliveries");
-                });
-
-            modelBuilder.Entity("ProjectAPI.Domain.Users.Entities.User", b =>
-                {
-                    b.Navigation("LikedProjects");
                 });
 
             modelBuilder.Entity("ProjectAPI.Domain.Users.Entities.Agent", b =>
