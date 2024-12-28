@@ -7,6 +7,8 @@
 	</PropertyGroup>
 
 	<ItemGroup Label="Package References">
+		<PackageReference Include="Als.Foundation.Data.BlobStorage" Version="8.3.5" />
+		<PackageReference Include="Azure.Storage.Blobs" Version="12.23.0" />
 		<PackageReference Include="Dapper" Version="2.1.35" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.8" />
 		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />

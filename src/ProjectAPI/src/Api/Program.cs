@@ -121,8 +121,10 @@ if (app.Environment.IsDevelopment())
 
 app
     .UseRouting()
+    .UseStaticFiles()
     .UseCors("AllowAll") // Apply the CORS policy
     .UseResponseCompression()
+    .UseAuthentication()
     .UseAuthorization();
 
 app.MapHealthChecks("/health");
