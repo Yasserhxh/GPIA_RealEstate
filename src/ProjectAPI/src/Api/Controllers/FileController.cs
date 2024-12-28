@@ -1,6 +1,7 @@
 ﻿using ProjectAPI.Api.Application.Common.BlobOperations.DeleteFromBlob;
 using ProjectAPI.Api.Application.Common.BlobOperations.UpdateBlob;
 using ProjectAPI.Api.Application.Common.BlobOperations.UploadToblob;
+
 namespace ProjectAPI.Api.Controllers;
 
 /// <summary>
@@ -24,8 +25,11 @@ public class FileController : ControllerBase
     /// <summary>
     /// Uploads a list of files to blob storage.
     /// </summary>
-    /// <param name="files">The list of files to upload.</param>
-    /// <returns>Returns the list of file links.</returns>
+    /// <param name="command">The command containing the list of files to upload.</param>
+    /// <returns>
+    /// Returns the list of file links if successful.
+    /// Returns a bad request if no files are uploaded or an error occurs.
+    /// </returns>
     [HttpPost("upload")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -39,11 +43,15 @@ public class FileController : ControllerBase
         var response = await _mediator.Send(command);
         return Ok(response);
     }
+
     /// <summary>
     /// Deletes a file from blob storage.
     /// </summary>
     /// <param name="fileName">The name of the file to delete.</param>
-    /// <returns>Returns a success or failure message.</returns>
+    /// <returns>
+    /// Returns a success message if the file is deleted successfully.
+    /// Returns a bad request if the file does not exist or cannot be deleted.
+    /// </returns>
     [HttpDelete("delete/{fileName}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -57,9 +65,11 @@ public class FileController : ControllerBase
     /// <summary>
     /// Updates a file in blob storage.
     /// </summary>
-    /// <param name="fileName">The name of the file to update.</param>
-    /// <param name="file">The new file to upload.</param>
-    /// <returns>Returns the new file link.</returns>
+    /// <param name="command">The command containing the name of the file to update and the new file data.</param>
+    /// <returns>
+    /// Returns the new file link if the update is successful.
+    /// Returns a bad request if the file does not exist, cannot be updated, or no file is uploaded.
+    /// </returns>
     [HttpPut("update/{fileName}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
