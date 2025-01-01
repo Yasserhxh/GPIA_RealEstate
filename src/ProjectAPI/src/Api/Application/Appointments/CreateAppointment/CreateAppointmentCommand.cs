@@ -9,6 +9,7 @@ public class CreateAppointmentCommand : IRequest<CreateAppointmentResponse>
     /// Gets or sets the unique identifier of the project for the appointment.
     /// </summary>
     public Guid ProjectId { get; set; }
+    public Guid ImmeubleId { get; set; }
 
     /// <summary>
     /// Gets or sets the unique identifier of the agent for the appointment.

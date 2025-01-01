@@ -37,7 +37,8 @@ public class GetAppointmentsHandler : IRequestHandler<GetAppointmentsQuery, Pagi
 
         var includes = new Expression<Func<Appointment, object>>[]
         {
-                a => a.Immeuble//,
+                a => a.Immeuble,
+                a=>a.Project//,
                 //a => a.Agent
         };
 
@@ -61,11 +62,13 @@ public class GetAppointmentsHandler : IRequestHandler<GetAppointmentsQuery, Pagi
             {
                 Id = a.Id,
                 ProjectId = a.ProjectId,
+                ImmeubleId = a.ImmeubleId,
                 AgentId = a.AgentId,
                 //AgentFullName = a.Agent.FirstName + " " + a.Agent.LastName,
-                ProjectName = a.Immeuble.Name,
+                ImmeubleName = a.Immeuble.Name,
+                ProjectName = a.Project.Name,
                 AppointmentDate = a.AppointmentDate,
-                UserId = Guid.Parse(a.UserId),
+                UserId = a.UserId != null ? Guid.Parse(a.UserId) : null,
                 Status = Enum.Parse<AppointmentStatus>(a.Status),
                 Name = a.Name,
                 LastName = a.LastName,

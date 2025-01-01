@@ -1,4 +1,5 @@
-﻿using ProjectAPI.Domain.Immeubles.Entities;
+﻿using ProjectAPI.Domain.Appointments.Entities;
+using ProjectAPI.Domain.Immeubles.Entities;
 
 namespace ProjectAPI.Domain.Projects.Entities;
 
@@ -17,4 +18,5 @@ public class Project
 
     // Navigation property
     public ICollection<Immeuble> Immeubles { get; set; } = new List<Immeuble>();
+    public ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
 }

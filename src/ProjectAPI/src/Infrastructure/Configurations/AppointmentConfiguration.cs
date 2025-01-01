@@ -39,6 +39,10 @@ public class AppointmentConfiguration : IEntityTypeConfiguration<Appointment>
         // Configures the relationship between Appointment and Project.
         builder.HasOne(ap => ap.Immeuble)
             .WithMany(p => p.Appointments)
+            .HasForeignKey(ap => ap.ImmeubleId).OnDelete(DeleteBehavior.NoAction);
+
+        builder.HasOne(ap => ap.Project)
+            .WithMany(p => p.Appointments)
             .HasForeignKey(ap => ap.ProjectId);
 
         // Configures the relationship between Appointment and Agent.

@@ -48,8 +48,9 @@ public class CreateAppointmentHandler : IRequestHandler<CreateAppointmentCommand
         {
             Id = Guid.NewGuid(),
             ProjectId = request.ProjectId,
-            AgentId = request.AgentId.Value.ToString(),
+            AgentId = request.AgentId.HasValue ? request.AgentId.Value.ToString() : null,
             AppointmentDate = request.AppointmentDate,
+            ImmeubleId = request.ImmeubleId,
             UserId = string.IsNullOrEmpty(request.UserId) ? null : request.UserId,
             Name = request.Name,
             Email = request.Email,

@@ -24,12 +24,13 @@ public class AppointmentResponse
     /// <summary>
     /// Gets or sets the unique identifier of the user associated with the appointment.
     /// </summary>
-    public Guid UserId { get; set; }
+    public Guid? UserId { get; set; }
 
     /// <summary>
     /// Gets or sets the unique identifier of the project related to the appointment.
     /// </summary>
-    public Guid ProjectId { get; set; }
+    public Guid? ProjectId { get; set; }
+    public Guid? ImmeubleId { get; set; }
 
     /// <summary>
     /// Gets or sets the date of the appointment.
@@ -49,7 +50,7 @@ public class AppointmentResponse
     /// <summary>
     /// Gets or sets the unique identifier of the agent associated with the appointment.
     /// </summary>
-    public string AgentId { get; set; }
+    public string? AgentId { get; set; }
 
     /// <summary>
     /// Gets or sets the full name of the agent associated with the appointment.
@@ -60,6 +61,8 @@ public class AppointmentResponse
     /// Gets or sets the name of the project related to the appointment.
     /// </summary>
     public string ProjectName { get; set; }
+    public string ImmeubleName { get; set; }
+
 
     /// <summary>
     /// Gets or sets the date and time of the appointment.

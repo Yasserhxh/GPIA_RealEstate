@@ -61,12 +61,13 @@ public class AppointmentsController : ControllerBase
     /// <param name="query">The filters and pagination options for retrieving appointments.</param>
     /// <returns>A paginated response containing a list of appointments.</returns>
     [HttpGet]
-    [Authorize(Roles = "Agent,Acheteur")]
+    [AllowAnonymous]
+    //[Authorize(Roles = "Agent,Acheteur")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetAppointments([FromQuery] GetAppointmentsQuery query)
     {
-        query.AgentId = User.FindFirst("UserId")!.Value;
+        query.AgentId = User != null ? User.FindFirst("UserId")?.Value : null;
         var response = await _mediator.Send(query);
         return Ok(response);
     }

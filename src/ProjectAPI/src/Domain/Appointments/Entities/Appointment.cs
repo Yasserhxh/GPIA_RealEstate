@@ -1,4 +1,5 @@
 ﻿using ProjectAPI.Domain.Immeubles.Entities;
+using ProjectAPI.Domain.Projects.Entities;
 using ProjectAPI.Domain.Users.Entities;
 
 namespace ProjectAPI.Domain.Appointments.Entities;
@@ -18,11 +19,12 @@ public class Appointment
     /// Gets or sets the unique identifier of the related project.
     /// </summary>
     public Guid ProjectId { get; set; }
+    public Guid ImmeubleId { get; set; }
 
     /// <summary>
     /// Gets or sets the unique identifier of the agent managing the appointment.
     /// </summary>
-    public string AgentId { get; set; }
+    public string? AgentId { get; set; }
 
     /// <summary>
     /// Gets or sets the date and time of the appointment.
@@ -64,6 +66,7 @@ public class Appointment
     /// Gets or sets the project associated with the appointment.
     /// </summary>
     public Immeuble Immeuble { get; set; }
+    public Project Project { get; set; }
 
     /// <summary>
     /// Gets or sets the agent associated with the appointment.
