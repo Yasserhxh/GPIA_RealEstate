@@ -15,7 +15,7 @@ public class GetAppointmentsQuery : IRequest<PaginatedResponse<AppointmentRespon
     /// <summary>
     /// Gets or sets the agent ID to filter appointments by agent.
     /// </summary>
-    public string AgentId { get; set; }
+    public string? AgentId { get; set; }
 
     /// <summary>
     /// Gets or sets the date to filter appointments by the appointment date.
@@ -25,32 +25,32 @@ public class GetAppointmentsQuery : IRequest<PaginatedResponse<AppointmentRespon
     /// <summary>
     /// Gets or sets the user ID to filter appointments by user.
     /// </summary>
-    public string UserId { get; set; }
+    public string? UserId { get; set; }
 
     /// <summary>
     /// Gets or sets the status to filter appointments by status.
     /// </summary>
-    public string Status { get; set; }
+    public string? Status { get; set; }
 
     /// <summary>
     /// Gets or sets the first name to filter appointments by user first name.
     /// </summary>
-    public string Name { get; set; }
+    public string? Name { get; set; }
 
     /// <summary>
     /// Gets or sets the last name to filter appointments by user last name.
     /// </summary>
-    public string LastName { get; set; }
+    public string? LastName { get; set; }
 
     /// <summary>
     /// Gets or sets the email to filter appointments by user email.
     /// </summary>
-    public string Email { get; set; }
+    public string? Email { get; set; }
 
     /// <summary>
     /// Gets or sets the phone number to filter appointments by user phone number.
     /// </summary>
-    public string PhoneNumber { get; set; }
+    public string? PhoneNumber { get; set; }
     public int PageNumber { get; set; } = 1;
     public int PageSize { get; set; } = 10;
 }

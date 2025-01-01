@@ -35,8 +35,7 @@ public class GetAllImmeublesHandler : IRequestHandler<GetAllImmeublesQuery, Pagi
                  (request.MaxPrice == null || p.MaxPrice <= request.MaxPrice) &&
                  (request.Type == null || p.Type == request.Type.ToString()) &&
                  (request.MinSellableSurfaceRange == null || p.MinSellableSurfaceRange >= request.MinSellableSurfaceRange) &&
-                 (request.MaxSellableSurfaceRange == null || p.MaxSellableSurfaceRange <= request.MaxSellableSurfaceRange),
-            null!
+                 (request.MaxSellableSurfaceRange == null || p.MaxSellableSurfaceRange <= request.MaxSellableSurfaceRange),p => p.PlanInterieurs
         );
 
 
@@ -64,7 +63,13 @@ public class GetAllImmeublesHandler : IRequestHandler<GetAllImmeublesQuery, Pagi
                 Module3DLink = p.Module3DLink,
                 NumberOfAvailableUnites = p.NumberOfUnits,
                 NumberOfSoldUnites = p.NumberOfSoldUnites,
-                SellsPercentage = p.SellsPercentage
+                SellsPercentage = p.SellsPercentage,
+                PlanInerieurs = p.PlanInterieurs.Select(pi => new PlanInerieurResponse
+                {
+                    Id = pi.Id,
+                    ImmeubleId = pi.ImmeubleId,
+                    PhotoLinks = pi.PhotoLinks
+                }).ToList()
             });
 
         return new PaginatedResponse<ImmeubleResponse>(paginatedData, request.PageNumber, request.PageSize, totalItems);

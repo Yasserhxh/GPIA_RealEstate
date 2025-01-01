@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using ProjectAPI.Api.Application.Appointments.CreateAppointment;
+using ProjectAPI.Api.Application.Appointments.GetAppointments;
+using ProjectAPI.Api.Application.Appointments.UpdateAppointmentStatus;
 
 namespace ProjectAPI.Api.Controllers;
 
@@ -53,33 +55,65 @@ public class AppointmentsController : ControllerBase
         var response = await _mediator.Send(command);
         return Ok(response);
     }
-/*
     /// <summary>
-    /// Gets all appointments for a specific user by their user ID.
+    /// Retrieves a list of appointments with optional filters.
     /// </summary>
-    /// <param name="userId">The user ID to retrieve appointments for.</param>
-    /// <returns>A list of appointments associated with the user.</returns>
-    [HttpGet("user/{userId}")]
-    [Authorize(Roles = "Acheteur,Admin,Agent")]
-    public async Task<IActionResult> GetAppointmentsByUserId(string userId)
+    /// <param name="query">The filters and pagination options for retrieving appointments.</param>
+    /// <returns>A paginated response containing a list of appointments.</returns>
+    [HttpGet]
+    [Authorize(Roles = "Agent,Acheteur")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetAppointments([FromQuery] GetAppointmentsQuery query)
     {
-        var query = new GetAppointmentsByUserIdQuery { UserId = userId };
-        var appointments = await _mediator.Send(query);
-        return Ok(appointments);
+        query.AgentId = User.FindFirst("UserId")!.Value;
+        var response = await _mediator.Send(query);
+        return Ok(response);
     }
 
     /// <summary>
-    /// Gets all appointments for a specific project by project ID.
+    /// Updates the status of an appointment.
     /// </summary>
-    /// <param name="projectId">The project ID to retrieve appointments for.</param>
-    /// <returns>A list of appointments associated with the project.</returns>
-    [HttpGet("project/{projectId}")]
-    [Authorize(Roles = "Acheteur,Admin,Agent")]
-    public async Task<IActionResult> GetAppointmentsByProjectId(Guid projectId)
+    /// <param name="command">The command to update the appointment status.</param>
+    /// <returns>A response indicating the success or failure of the update.</returns>
+    [HttpPatch("{appointmentId}/status")]
+    [Authorize(Roles = "Agent")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> UpdateAppointmentStatus([FromBody] UpdateAppointmentStatusCommand command)
     {
-        var query = new GetAppointmentsByProjectIdQuery { ProjectId = projectId };
-        var appointments = await _mediator.Send(query);
-        return Ok(appointments);
+
+        var response = await _mediator.Send(command);
+        return Ok(response);
     }
-*/
+
+    /*
+        /// <summary>
+        /// Gets all appointments for a specific user by their user ID.
+        /// </summary>
+        /// <param name="userId">The user ID to retrieve appointments for.</param>
+        /// <returns>A list of appointments associated with the user.</returns>
+        [HttpGet("user/{userId}")]
+        [Authorize(Roles = "Acheteur,Admin,Agent")]
+        public async Task<IActionResult> GetAppointmentsByUserId(string userId)
+        {
+            var query = new GetAppointmentsByUserIdQuery { UserId = userId };
+            var appointments = await _mediator.Send(query);
+            return Ok(appointments);
+        }
+
+        /// <summary>
+        /// Gets all appointments for a specific project by project ID.
+        /// </summary>
+        /// <param name="projectId">The project ID to retrieve appointments for.</param>
+        /// <returns>A list of appointments associated with the project.</returns>
+        [HttpGet("project/{projectId}")]
+        [Authorize(Roles = "Acheteur,Admin,Agent")]
+        public async Task<IActionResult> GetAppointmentsByProjectId(Guid projectId)
+        {
+            var query = new GetAppointmentsByProjectIdQuery { ProjectId = projectId };
+            var appointments = await _mediator.Send(query);
+            return Ok(appointments);
+        }
+    */
 }

@@ -33,7 +33,7 @@ public class Appointment
     /// Gets or sets the unique identifier of the user associated with the appointment.
     /// If the user is not authenticated, this field will be null.
     /// </summary>
-    public string UserId { get; set; }
+    public string? UserId { get; set; }
 
     /// <summary>
     /// Gets or sets the overall status of the appointment.

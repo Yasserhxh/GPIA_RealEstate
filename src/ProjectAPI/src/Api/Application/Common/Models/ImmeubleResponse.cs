@@ -107,5 +107,7 @@ namespace ProjectAPI.Api.Application.Common.Models
         [JsonIgnore] 
         public int SellsPercentage { get; set; }
         public string RestPercentage => $"{SellsPercentage} %";
+
+        public ICollection<PlanInerieurResponse>? PlanInerieurs { get;set; }
     }
 }

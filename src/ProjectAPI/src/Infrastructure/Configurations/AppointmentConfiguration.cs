@@ -45,7 +45,9 @@ public class AppointmentConfiguration : IEntityTypeConfiguration<Appointment>
         builder.HasOne(a => a.Agent)
             .WithMany(ag=>ag.Appointments) // No navigation property on AspNetUsers for Appointments
             .HasForeignKey(a => a.AgentId)
+            .HasPrincipalKey(u => u.Id) // Maps to AspNetUsers.Id
             .OnDelete(DeleteBehavior.Cascade);
+
 
     }
 }

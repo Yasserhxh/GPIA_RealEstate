@@ -84,6 +84,7 @@ namespace ProjectAPI.Domain.Immeubles.Entities
         /// Gets or sets the collection of appointments associated with the Immeuble, representing user interactions.
         /// </summary>
         public ICollection<Appointment> Appointments { get; set; }
+        public ICollection<ImmeublePlanInterieur> PlanInterieurs { get; set; }
 
         // Foreign key to Project
         public Guid ProjectId { get; set; }

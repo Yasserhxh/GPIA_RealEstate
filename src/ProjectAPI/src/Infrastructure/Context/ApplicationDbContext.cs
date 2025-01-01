@@ -32,6 +32,7 @@ public class ApplicationDbContext : IdentityDbContext<User>
         });
         builder.ApplyConfiguration(new ProjectConfiguration());
         builder.ApplyConfiguration(new ImmeubleConfiguration());
+        builder.ApplyConfiguration(new ImmeublePlanInterieurConfiguration());
         builder.ApplyConfiguration(new AppointmentConfiguration());
         builder.ApplyConfiguration(new PerformanceIndicatorConfiguration());
         builder.ApplyConfiguration(new UnitConfiguration());

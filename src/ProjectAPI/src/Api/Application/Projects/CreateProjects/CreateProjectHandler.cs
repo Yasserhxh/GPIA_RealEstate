@@ -22,6 +22,8 @@ public class CreateProjectHandler : IRequestHandler<CreateProjectCommand, Create
             Name = request.Name,
             Location = request.Location,
             Address = request.Address,
+            Description = request.Description,
+            Module3DLink = request.Module3DLink,
             Images = request.Images
         };
 

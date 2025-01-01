@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectAPI.Infrastructure.Context;
 
@@ -11,9 +12,11 @@ using ProjectAPI.Infrastructure.Context;
 namespace ProjectAPI.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241229145506_fixAppointmentsConfig")]
+    partial class fixAppointmentsConfig
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -195,6 +198,7 @@ namespace ProjectAPI.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -469,27 +473,6 @@ namespace ProjectAPI.Infrastructure.Migrations
                     b.ToTable("Assignments", (string)null);
                 });
 
-            modelBuilder.Entity("ProjectAPI.Domain.Immeubles.Entities.ImmeublePlanInterieur", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasDefaultValueSql("NEWID()");
-
-                    b.Property<Guid?>("ImmeubleId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("PhotoLinks")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ImmeubleId");
-
-                    b.ToTable("ImmeublePlanInterieurs", (string)null);
-                });
-
             modelBuilder.Entity("ProjectAPI.Domain.Immeubles.Entities.Unit", b =>
                 {
                     b.Property<Guid>("Id")
@@ -602,10 +585,6 @@ namespace ProjectAPI.Infrastructure.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Images")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -614,10 +593,6 @@ namespace ProjectAPI.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
-
-                    b.Property<string>("Module3DLink")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -987,16 +962,6 @@ namespace ProjectAPI.Infrastructure.Migrations
                     b.Navigation("Immeuble");
                 });
 
-            modelBuilder.Entity("ProjectAPI.Domain.Immeubles.Entities.ImmeublePlanInterieur", b =>
-                {
-                    b.HasOne("ProjectAPI.Domain.Immeubles.Entities.Immeuble", "Immeuble")
-                        .WithMany("PlanInterieurs")
-                        .HasForeignKey("ImmeubleId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("Immeuble");
-                });
-
             modelBuilder.Entity("ProjectAPI.Domain.Immeubles.Entities.Unit", b =>
                 {
                     b.HasOne("ProjectAPI.Domain.Immeubles.Entities.Immeuble", "Immeuble")
@@ -1080,8 +1045,6 @@ namespace ProjectAPI.Infrastructure.Migrations
                     b.Navigation("Appointments");
 
                     b.Navigation("Assignments");
-
-                    b.Navigation("PlanInterieurs");
 
                     b.Navigation("Units");
                 });

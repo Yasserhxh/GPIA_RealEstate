@@ -28,26 +28,40 @@ public class GetImmeubleByIdHandler : IRequestHandler<GetImmeubleByIdQuery, Imme
     /// <returns>The response containing the project details.</returns>
     public async Task<ImmeubleResponse> Handle(GetImmeubleByIdQuery request, CancellationToken cancellationToken)
     {
-        var project = await _repository.GetByIDAsync(request.Id);
-
-        if (project == null)
+        var immeubles = await _repository.Find(p=>p.Id==request.Id, includes:p=>p.PlanInterieurs);
+        var immeuble = immeubles.FirstOrDefault();
+        if (immeuble == null)
         {
             throw new NotFoundException($"Project with ID {request.Id} not found.");
         }
 
         return new ImmeubleResponse
         {
-            Id = project.Id,
-            Name = project.Name,
-            Location = project.Location,
-            Type = project.Type,
-            MinPrice = project.MinPrice,
-            MaxPrice = project.MaxPrice,
-            Status = Enum.Parse<ProjectStatus>(project.Status),
-            Images = [.. project.Images.Split(',')],
-            Description = project.Description,
-            Latitude = project.Latitude,
-            Longitude = project.Longitude
+            Id = immeuble.Id,
+            ProjectId = immeuble.ProjectId,
+            Name = immeuble.Name,
+            Location = immeuble.Location,
+            Type = immeuble.Type,
+            MinPrice = immeuble.MinPrice,
+            MaxPrice = immeuble.MaxPrice,
+            Status = Enum.Parse<ProjectStatus>(immeuble.Status),
+            Images = [.. immeuble.Images.Split(',')],
+            Description = immeuble.Description,
+            Latitude = immeuble.Latitude,
+            Longitude = immeuble.Longitude,
+            NumberOfUnits = immeuble.NumberOfUnits,
+            MaxSellableSurfaceRange = immeuble.MaxSellableSurfaceRange,
+            MinSellableSurfaceRange = immeuble.MinSellableSurfaceRange,
+            Module3DLink = immeuble.Module3DLink,
+            NumberOfAvailableUnites = immeuble.NumberOfUnits,
+            NumberOfSoldUnites = immeuble.NumberOfSoldUnites,
+            SellsPercentage = immeuble.SellsPercentage,
+            PlanInerieurs = immeuble.PlanInterieurs.Select(pi => new PlanInerieurResponse
+            {
+                Id = pi.Id,
+                ImmeubleId = pi.ImmeubleId,
+                PhotoLinks = pi.PhotoLinks
+            }).ToList()
         };
     }
 }

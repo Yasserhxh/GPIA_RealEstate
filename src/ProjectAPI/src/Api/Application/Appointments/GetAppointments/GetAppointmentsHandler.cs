@@ -33,7 +33,15 @@ public class GetAppointmentsHandler : IRequestHandler<GetAppointmentsQuery, Pagi
     /// <returns>A task that represents the asynchronous operation, containing a list of <see cref="AppointmentResponse" />.</returns>
     public async Task<PaginatedResponse<AppointmentResponse>> Handle(GetAppointmentsQuery request, CancellationToken cancellationToken)
     {
-        Expression<Func<Appointment, bool>> filter = a =>
+        Expression<Func<Appointment, bool>> filter = null;
+
+        var includes = new Expression<Func<Appointment, object>>[]
+        {
+                a => a.Immeuble//,
+                //a => a.Agent
+        };
+
+        var appointments = await _appointmentRepository.Find(a =>
                   (!request.ProjectId.HasValue || a.ProjectId == request.ProjectId.Value) &&
                   (string.IsNullOrEmpty(request.AgentId) || a.AgentId == request.AgentId) &&
                   (!request.AppointmentDate.HasValue || a.AppointmentDate.Date == request.AppointmentDate.Value.Date) &&
@@ -42,15 +50,7 @@ public class GetAppointmentsHandler : IRequestHandler<GetAppointmentsQuery, Pagi
                   (string.IsNullOrEmpty(request.Name) || a.Name.Contains(request.Name)) &&
                   (string.IsNullOrEmpty(request.LastName) || a.LastName.Contains(request.LastName)) &&
                   (string.IsNullOrEmpty(request.Email) || a.Email.Contains(request.Email)) &&
-                  (string.IsNullOrEmpty(request.PhoneNumber) || a.PhoneNumber.Contains(request.PhoneNumber));
-
-        var includes = new Expression<Func<Appointment, object>>[]
-        {
-                a => a.Immeuble,
-                a => a.Agent
-        };
-
-        var appointments = await _appointmentRepository.Find(filter, includes);
+                  (string.IsNullOrEmpty(request.PhoneNumber) || a.PhoneNumber.Contains(request.PhoneNumber)), includes);
 
        
         var totalItems = appointments.Count();
@@ -62,7 +62,7 @@ public class GetAppointmentsHandler : IRequestHandler<GetAppointmentsQuery, Pagi
                 Id = a.Id,
                 ProjectId = a.ProjectId,
                 AgentId = a.AgentId,
-                AgentFullName = a.Agent.FirstName + " " + a.Agent.LastName,
+                //AgentFullName = a.Agent.FirstName + " " + a.Agent.LastName,
                 ProjectName = a.Immeuble.Name,
                 AppointmentDate = a.AppointmentDate,
                 UserId = Guid.Parse(a.UserId),

@@ -40,6 +40,8 @@ public class GetAllProjectsHandler : IRequestHandler<GetAllProjectsQuery, Pagina
                 Location = project.Location,
                 Address = project.Address,
                 Images = project.Images,
+                Description = project.Description,
+                Module3DLink = project.Module3DLink,
                 //IsLiked = likedProjectIds.Contains(project.Id)
 
              }).ToList();
