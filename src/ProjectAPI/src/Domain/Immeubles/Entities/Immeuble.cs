@@ -85,6 +85,11 @@ namespace ProjectAPI.Domain.Immeubles.Entities
         /// </summary>
         public ICollection<Appointment> Appointments { get; set; }
         public ICollection<ImmeublePlanInterieur> PlanInterieurs { get; set; }
+        /// <summary>
+        /// Gets or sets the collection of features associated with the immeuble.
+        /// </summary>
+        public ICollection<ImmeubleFeature> Features { get; set; } = new List<ImmeubleFeature>();
+
 
         // Foreign key to Project
         public Guid ProjectId { get; set; }

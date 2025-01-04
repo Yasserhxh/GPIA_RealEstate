@@ -1,7 +1,9 @@
-﻿using ProjectAPI.Api.Application.Immeubles.CreateImmeuble;
+﻿using ProjectAPI.Api.Application.Immeubles.CreateIImmeubleFeature;
+using ProjectAPI.Api.Application.Immeubles.CreateImmeuble;
 using ProjectAPI.Api.Application.Immeubles.DeleteImmeuble;
 using ProjectAPI.Api.Application.Immeubles.GetAllImmeubles;
 using ProjectAPI.Api.Application.Immeubles.GetImmeubleById;
+using ProjectAPI.Api.Application.Immeubles.GetImmeubleFeatures;
 using ProjectAPI.Api.Application.Immeubles.UpdateImmeuble;
 using ProjectAPI.Api.Application.Units.CreateProjectUnit;
 using ProjectAPI.Api.Application.Units.GetAllUnits;
@@ -193,5 +195,37 @@ public class ImmeubleController : ControllerBase
         var response = await _mediator.Send(command);
         return response.IsSuccess ? Ok(response.Message) : BadRequest(response.Message);
     }
+
+    /// <summary>
+    /// Add features to an Immeuble.
+    /// </summary>
+    /// <param name="command">The command containing the features to add.</param>
+    /// <returns>Success status.</returns>
+    [HttpPost("features")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> AddImmeubleFeatures([FromBody] AddImmeubleFeatureCommand command)
+    {
+        var result = await _mediator.Send(command);
+        return result ? Ok("Features added successfully.") : BadRequest("Failed to add features.");
+    }
+
+    /// <summary>
+    /// Get all features for a specific Immeuble.
+    /// </summary>
+    /// <param name="query">The query containing the Immeuble ID.</param>
+    /// <returns>List of features.</returns>
+    [HttpGet("features")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetImmeubleFeatures([FromQuery] GetImmeubleFeaturesQuery query)
+    {
+        var features = await _mediator.Send(query);
+        if (features == null || features.Count == 0)
+            return NotFound("No features found for the specified Immeuble.");
+
+        return Ok(features);
+    }
+
 
 }

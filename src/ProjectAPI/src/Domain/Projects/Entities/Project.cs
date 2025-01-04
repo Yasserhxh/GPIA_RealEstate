@@ -19,4 +19,9 @@ public class Project
     // Navigation property
     public ICollection<Immeuble> Immeubles { get; set; } = new List<Immeuble>();
     public ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
+    /// <summary>
+    /// Gets or sets the collection of features associated with the project.
+    /// </summary>
+    public ICollection<ProjectFeature> Features { get; set; } = new List<ProjectFeature>();
+
 }

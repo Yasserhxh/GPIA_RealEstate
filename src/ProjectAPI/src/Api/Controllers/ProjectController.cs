@@ -1,5 +1,7 @@
-﻿using ProjectAPI.Api.Application.Projects.CreateProjects;
+﻿using ProjectAPI.Api.Application.Projects.AddProjectFratures;
+using ProjectAPI.Api.Application.Projects.CreateProjects;
 using ProjectAPI.Api.Application.Projects.GetAllProjects;
+using ProjectAPI.Api.Application.Projects.GetProjectFeatures;
 using ProjectAPI.Api.Application.Projects.LikedProjects.AddLikedProject;
 using ProjectAPI.Api.Application.Projects.LikedProjects.GetLikedProjects;
 using ProjectAPI.Api.Application.Projects.LikedProjects.UpdateLikedProject;
@@ -54,5 +56,36 @@ public class ProjectsController : ControllerBase
     {
         var response = await _mediator.Send(command);
         return Ok(response);
+    }
+
+    /// <summary>
+    /// Add features to a Project.
+    /// </summary>
+    /// <param name="command">The command containing the features to add.</param>
+    /// <returns>Success status.</returns>
+    [HttpPost("features")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> AddProjectFeatures([FromBody] AddProjectFeatureCommand command)
+    {
+        var result = await _mediator.Send(command);
+        return result ? Ok("Features added successfully.") : BadRequest("Failed to add features.");
+    }
+
+    /// <summary>
+    /// Get all features for a specific Project.
+    /// </summary>
+    /// <param name="query">The query containing the Project ID.</param>
+    /// <returns>List of features.</returns>
+    [HttpGet("features")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetProjectFeatures([FromQuery] GetProjectFeaturesQuery query)
+    {
+        var features = await _mediator.Send(query);
+        if (features == null || features.Count == 0)
+            return NotFound("No features found for the specified Project.");
+
+        return Ok(features);
     }
 }
