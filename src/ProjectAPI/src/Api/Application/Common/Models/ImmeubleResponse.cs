@@ -22,6 +22,7 @@ namespace ProjectAPI.Api.Application.Common.Models
         /// </summary>
         public Guid Id { get; set; }
         public Guid ProjectId { get; set; }
+        public string? AgentId { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the project.

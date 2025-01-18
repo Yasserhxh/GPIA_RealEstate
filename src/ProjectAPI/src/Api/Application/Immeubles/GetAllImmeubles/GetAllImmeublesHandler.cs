@@ -47,6 +47,7 @@ public class GetAllImmeublesHandler : IRequestHandler<GetAllImmeublesQuery, Pagi
             {
                 Id = p.Id,
                 ProjectId = p.ProjectId,
+                AgentId = p.AgentId,
                 Name = p.Name,
                 Location = p.Location,
                 Type = p.Type,

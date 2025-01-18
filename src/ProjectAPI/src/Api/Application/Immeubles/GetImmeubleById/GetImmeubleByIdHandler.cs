@@ -39,6 +39,7 @@ public class GetImmeubleByIdHandler : IRequestHandler<GetImmeubleByIdQuery, Imme
         {
             Id = immeuble.Id,
             ProjectId = immeuble.ProjectId,
+            AgentId = immeuble.AgentId,
             Name = immeuble.Name,
             Location = immeuble.Location,
             Type = immeuble.Type,

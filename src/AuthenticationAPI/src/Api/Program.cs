@@ -67,12 +67,8 @@ if (builder.Environment.IsDevelopment())
         .UseDeveloperExceptionPage();
 }
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
+app.UseSwagger();
+app.UseSwaggerUI();
 app
     .UseRouting()
     .UseCors("AllowAll") // Apply the CORS policy
