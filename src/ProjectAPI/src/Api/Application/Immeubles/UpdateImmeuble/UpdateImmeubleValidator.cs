@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace ProjectAPI.Api.Application.Immeubles.UpdateImmeuble
+﻿namespace ProjectAPI.Api.Application.Immeubles.UpdateImmeuble
 {
     /// <summary>
     /// Validator for the <see cref="UpdateImmeubleCommand"/> class.

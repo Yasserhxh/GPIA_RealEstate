@@ -106,6 +106,7 @@ public class Unit
     /// Navigation property for related property deliveries.
     /// </summary>
     public ICollection<PropertyDelivery> PropertyDeliveries { get; set; } = new List<PropertyDelivery>();
+    public ICollection<UnitTracking> UnitTrackings { get; set; }= new List<UnitTracking>();
 
     /// <summary>
     /// Gets or sets the status of the unit.

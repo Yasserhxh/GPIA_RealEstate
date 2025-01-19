@@ -3,6 +3,7 @@ using ProjectAPI.Domain.Appointments.Interfaces;
 using ProjectAPI.Api.Application.Common.Exceptions;
 using Microsoft.AspNetCore.Identity;
 using ProjectAPI.Domain.Users.Entities;
+using ProjectAPI.Domain.Users.Interfaces;
 
 namespace ProjectAPI.Api.Application.Appointments.CreateAppointment;
 
@@ -13,16 +14,22 @@ public class CreateAppointmentHandler : IRequestHandler<CreateAppointmentCommand
 {
     private readonly IAppointmentRepository _appointmentRepository;
     private readonly UserManager<User> _userManager;
+    private readonly IPerformanceIndicatorRepository _performanceIndicatorRepository;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CreateAppointmentHandler"/> class.
     /// </summary>
     /// <param name="appointmentRepository">The repository for managing appointments.</param>
     /// <param name="userManager">The user manager for managing user information.</param>
-    public CreateAppointmentHandler(IAppointmentRepository appointmentRepository, UserManager<User> userManager)
+    /// <param name="performanceIndicatorRepository">The repository for managing performance indicators.</param>
+    public CreateAppointmentHandler(
+        IAppointmentRepository appointmentRepository,
+        UserManager<User> userManager,
+        IPerformanceIndicatorRepository performanceIndicatorRepository)
     {
         _appointmentRepository = appointmentRepository;
         _userManager = userManager;
+        _performanceIndicatorRepository = performanceIndicatorRepository;
     }
 
     /// <summary>
@@ -60,6 +67,21 @@ public class CreateAppointmentHandler : IRequestHandler<CreateAppointmentCommand
         };
 
         await _appointmentRepository.InsertAsync(appointment);
+
+        // Increment AppointmentsScheduled for the agent
+        if (request.AgentId.HasValue && !string.IsNullOrEmpty(request.AgentId!.Value.ToString()))
+        {
+            var performanceIndicator = await _performanceIndicatorRepository.Find(pi => pi.AgentId == request.AgentId.ToString());
+
+            if (performanceIndicator == null)
+            {
+                throw new NotFoundException($"Performance indicator for agent ID {request.AgentId} not found.");
+            }
+
+            performanceIndicator.FirstOrDefault()!.IncrementAppointmentsScheduled();
+            _performanceIndicatorRepository.Update(performanceIndicator.FirstOrDefault()!);
+        }
+
         await _appointmentRepository.SaveAsync();
 
         return new CreateAppointmentResponse

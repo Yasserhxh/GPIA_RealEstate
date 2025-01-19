@@ -1,6 +1,5 @@
 ﻿using ProjectAPI.Api.Application.Common.Models;
 using ProjectAPI.Domain.Projects.Interfaces;
-using ProjectAPI.Infrastructure.Migrations;
 
 namespace ProjectAPI.Api.Application.Projects.GetAllProjects;
 

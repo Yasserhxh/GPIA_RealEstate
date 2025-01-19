@@ -1,5 +1,6 @@
 ﻿using ProjectAPI.Api.Application.Common.Exceptions;
 using ProjectAPI.Api.Application.Common.Models;
+using ProjectAPI.Domain.Immeubles.Entities;
 using ProjectAPI.Domain.Immeubles.Interfaces;
 
 namespace ProjectAPI.Api.Application.Immeubles.UpdateImmeuble
@@ -10,25 +11,32 @@ namespace ProjectAPI.Api.Application.Immeubles.UpdateImmeuble
     public class UpdateImmeubleHandler : IRequestHandler<UpdateImmeubleCommand, ImmeubleResponse>
     {
         private readonly IImmeubleRepository _repository;
+        private readonly IImmeubleTrackingRepository _trackingRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateImmeubleHandler"/> class.
         /// </summary>
-        /// <param name="repository">The project repository.</param>
-        public UpdateImmeubleHandler(IImmeubleRepository repository)
+        /// <param name="repository">The immeuble repository.</param>
+        /// <param name="trackingRepository">The tracking repository.</param>
+        public UpdateImmeubleHandler(IImmeubleRepository repository, IImmeubleTrackingRepository trackingRepository)
         {
             _repository = repository;
+            _trackingRepository = trackingRepository;
         }
 
         /// <summary>
-        /// Handles the request to update a project.
+        /// Handles the request to update an immeuble.
         /// </summary>
-        /// <param name="request">The request containing project update details.</param>
+        /// <param name="request">The request containing immeuble update details.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The response containing the updated project details.</returns>
+        /// <returns>The response containing the updated immeuble details.</returns>
         public async Task<ImmeubleResponse> Handle(UpdateImmeubleCommand request, CancellationToken cancellationToken)
         {
-            var immeuble = await _repository.GetByIDAsync(request.Id) ?? throw new NotFoundException($"Immeuble with ID {request.Id} not found.");
+            var immeuble = await _repository.GetByIDAsync(request.Id)
+                           ?? throw new NotFoundException($"Immeuble with ID {request.Id} not found.");
+
+            // Track the original status
+            var originalStatus = immeuble.Status;
 
             // Dictionary to manage field updates dynamically
             var updateActions = new Dictionary<Func<bool>, Action>
@@ -38,7 +46,7 @@ namespace ProjectAPI.Api.Application.Immeubles.UpdateImmeuble
                 { () => !string.IsNullOrWhiteSpace(request.Type), () => immeuble.Type = request.Type },
                 { () => request.MinPrice > 0, () => immeuble.MinPrice = request.MinPrice },
                 { () => request.MaxPrice > 0, () => immeuble.MaxPrice = request.MaxPrice },
-                { () => request.Status.HasValue, () => immeuble.Status = request.Status!.Value.ToString() }, // Enum update
+                { () => request.Status.HasValue, () => immeuble.Status = request.Status!.Value.ToString() },
                 { () => request.Images != null && request.Images.Any(), () => immeuble.Images = request.Images },
                 { () => !string.IsNullOrWhiteSpace(request.Description), () => immeuble.Description = request.Description },
                 { () => request.Latitude != 0, () => immeuble.Latitude = request.Latitude },
@@ -56,6 +64,21 @@ namespace ProjectAPI.Api.Application.Immeubles.UpdateImmeuble
                 }
             }
 
+            // If the status has changed, add an entry to ImmeubleTracking
+            if (originalStatus != immeuble.Status)
+            {
+                var trackingEntry = new ImmeubleTracking
+                {
+                    Id = Guid.NewGuid(),
+                    ImmeubleId = immeuble.Id,
+                    StatusUpdate = immeuble.Status,
+                    DateUpdated = DateTime.UtcNow
+                };
+
+                await _trackingRepository.InsertAsync(trackingEntry);
+                await _trackingRepository.SaveAsync();
+            }
+
             _repository.Update(immeuble);
             await _repository.SaveAsync();
 
@@ -68,7 +91,7 @@ namespace ProjectAPI.Api.Application.Immeubles.UpdateImmeuble
                 MinPrice = immeuble.MinPrice,
                 MaxPrice = immeuble.MaxPrice,
                 Status = Enum.Parse<ProjectStatus>(immeuble.Status),
-                Images = [.. immeuble.Images.Split(',')],
+                Images = immeuble.Images.Split(',').ToList(),
                 Description = immeuble.Description,
                 Latitude = immeuble.Latitude,
                 Longitude = immeuble.Longitude

@@ -6,6 +6,7 @@ using ProjectAPI.Domain.Common.Interfaces;
 using ProjectAPI.Domain.FeedBacks.Interfaces;
 using ProjectAPI.Domain.Immeubles.Interfaces;
 using ProjectAPI.Domain.Projects.Interfaces;
+using ProjectAPI.Domain.Reservations.Interface;
 using ProjectAPI.Domain.Users.Entities;
 using ProjectAPI.Domain.Users.Interfaces;
 using ProjectAPI.Infrastructure.Context;
@@ -76,6 +77,12 @@ public static class DependencyInjection
         services.AddScoped<ILikedProjectRepository, LikedProjectRepository>();
         services.AddScoped<IImmeubleFeatureRepository, ImmeubleFeatureRepository>();
         services.AddScoped<IProjectFeatureRepository, ProjectFeatureRepository>();
+        services.AddScoped<ILeadRepository, LeadRepository>();
+        services.AddScoped<IPerformanceIndicatorRepository, PerformanceIndicatorRepository>();
+        services.AddScoped<IReservationRepository, ReservationRepository>();
+        services.AddScoped<IImmeubleTrackingRepository, ImmeubleTrackingRepository>();
+        services.AddScoped<INotaryAppointmentRepository, NotaryAppointmentRepository>();
+
 
 
 

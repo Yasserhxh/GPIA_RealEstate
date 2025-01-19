@@ -155,6 +155,34 @@ namespace ProjectAPI.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("PerformanceIndicator", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AgentId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AppointmentsScheduled")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LeadsGenerated")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("RecordedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("SuccessfulSales")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AgentId");
+
+                    b.ToTable("PerformanceIndicators", (string)null);
+                });
+
             modelBuilder.Entity("ProjectAPI.Domain.Appointments.Entities.Appointment", b =>
                 {
                     b.Property<Guid>("Id")
@@ -273,10 +301,44 @@ namespace ProjectAPI.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("AgentId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("AppointmentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("SaleId")
+                    b.Property<string>("BuyerCIN")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BuyerEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BuyerFirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BuyerId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("BuyerLastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BuyerPhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ConnectedUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("NotaireId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<decimal>("PropertyPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("ReservationId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Status")
@@ -284,11 +346,15 @@ namespace ProjectAPI.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal>("TahfidFees")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TaxFees")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ReservationId");
 
                     b.ToTable("NotaryAppointments", (string)null);
                 });
@@ -518,6 +584,30 @@ namespace ProjectAPI.Infrastructure.Migrations
                     b.ToTable("ImmeublePlanInterieurs", (string)null);
                 });
 
+            modelBuilder.Entity("ProjectAPI.Domain.Immeubles.Entities.ImmeubleTracking", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ImmeubleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("StatusUpdate")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ImmeubleId");
+
+                    b.ToTable("ImmeubleTracking", (string)null);
+                });
+
             modelBuilder.Entity("ProjectAPI.Domain.Immeubles.Entities.Unit", b =>
                 {
                     b.Property<Guid>("Id")
@@ -592,6 +682,37 @@ namespace ProjectAPI.Infrastructure.Migrations
                     b.HasIndex("ProjectId");
 
                     b.ToTable("Units", (string)null);
+                });
+
+            modelBuilder.Entity("ProjectAPI.Domain.Immeubles.Entities.UnitTracking", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CurrentPhase")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Images")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("LastUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ProgressDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UnitId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UnitId");
+
+                    b.ToTable("UnitTracking");
                 });
 
             modelBuilder.Entity("ProjectAPI.Domain.Projects.Entities.LikedProject", b =>
@@ -679,6 +800,63 @@ namespace ProjectAPI.Infrastructure.Migrations
                     b.HasIndex("ProjectId");
 
                     b.ToTable("ProjectFeature");
+                });
+
+            modelBuilder.Entity("ProjectAPI.Domain.Reservations.Entities.Reservation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AgentId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BuyerId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CIN")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<bool>("IsUnderConstruction")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LastName")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<decimal>("ReservationAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("ReservationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("TotalPropertyPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("UnitDetails")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UnitId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UnitId");
+
+                    b.ToTable("Reservations", (string)null);
                 });
 
             modelBuilder.Entity("ProjectAPI.Domain.Sales.Entities.PaymentTracking", b =>
@@ -771,41 +949,37 @@ namespace ProjectAPI.Infrastructure.Migrations
                     b.ToTable("Sale");
                 });
 
-            modelBuilder.Entity("ProjectAPI.Domain.Users.Entities.PerformanceIndicator", b =>
+            modelBuilder.Entity("ProjectAPI.Domain.Users.Entities.Lead", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("AgentId")
-                        .IsRequired()
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("AgentId1")
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserId")
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AppointmentsScheduled")
-                        .HasColumnType("int");
-
-                    b.Property<double>("ConversionRate")
-                        .HasColumnType("float");
-
-                    b.Property<int>("LeadsGenerated")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("RecordedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("SuccessfulSales")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AgentId");
+                    b.HasIndex("ProjectId");
 
-                    b.HasIndex("AgentId1");
-
-                    b.ToTable("PerformanceIndicators", (string)null);
+                    b.ToTable("Leads", (string)null);
                 });
 
             modelBuilder.Entity("ProjectAPI.Domain.Users.Entities.User", b =>
@@ -955,6 +1129,13 @@ namespace ProjectAPI.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("PerformanceIndicator", b =>
+                {
+                    b.HasOne("ProjectAPI.Domain.Users.Entities.Agent", null)
+                        .WithMany("PerformanceIndicators")
+                        .HasForeignKey("AgentId");
+                });
+
             modelBuilder.Entity("ProjectAPI.Domain.Appointments.Entities.Appointment", b =>
                 {
                     b.HasOne("ProjectAPI.Domain.Users.Entities.Agent", "Agent")
@@ -990,6 +1171,17 @@ namespace ProjectAPI.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Appointment");
+                });
+
+            modelBuilder.Entity("ProjectAPI.Domain.Appointments.Entities.NotaryAppointment", b =>
+                {
+                    b.HasOne("ProjectAPI.Domain.Reservations.Entities.Reservation", "Reservation")
+                        .WithMany()
+                        .HasForeignKey("ReservationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Reservation");
                 });
 
             modelBuilder.Entity("ProjectAPI.Domain.FeedBacks.Entities.Feedback", b =>
@@ -1067,6 +1259,17 @@ namespace ProjectAPI.Infrastructure.Migrations
                     b.Navigation("Immeuble");
                 });
 
+            modelBuilder.Entity("ProjectAPI.Domain.Immeubles.Entities.ImmeubleTracking", b =>
+                {
+                    b.HasOne("ProjectAPI.Domain.Immeubles.Entities.Immeuble", "Immeuble")
+                        .WithMany()
+                        .HasForeignKey("ImmeubleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Immeuble");
+                });
+
             modelBuilder.Entity("ProjectAPI.Domain.Immeubles.Entities.Unit", b =>
                 {
                     b.HasOne("ProjectAPI.Domain.Immeubles.Entities.Immeuble", "Immeuble")
@@ -1076,6 +1279,17 @@ namespace ProjectAPI.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Immeuble");
+                });
+
+            modelBuilder.Entity("ProjectAPI.Domain.Immeubles.Entities.UnitTracking", b =>
+                {
+                    b.HasOne("ProjectAPI.Domain.Immeubles.Entities.Unit", "Unit")
+                        .WithMany("UnitTrackings")
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Unit");
                 });
 
             modelBuilder.Entity("ProjectAPI.Domain.Projects.Entities.LikedProject", b =>
@@ -1108,6 +1322,17 @@ namespace ProjectAPI.Infrastructure.Migrations
                     b.Navigation("Project");
                 });
 
+            modelBuilder.Entity("ProjectAPI.Domain.Reservations.Entities.Reservation", b =>
+                {
+                    b.HasOne("ProjectAPI.Domain.Immeubles.Entities.Unit", "Unit")
+                        .WithMany()
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Unit");
+                });
+
             modelBuilder.Entity("ProjectAPI.Domain.Sales.Entities.PaymentTracking", b =>
                 {
                     b.HasOne("ProjectAPI.Domain.Sales.Entities.Sale", null)
@@ -1136,19 +1361,15 @@ namespace ProjectAPI.Infrastructure.Migrations
                     b.Navigation("Unit");
                 });
 
-            modelBuilder.Entity("ProjectAPI.Domain.Users.Entities.PerformanceIndicator", b =>
+            modelBuilder.Entity("ProjectAPI.Domain.Users.Entities.Lead", b =>
                 {
-                    b.HasOne("ProjectAPI.Domain.Users.Entities.Agent", "Agent")
+                    b.HasOne("ProjectAPI.Domain.Projects.Entities.Project", "Project")
                         .WithMany()
-                        .HasForeignKey("AgentId")
+                        .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ProjectAPI.Domain.Users.Entities.Agent", null)
-                        .WithMany("PerformanceIndicators")
-                        .HasForeignKey("AgentId1");
-
-                    b.Navigation("Agent");
+                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("ProjectAPI.Domain.Appointments.Entities.Appointment", b =>
@@ -1172,6 +1393,8 @@ namespace ProjectAPI.Infrastructure.Migrations
             modelBuilder.Entity("ProjectAPI.Domain.Immeubles.Entities.Unit", b =>
                 {
                     b.Navigation("PropertyDeliveries");
+
+                    b.Navigation("UnitTrackings");
                 });
 
             modelBuilder.Entity("ProjectAPI.Domain.Projects.Entities.Project", b =>

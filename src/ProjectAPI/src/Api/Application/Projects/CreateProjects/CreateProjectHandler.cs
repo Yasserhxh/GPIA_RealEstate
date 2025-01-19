@@ -1,5 +1,4 @@
-﻿using ProjectAPI.Api.Application.Common.Models;
-using ProjectAPI.Domain.Projects.Entities;
+﻿using ProjectAPI.Domain.Projects.Entities;
 using ProjectAPI.Domain.Projects.Interfaces;
 
 namespace ProjectAPI.Api.Application.Projects.CreateProjects;

@@ -1,5 +1,4 @@
 ﻿using ProjectAPI.Domain.Appointments.Entities;
-using ProjectAPI.Domain.Immeubles.Entities;
 
 namespace ProjectAPI.Domain.Users.Entities;
 

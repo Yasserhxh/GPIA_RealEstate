@@ -4,6 +4,8 @@ using ProjectAPI.Api.Application.Immeubles.DeleteImmeuble;
 using ProjectAPI.Api.Application.Immeubles.GetAllImmeubles;
 using ProjectAPI.Api.Application.Immeubles.GetImmeubleById;
 using ProjectAPI.Api.Application.Immeubles.GetImmeubleFeatures;
+using ProjectAPI.Api.Application.Immeubles.Tracking.AddImmeubleTracking;
+using ProjectAPI.Api.Application.Immeubles.Tracking.GetImmeubleTracking;
 using ProjectAPI.Api.Application.Immeubles.UpdateImmeuble;
 using ProjectAPI.Api.Application.Units.CreateProjectUnit;
 using ProjectAPI.Api.Application.Units.GetAllUnits;
@@ -226,6 +228,32 @@ public class ImmeubleController : ControllerBase
 
         return Ok(features);
     }
+    [HttpPost("{immeubleId}/tracking")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> AddImmeubleTracking([FromRoute] Guid immeubleId, [FromBody] AddImmeubleTrackingCommand command)
+    {
+        command.ImmeubleId = immeubleId;
+        var result = await _mediator.Send(command);
 
+        if (result)
+            return Ok(new { Message = "Immeuble tracking added successfully." });
+
+        return BadRequest(new { Message = "Failed to add immeuble tracking." });
+    }
+
+    [HttpGet("{immeubleId}/tracking")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetImmeubleTracking([FromRoute] Guid immeubleId)
+    {
+        var query = new GetImmeubleTrackingQuery { ImmeubleId = immeubleId };
+        var trackings = await _mediator.Send(query);
+
+        if (trackings == null || !trackings.Any())
+            return NotFound(new { Message = "No tracking records found for the specified immeuble." });
+
+        return Ok(trackings);
+    }
 
 }

@@ -2,35 +2,28 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ProjectAPI.Domain.Appointments.Entities;
 
-namespace ProjectAPI.Infrastructure.Configurations
+namespace ProjectAPI.Infrastructure.Configurations;
+
+public class NotaryAppointmentConfiguration : IEntityTypeConfiguration<NotaryAppointment>
 {
-    /// <summary>
-    /// Configuration class for the <see cref="NotaryAppointment"/> entity.
-    /// </summary>
-    public class NotaryAppointmentConfiguration : IEntityTypeConfiguration<NotaryAppointment>
+    public void Configure(EntityTypeBuilder<NotaryAppointment> builder)
     {
-        /// <summary>
-        /// Configures the properties and relationships of the <see cref="NotaryAppointment"/> entity.
-        /// </summary>
-        /// <param name="builder">The builder to be used to configure the entity.</param>
-        public void Configure(EntityTypeBuilder<NotaryAppointment> builder)
-        {
-            builder.ToTable("NotaryAppointments");
+        builder.ToTable("NotaryAppointments");
 
-            // Configures the primary key for the NotaryAppointment entity.
-            builder.HasKey(na => na.Id);
+        builder.HasKey(na => na.Id);
 
-            // Configures the UserId property to be required.
-            builder.Property(na => na.UserId).IsRequired();
+        builder.Property(na => na.BuyerId).HasMaxLength(450);
+        builder.Property(na => na.NotaireId).HasMaxLength(450);
+        builder.Property(na => na.AgentId).HasMaxLength(450);
+        builder.Property(na => na.ConnectedUserId).HasMaxLength(450);
+        builder.Property(na => na.Status).IsRequired().HasMaxLength(50);
+        builder.Property(na => na.PropertyPrice).HasColumnType("decimal(18,2)");
+        builder.Property(na => na.TaxFees).HasColumnType("decimal(18,2)");
+        builder.Property(na => na.TahfidFees).HasColumnType("decimal(18,2)");
 
-            // Configures the SaleId property to be required.
-            builder.Property(na => na.SaleId).IsRequired();
-
-            // Configures the AppointmentDate property to be required.
-            builder.Property(na => na.AppointmentDate).IsRequired();
-
-            // Configures the Status property with a maximum length of 50 characters and makes it required.
-            builder.Property(na => na.Status).HasMaxLength(50).IsRequired();
-        }
+        builder.HasOne(na => na.Reservation)
+            .WithMany()
+            .HasForeignKey(na => na.ReservationId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

@@ -5,7 +5,6 @@ using ProjectAPI.Domain.Immeubles.Entities;
 using ProjectAPI.Domain.Projects.Entities;
 using ProjectAPI.Domain.Users.Entities;
 using ProjectAPI.Infrastructure.Configurations;
-using System.Reflection.Emit;
 
 namespace ProjectAPI.Infrastructure.Context;
 
@@ -44,6 +43,9 @@ public class ApplicationDbContext : IdentityDbContext<User>
         builder.ApplyConfiguration(new PropertyDeliveryConfiguration());
         builder.ApplyConfiguration(new AssignmentConfiguration());
         builder.ApplyConfiguration(new LikedProjectsConfiguration());
+        builder.ApplyConfiguration(new ImmeubleTrackingConfiguration());
+        builder.ApplyConfiguration(new ReservationConfiguration());
+        builder.ApplyConfiguration(new LeadConfiguration());
     }
     /// <summary>
     /// Constructor for ApplicationDbContext.

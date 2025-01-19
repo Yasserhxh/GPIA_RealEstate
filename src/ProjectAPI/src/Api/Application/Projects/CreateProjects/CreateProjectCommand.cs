@@ -1,6 +1,4 @@
-﻿using ProjectAPI.Api.Application.Common.Models;
-
-namespace ProjectAPI.Api.Application.Projects.CreateProjects;
+﻿namespace ProjectAPI.Api.Application.Projects.CreateProjects;
 
 public class CreateProjectCommand : IRequest<CreateProjectResponse>
 {

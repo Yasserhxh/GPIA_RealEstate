@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
-using ProjectAPI.Api.Application.Common.Exceptions;
+﻿using ProjectAPI.Api.Application.Common.Exceptions;
 using ProjectAPI.Api.Application.Common.Models;
-using ProjectAPI.Domain.Projects.Entities;
 using ProjectAPI.Domain.Projects.Interfaces;
 using ProjectAPI.Domain.Users.Entities;
 using ProjectAPI.Infrastructure.Context;

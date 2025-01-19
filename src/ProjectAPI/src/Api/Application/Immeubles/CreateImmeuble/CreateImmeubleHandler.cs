@@ -11,6 +11,7 @@ namespace ProjectAPI.Api.Application.Immeubles.CreateImmeuble
     {
         private readonly IImmeubleRepository _repository;
         private readonly IProjectRepository _projectRepository;
+        private readonly IImmeubleTrackingRepository _immeubleTrackingRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateImmeubleHandler"/> class.
@@ -18,10 +19,11 @@ namespace ProjectAPI.Api.Application.Immeubles.CreateImmeuble
         /// <param name="repository">The repository to handle immeuble data operations.</param>
         /// <param name="projectRepository">The repository to handle project data operations.</param>
 
-        public CreateImmeubleHandler(IImmeubleRepository repository, IProjectRepository projectRepository)
+        public CreateImmeubleHandler(IImmeubleRepository repository, IProjectRepository projectRepository, IImmeubleTrackingRepository immeubleTrackingRepository)
         {
             _repository = repository;
             _projectRepository = projectRepository;
+            _immeubleTrackingRepository = immeubleTrackingRepository;
         }
 
         /// <summary>
@@ -61,6 +63,18 @@ namespace ProjectAPI.Api.Application.Immeubles.CreateImmeuble
 
             await _repository.InsertAsync(immeuble);
             await _repository.SaveAsync();
+
+            var immeubleTracking = new ImmeubleTracking
+            {
+                Id = Guid.NewGuid(),
+                ImmeubleId = immeuble.Id,
+                StatusUpdate = "ComingSoon",
+                DateUpdated = DateTime.UtcNow
+            };
+
+            await _immeubleTrackingRepository.InsertAsync(immeubleTracking);
+            await _immeubleTrackingRepository.SaveAsync();
+
             return project.Id;
         }
     }

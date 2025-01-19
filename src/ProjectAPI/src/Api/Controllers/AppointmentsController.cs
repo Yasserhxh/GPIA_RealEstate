@@ -64,6 +64,7 @@ public class AppointmentsController : ControllerBase
     [AllowAnonymous]
     //[Authorize(Roles = "Agent,Acheteur")]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetAppointments([FromQuery] GetAppointmentsQuery query)
     {
@@ -80,6 +81,7 @@ public class AppointmentsController : ControllerBase
     [HttpPatch("{appointmentId}/status")]
     [Authorize(Roles = "Agent")]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> UpdateAppointmentStatus([FromBody] UpdateAppointmentStatusCommand command)
     {
