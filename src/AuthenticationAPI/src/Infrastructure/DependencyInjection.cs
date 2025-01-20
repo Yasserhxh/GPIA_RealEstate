@@ -130,7 +130,9 @@ public static class DependencyInjection
         services
             .AddSingleton<ITokenProvider, TokenProvider>()
             .AddSingleton<IEmailService, EmailService>()
-            .AddSingleton<IOtpVerificationRepository, OtpVerificationRepository>();
+            .AddSingleton<IOtpVerificationRepository, OtpVerificationRepository>()
+            .AddScoped<IPerformanceIndicatorRepository, PerformanceIndicatorRepository>();
+
 
         services.AddScoped<IUserRepository, UserRepository>();
     }

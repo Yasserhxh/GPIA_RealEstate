@@ -36,6 +36,7 @@ public class Appointment
     /// If the user is not authenticated, this field will be null.
     /// </summary>
     public string? UserId { get; set; }
+    public string? PropertyType { get; set; }
 
     /// <summary>
     /// Gets or sets the overall status of the appointment.

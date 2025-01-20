@@ -36,6 +36,7 @@ public class AppointmentResponse
     /// Gets or sets the date of the appointment.
     /// </summary>
     public DateTime Date { get; set; }
+    public string? PropertyType { get; set; }
 
     /// <summary>
     /// Gets or sets the status of the appointment.

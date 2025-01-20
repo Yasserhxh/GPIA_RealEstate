@@ -64,6 +64,7 @@ public class GetAppointmentsHandler : IRequestHandler<GetAppointmentsQuery, Pagi
                 ProjectId = a.ProjectId,
                 ImmeubleId = a.ImmeubleId,
                 AgentId = a.AgentId,
+                PropertyType = a.PropertyType,
                 //AgentFullName = a.Agent.FirstName + " " + a.Agent.LastName,
                 ImmeubleName = a.Immeuble.Name,
                 ProjectName = a.Project.Name,

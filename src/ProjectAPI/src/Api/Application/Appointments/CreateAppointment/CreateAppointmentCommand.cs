@@ -21,6 +21,7 @@ public class CreateAppointmentCommand : IRequest<CreateAppointmentResponse>
     /// </summary>
     public DateTime AppointmentDate { get; set; }
 
+    public string? PropertyType { get; set; }
     /// <summary>
     /// Gets or sets the unique identifier of the user if authenticated.
     /// </summary>
