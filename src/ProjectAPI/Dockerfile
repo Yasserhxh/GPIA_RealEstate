@@ -20,7 +20,7 @@ COPY ["src/ProjectAPI/ProjectAPI.sln", "."]
 COPY ["src/ProjectAPI/Directory.Build.props", "."]
 
 # 2) Copy each .csproj to the correct place in the container
-COPY ["src/ProjectAPI/src/ProjectAPI.Api.csproj", "."]
+COPY ["src/ProjectAPI/src/Api/ProjectAPI.Api.csproj", "."]
 COPY ["src/ProjectAPI/src/Domain/ProjectAPI.Domain.csproj", "Domain/"]
 COPY ["src/ProjectAPI/src/Infrastructure/ProjectAPI.Infrastructure.csproj", "Infrastructure/"]
 
