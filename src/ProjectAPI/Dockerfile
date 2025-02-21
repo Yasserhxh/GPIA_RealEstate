@@ -32,7 +32,7 @@ RUN dotnet nuget add source \
 RUN dotnet restore "Api/ProjectAPI.Api.csproj"
 COPY src/ProjectAPI/. .
 WORKDIR /src/Api
-RUN dotnet build "/ProjectAPI.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "ProjectAPI.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # Cette étape permet de publier le projet de service à copier dans la phase finale
 FROM build AS publish
