@@ -1,7 +1,7 @@
-name: Build and deploy ASP.Net Core app to Azure Web App - apiprojecttest001
+name: Build and Deploy ASP.Net Core app to Azure container services - apiprojecttest001
 
 on:
-  push:    
+  push:
     paths:
       - "src/ProjectAPI/**"
     branches:
@@ -14,60 +14,30 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: windows-latest
-
+  build_and_push:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
-      # Set up .NET Core SDK
-      - name: Set up .NET Core
-        uses: actions/setup-dotnet@v4
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to Azure Container Registry
+        uses: docker/login-action@v3
         with:
-          dotnet-version: '8.x'
+          registry: ${{ secrets.ACR_REGISTRY }}      # e.g., myregistry.azurecr.io
+          username: ${{ secrets.ACR_USERNAME }}        # ACR admin or service principal ID
+          password: ${{ secrets.ACR_PASSWORD }}        # Corresponding password
 
-      # Add NuGet-NetCore source with credentials
-      - name: Set up NuGet Feed for NuGet-NetCore
-        run: dotnet nuget add source "${{ secrets.NUGET_NETCORE_URL }}" -n "NuGet-NetCore-Ekram" -u "${{ secrets.NUGET_NETCORE_USERNAME }}" -p "${{ secrets.NUGET_NETCORE_PASSWORD }}" --store-password-in-clear-text
-
-      # Restore dependencies
-      - name: Restore dependencies
-        run: dotnet restore ./src/ProjectAPI/ProjectAPI.sln
-
-      # Build the solution
-      - name: Build with dotnet
-        run: dotnet build ./src/ProjectAPI/ProjectAPI.sln --configuration Release
-        
-      - name: dotnet publish
-        run: dotnet publish ./src/ProjectAPI/ProjectAPI.sln -c Release -o "${{env.DOTNET_ROOT}}/myapp"
-        
-      # Upload the artifact for deployment
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v4
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v6
         with:
-          name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
-
-  deploy:
-    runs-on: windows-latest
-    needs: build
-    environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
-    steps:
-      # Download artifact from the build job
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v4
-        with:
-          name: .net-app
-
-      # Deploy to Azure Web App
-      - name: Deploy to Azure Web App
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: 'apitestproejct001'
-          slot-name: 'Production'
-          package: .
-          publish-profile: ${{ secrets.AZURE_NET_PUBLISH_PROFILE }}
+          context: .
+          file: ./Dockerfile                       # Adjust if your Dockerfile is elsewhere
+          push: true
+          tags: ${{ secrets.ACR_REGISTRY }}/${{ secrets.IMAGE_NAME }}:latest
+          build-args: |
+            FEED_URL=${{ secrets.NUGET_NETCORE_URL }}         # e.g., https://pkgs.dev.azure.com/your-org/your-project/_packaging/YourFeed/nuget/v3/index.json
+            FEED_USERNAME=${{ secrets.NUGET_NETCORE_USERNAME }}  # Typically "anything" for Azure DevOps feeds
+            FEED_PASSWORD=${{ secrets.NUGET_NETCORE_PASSWORD }}  # Your Personal Access Token (PAT)
