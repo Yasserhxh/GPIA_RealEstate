@@ -16,11 +16,11 @@ ARG FEED_USERNAME="your-username"  # Azure DevOps often doesn't require a real u
 ARG FEED_PASSWORD="hlbqvxdpzkyml4bpoitebvwiwguphrwb4iro2osnl4pv73gdvrza"
 
 WORKDIR /src
-COPY ["src/Directory.Build.props", "src/"]
-COPY ["Directory.Build.props", "."]
-COPY ["src/Api/ProjectAPI.Api.csproj", "src/Api/"]
-COPY ["src/Domain/ProjectAPI.Domain.csproj", "src/Domain/"]
-COPY ["src/Infrastructure/ProjectAPI.Infrastructure.csproj", "src/Infrastructure/"]
+COPY ["src/ProjectAPI/ProjectAPI.sln", "."]
+COPY ["src/ProjectAPI/Directory.Build.props", "."]
+COPY ["src/ProjectAPI/Api/ProjectAPI.Api.csproj", "Api/"]
+COPY ["src/ProjectAPI/Domain/ProjectAPI.Domain.csproj", "Domain/"]
+COPY ["src/ProjectAPI/Infrastructure/ProjectAPI.Infrastructure.csproj", "Infrastructure/"]
 # Dynamically add your feed
 RUN dotnet nuget add source \
     "$FEED_URL" \
@@ -29,15 +29,15 @@ RUN dotnet nuget add source \
     --password "$FEED_PASSWORD" \
     --store-password-in-clear-text
 
-RUN dotnet restore "./src/Api/ProjectAPI.Api.csproj"
-COPY . .
-WORKDIR "/src/src/Api"
-RUN dotnet build "./ProjectAPI.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet restore "Api/ProjectAPI.Api.csproj"
+COPY src/ProjectAPI/. .
+WORKDIR "/src/Api"
+RUN dotnet build "ProjectAPI.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # Cette étape permet de publier le projet de service à copier dans la phase finale
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./ProjectAPI.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "ProjectAPI.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # Cette phase est utilisée en production ou lors de l’exécution à partir de VS en mode normal (par défaut quand la configuration de débogage n’est pas utilisée)
 FROM base AS final
