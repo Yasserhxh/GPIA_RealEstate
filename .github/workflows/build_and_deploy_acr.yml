@@ -37,7 +37,3 @@ jobs:
           file: ./src/ProjectAPI/Dockerfile
           push: true
           tags: ${{ secrets.ACR_REGISTRY }}/${{ secrets.IMAGE_NAME }}:latest
-          build-args: |
-            FEED_URL=${{ secrets.NUGET_NETCORE_URL }}         # e.g., https://pkgs.dev.azure.com/your-org/your-project/_packaging/YourFeed/nuget/v3/index.json
-            FEED_USERNAME=${{ secrets.NUGET_NETCORE_USERNAME }}  # Typically "anything" for Azure DevOps feeds
-            FEED_PASSWORD=${{ secrets.NUGET_NETCORE_PASSWORD }}  # Your Personal Access Token (PAT)
