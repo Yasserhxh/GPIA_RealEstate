@@ -22,8 +22,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sources", "Sources", "{4061
 		src\Directory.Build.props = src\Directory.Build.props
 	EndProjectSection
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{2A564D17-B41C-43B8-95C2-63402A0D977F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectAPI.Api", "src\Api\ProjectAPI.Api.csproj", "{D1739B9D-A467-4F65-9AE7-3FA85875BBC7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectAPI.Domain", "src\Domain\ProjectAPI.Domain.csproj", "{B2866CAE-2015-44E2-BE73-F53E5146D360}"
@@ -37,12 +35,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2A564D17-B41C-43B8-95C2-63402A0D977F}.CodeAnalysis|Any CPU.ActiveCfg = Debug|Any CPU
-		{2A564D17-B41C-43B8-95C2-63402A0D977F}.CodeAnalysis|Any CPU.Build.0 = Debug|Any CPU
-		{2A564D17-B41C-43B8-95C2-63402A0D977F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2A564D17-B41C-43B8-95C2-63402A0D977F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2A564D17-B41C-43B8-95C2-63402A0D977F}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{2A564D17-B41C-43B8-95C2-63402A0D977F}.Release|Any CPU.Build.0 = Debug|Any CPU
 		{D1739B9D-A467-4F65-9AE7-3FA85875BBC7}.CodeAnalysis|Any CPU.ActiveCfg = CodeAnalysis|Any CPU
 		{D1739B9D-A467-4F65-9AE7-3FA85875BBC7}.CodeAnalysis|Any CPU.Build.0 = CodeAnalysis|Any CPU
 		{D1739B9D-A467-4F65-9AE7-3FA85875BBC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
