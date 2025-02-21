@@ -18,9 +18,9 @@ ARG FEED_PASSWORD="hlbqvxdpzkyml4bpoitebvwiwguphrwb4iro2osnl4pv73gdvrza"
 WORKDIR /src
 COPY ["src/ProjectAPI/ProjectAPI.sln", "."]
 COPY ["src/ProjectAPI/Directory.Build.props", "."]
-COPY ["src/ProjectAPI/Api/ProjectAPI.Api.csproj", "Api/"]
-COPY ["src/ProjectAPI/Domain/ProjectAPI.Domain.csproj", "Domain/"]
-COPY ["src/ProjectAPI/Infrastructure/ProjectAPI.Infrastructure.csproj", "Infrastructure/"]
+COPY ["src/ProjectAPI/src/Api/ProjectAPI.Api.csproj", "Api/"]
+COPY ["src/ProjectAPI/src/Domain/ProjectAPI.Domain.csproj", "Domain/"]
+COPY ["src/ProjectAPI/src/Infrastructure/ProjectAPI.Infrastructure.csproj", "Infrastructure/"]
 # Dynamically add your feed
 RUN dotnet nuget add source \
     "$FEED_URL" \
