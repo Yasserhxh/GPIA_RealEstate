@@ -3,8 +3,6 @@
 	<PropertyGroup Label="Build">
 		<TargetFramework>net8.0</TargetFramework>
 		<ServerGarbageCollection>true</ServerGarbageCollection>
-		<DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
-		<DockerTargetOS>Linux</DockerTargetOS>
 		<ProjectGuid>{D1739B9D-A467-4F65-9AE7-3FA85875BBC7}</ProjectGuid>
 		<InvariantGlobalization>false</InvariantGlobalization>
 		<IsPackable>false</IsPackable>
@@ -56,6 +54,7 @@
 		<LocalRuleSetPath>..\..\.sonarlint\sonar-platinium-1.0.ruleset</LocalRuleSetPath>
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 		<DockerfileContext>..\..</DockerfileContext>
+		<DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
 	</PropertyGroup>
 
 	<Choose>
