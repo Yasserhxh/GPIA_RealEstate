@@ -21,7 +21,7 @@ if (builder.Environment.IsDevelopment())
 // Configure Services
 builder.Services
   .AddHealthChecks()
-  .AddCheck("Default", () => HealthCheckResult.Healthy("OK"))
+  .AddCheck("Default", () => HealthCheckResult.Healthy("OKe"))
   // [You can add more checks here...]
   ;
 
