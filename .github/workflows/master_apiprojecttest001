@@ -34,7 +34,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: ./Dockerfile                       # Adjust if your Dockerfile is elsewhere
+          file: ./src/ProjectAPI/Dockerfile
           push: true
           tags: ${{ secrets.ACR_REGISTRY }}/${{ secrets.IMAGE_NAME }}:latest
           build-args: |
